@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Android TV 桌面横幅（320x180 比例，矢量自适应） -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="320dp"
+    android:height="180dp"
+    android:viewportWidth="320"
+    android:viewportHeight="180">
+    <path android:fillColor="#0E1621" android:pathData="M0,0h320v180h-320z" />
+    <path android:fillColor="#FF8A3D"
+        android:pathData="M24,36h112a12,12 0 0 1 12,12v84a12,12 0 0 1 -12,12h-112a12,12 0 0 1 -12,-12v-84a12,12 0 0 1 12,-12z" />
+    <path android:fillColor="#FFFFFF"
+        android:pathData="M66,66l56,27l-56,27z" />
+    <path android:fillColor="#F4F7FA"
+        android:pathData="M164,58h120v14h-120z" />
+    <path android:fillColor="#93A7BC"
+        android:pathData="M164,84h96v12h-96z" />
+    <path android:fillColor="#93A7BC"
+        android:pathData="M164,104h76v12h-76z" />
+    <path android:fillColor="#FF8A3D"
+        android:pathData="M164,126a10,10 0 1 0 20,0a10,10 0 1 0 -20,0z" />
+</vector>

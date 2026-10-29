@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 夜幕故事书：夜幕 / 灯火 / 月光 / 雾 / 书脊五色 -->
+    <color name="bg_dark">#0C1420</color>
+    <color name="bg_panel">#16222F</color>
+    <color name="bg_card">#1B2A3A</color>
+    <color name="bg_card_focused">#24384D</color>
+    <color name="accent">#FF8A3D</color>
+    <color name="accent_dim">#3D2A1A</color>
+    <color name="text_primary">#F4F7FA</color>
+    <color name="text_secondary">#93A7BC</color>
+    <!-- 书脊：钢蓝 / 黛紫 / 松绿 / 赭金 / 绛红 -->
+    <color name="card_c0">#27476B</color>
+    <color name="card_c1">#413A63</color>
+    <color name="card_c2">#1F4E4A</color>
+    <color name="card_c3">#5A4430</color>
+    <color name="card_c4">#54333E</color>
+    <color name="qr_bg">#FFFFFF</color>
+</resources>

@@ -1,0 +1,14 @@
+# 构建产物
+.gradle/
+build/
+app/build/
+local.properties
+*.apk
+.tools/
+# IDE
+.idea/
+*.iml
+.vscode/
+# 脚本临时文件
+node_modules/
+.kotlin/
