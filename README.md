@@ -14,11 +14,12 @@
 
 ```
 ├── app/                    # Android TV 应用（Kotlin）
-│   └── src/main/assets/config.default.json   # 离线兜底片单（365部）
+│   └── src/main/assets/config.default.json   # 离线兜底片单（1151部，含2026-10精选增补）
 ├── docs/
 │   ├── DESIGN.md           # 设计分析（架构/接口/决策）
 │   ├── PLAN.md             # 执行方案
-│   └── 365-english-kids-videos.md  # 365部片单文档
+│   └── 365-english-kids-videos.md  # 分级片单文档（1151部）
+│   └── premium-bilingual-catalog.md  # 优质双语资源精选目录（2026-10，43系列调研+验证）
 ├── server/
 │   ├── config.default.json # 片单母本（搜索词）
 │   ├── config.json         # 已解析BV号的部署版
@@ -97,7 +98,7 @@ adb install -r app/build/outputs/apk/debug/app-debug.apk
 见 `docs/DESIGN.md` 第4节。v2 核心字段：
 
 ```jsonc
-// categories 按难度等级组织（L1启蒙~L5挑战 + 纪录片），共 1041 部
+// categories 按难度等级组织（L1启蒙~L5挑战 + 纪录片），共 1151 部（含 2026-10 精选增补 112 条：43 部双语/高清系列，id 前缀 p）
 { "id": "n001", "t": "Muddy Puddles",
   "kw": "小猪佩奇 英文版 第1季 Muddy Puddles 1",  // BV号失效时的兜底搜索词
   "bvid": "BV1xx...", "ep": 1,      // BV号 + 选集P数（合集按分P展开）

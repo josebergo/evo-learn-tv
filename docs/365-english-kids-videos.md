@@ -1,14 +1,14 @@
-# 365天英语动画片·纪录片片单（小学2~3年级）
+# 英语动画·纪录片分级片单（小学2~3年级）
 
 > 目标用户：小学二、三年级（7~9岁）学生，以英语原声内容为主。
-> 结构：52周主题 × 每周7部 + 1部新年特辑 = **1041部**。
-> 内容分类：英语启蒙生活动画（22周）、STEM科普动画（13周）、英语纪录片（17周）。
-> 单部时长 5~50 分钟，总时长约 307 小时。
+> 结构：L1~L5 五级分类 + 纪录片专类，含 2026-10 精选增补（43部优质双语/高清系列），共 **1151部**。
+> 内容分类：英语启蒙生活动画、STEM科普动画、英语纪录片；2026-10 增补双语精选（Big Muzzy/牛津树真人剧/Do You Know/真双语布鲁伊/TED-Ed 等43系列）。
+> 单部时长 5~50 分钟，总时长约 342 小时。
 
 ## 使用说明
 
 - 每天看 1 部，全年刚好看完；也可按孩子兴趣自由挑选。
-- 表中 **B站链接** 由脚本 `gen-md.js` 于 - 自动解析（解析成功 1041/1041）。
+- 表中 **B站链接** 由脚本 `gen-md.js` 于 - 自动解析（解析成功 1151/1151）。
 - B站视频可能因版权/删除而失效：失效时用同一行 **搜索词** 在B站搜索即可找到同类资源，或在 `server/config.default.json` 中更新后重新解析。
 - 纪录片第43周《猎捕》涉及捕食画面，建议家长陪同观看（片单已标注）。
 
@@ -219,6 +219,48 @@
 | N425 | 小猪佩奇 S6 EP10 | 英语启蒙 | 2分钟 | `小猪佩奇 第六季 英文版 10` | [BV1Wvpm6PEqK](https://www.bilibili.com/video/BV1Wvpm6PEqK) |
 | N426 | 小猪佩奇 S6 EP11 | 英语启蒙 | 2分钟 | `小猪佩奇 第六季 英文版 11` | [BV1Wvpm6PEqK](https://www.bilibili.com/video/BV1Wvpm6PEqK) |
 | N427 | 小猪佩奇 S6 EP12 | 英语启蒙 | 2分钟 | `小猪佩奇 第六季 英文版 12` | [BV1Wvpm6PEqK](https://www.bilibili.com/video/BV1Wvpm6PEqK) |
+| P001 | Big Muzzy 新版3D · 01_Muzzy_in_Gondoland | 教学动画 | 13分钟 | `Big Muzzy 英文版 新版` | [BV1tf4y1U7gS](https://www.bilibili.com/video/BV1tf4y1U7gS) |
+| P002 | Big Muzzy 新版3D · 02_Muzzy_in_Gondoland | 教学动画 | 13分钟 | `Big Muzzy 英文版 新版` | [BV1tf4y1U7gS](https://www.bilibili.com/video/BV1tf4y1U7gS) |
+| P003 | Big Muzzy 新版3D · 03_Muzzy_in_Gondoland | 教学动画 | 13分钟 | `Big Muzzy 英文版 新版` | [BV1tf4y1U7gS](https://www.bilibili.com/video/BV1tf4y1U7gS) |
+| P004 | Big Muzzy 经典版 · 01集_Muzzy_in_Gondoland | 教学动画 | 13分钟 | `big muzzy gondoland 英文版` | [BV1bWYizEEz6](https://www.bilibili.com/video/BV1bWYizEEz6) |
+| P005 | Big Muzzy 经典版 · 02集_Muzzy_in_Gondoland | 教学动画 | 13分钟 | `big muzzy gondoland 英文版` | [BV1bWYizEEz6](https://www.bilibili.com/video/BV1bWYizEEz6) |
+| P006 | Wow English · 001-Are You Happy Are You Sad English For | 真人互动 | 13分钟 | `Wow English 史蒂夫 英文` | [BV1PJ8FzvEnf](https://www.bilibili.com/video/BV1PJ8FzvEnf) |
+| P007 | Wow English · 006-Play the Drums with Steve English For | 真人互动 | 13分钟 | `Wow English 史蒂夫 英文` | [BV1PJ8FzvEnf](https://www.bilibili.com/video/BV1PJ8FzvEnf) |
+| P008 | Wow English · 012-Come and see the clowns at the circus | 真人互动 | 13分钟 | `Wow English 史蒂夫 英文` | [BV1PJ8FzvEnf](https://www.bilibili.com/video/BV1PJ8FzvEnf) |
+| P009 | Wow English · 017-On the Farm English For Children English | 真人互动 | 13分钟 | `Wow English 史蒂夫 英文` | [BV1PJ8FzvEnf](https://www.bilibili.com/video/BV1PJ8FzvEnf) |
+| P010 | English Sing Sing · 01 Kids Vocabulary | 词汇句型 | 8分钟 | `English Sing Sing 儿童英语` | [BV1qbC6YtE91](https://www.bilibili.com/video/BV1qbC6YtE91) |
+| P011 | English Sing Sing · 50 Kids vocabulary | 词汇句型 | 8分钟 | `English Sing Sing 儿童英语` | [BV1qbC6YtE91](https://www.bilibili.com/video/BV1qbC6YtE91) |
+| P012 | English Sing Sing · 23 Kids vocabulary compilation | 词汇句型 | 8分钟 | `English Sing Sing 儿童英语` | [BV1qbC6YtE91](https://www.bilibili.com/video/BV1qbC6YtE91) |
+| P013 | Yakka Dee 开口说 · Yakka Dee S03E01 Cake | 单词启蒙 | 5分钟 | `Yakka Dee 英文` | [BV1rS411A7eW](https://www.bilibili.com/video/BV1rS411A7eW) |
+| P014 | Yakka Dee 开口说 · Yakka Dee S03E02 Fish | 单词启蒙 | 5分钟 | `Yakka Dee 英文` | [BV1rS411A7eW](https://www.bilibili.com/video/BV1rS411A7eW) |
+| P015 | 动物王国大冒险 · 1 Wake Me Up | 英语启蒙 | 3分钟 | `动物王国大冒险 英语` | [BV1BycUecEqy](https://www.bilibili.com/video/BV1BycUecEqy) |
+| P016 | 动物王国大冒险 · 10 Lifted | 英语启蒙 | 3分钟 | `动物王国大冒险 英语` | [BV1BycUecEqy](https://www.bilibili.com/video/BV1BycUecEqy) |
+| P017 | 动物王国大冒险 · 20 Shell Game | 英语启蒙 | 3分钟 | `动物王国大冒险 英语` | [BV1BycUecEqy](https://www.bilibili.com/video/BV1BycUecEqy) |
+| P018 | 动物王国大冒险 · 30 look look | 英语启蒙 | 3分钟 | `动物王国大冒险 英语` | [BV1BycUecEqy](https://www.bilibili.com/video/BV1BycUecEqy) |
+| P019 | Cocomelon 儿歌 · 领全集VX:327311390 | 英语儿歌 | 4分钟 | `Cocomelon 英文儿歌` | [BV1AgouY7EFE](https://www.bilibili.com/video/BV1AgouY7EFE) |
+| P020 | Cocomelon 儿歌 · 21 Balloon Boat Race Cocomelon ABCkidTV | 英语儿歌 | 4分钟 | `Cocomelon 英文儿歌` | [BV1AgouY7EFE](https://www.bilibili.com/video/BV1AgouY7EFE) |
+| P021 | 布鲁伊·真双语 第1集 | 英语启蒙 | 7分钟 | `布鲁伊 双语 中英 第一季` | [BV18T3G6jEVM](https://www.bilibili.com/video/BV18T3G6jEVM) |
+| P022 | 布鲁伊·真双语 第2集 | 英语启蒙 | 7分钟 | `布鲁伊 双语 中英 第一季` | [BV18T3G6jEVM](https://www.bilibili.com/video/BV18T3G6jEVM) |
+| P023 | 布鲁伊·真双语 第3集 | 英语启蒙 | 7分钟 | `布鲁伊 双语 中英 第一季` | [BV18T3G6jEVM](https://www.bilibili.com/video/BV18T3G6jEVM) |
+| P024 | 布鲁伊·真双语 第4集 | 英语启蒙 | 7分钟 | `布鲁伊 双语 中英 第一季` | [BV18T3G6jEVM](https://www.bilibili.com/video/BV18T3G6jEVM) |
+| P025 | 布鲁伊·真双语 第5集 | 英语启蒙 | 7分钟 | `布鲁伊 双语 中英 第一季` | [BV18T3G6jEVM](https://www.bilibili.com/video/BV18T3G6jEVM) |
+| P026 | 布鲁伊·真双语 第6集 | 英语启蒙 | 7分钟 | `布鲁伊 双语 中英 第一季` | [BV18T3G6jEVM](https://www.bilibili.com/video/BV18T3G6jEVM) |
+| P027 | 布鲁伊·双音频 · S1 21蓝色大山 | 英语启蒙 | 10分钟 | `双音频布鲁伊 第一季` | [BV1HhHA6NEZu](https://www.bilibili.com/video/BV1HhHA6NEZu) |
+| P028 | 布鲁伊·双音频 · S1 22游泳池 | 英语启蒙 | 10分钟 | `双音频布鲁伊 第一季` | [BV1HhHA6NEZu](https://www.bilibili.com/video/BV1HhHA6NEZu) |
+| P029 | Pocoyo 小P优优 · Pocoyo S01E01 ∙ Umbrella Umbrella | 英语启蒙 | 7分钟 | `Pocoyo 小P优优 英文` | [BV1QAKp6wEEi](https://www.bilibili.com/video/BV1QAKp6wEEi) |
+| P030 | Pocoyo 小P优优 · Pocoyo S01E26 ∙ Pato’s Postal Service | 英语启蒙 | 7分钟 | `Pocoyo 小P优优 英文` | [BV1QAKp6wEEi](https://www.bilibili.com/video/BV1QAKp6wEEi) |
+| P031 | Pocoyo 小P优优 · Pocoyo S01E52 ∙ Paint Me a Picture! | 英语启蒙 | 7分钟 | `Pocoyo 小P优优 英文` | [BV1QAKp6wEEi](https://www.bilibili.com/video/BV1QAKp6wEEi) |
+| P032 | Tee and Mo · S01E01 Tee and Mo Face Wipe | 生活英语 | 7分钟 | `Tee and Mo 英文` | [BV1RT42117Gd](https://www.bilibili.com/video/BV1RT42117Gd) |
+| P033 | Tee and Mo · S01E22 Tee and Mo Where Did You Last See Him | 生活英语 | 7分钟 | `Tee and Mo 英文` | [BV1RT42117Gd](https://www.bilibili.com/video/BV1RT42117Gd) |
+| P034 | Love Monster · 1 sharing with others day | 情绪英语 | 7分钟 | `Love Monster 英文` | [BV1KC411a7Dz](https://www.bilibili.com/video/BV1KC411a7Dz) |
+| P035 | Love Monster · 9 yay for rain day | 情绪英语 | 7分钟 | `Love Monster 英文` | [BV1KC411a7Dz](https://www.bilibili.com/video/BV1KC411a7Dz) |
+| P036 | Super Simple Songs · 001 Five Little Monkeys | 英语儿歌 | 19分钟 | `Super Simple Songs 高清 合集` | [BV16cudzaEeQ](https://www.bilibili.com/video/BV16cudzaEeQ) |
+| P037 | Super Simple Songs · 023 Counting Bananas | 英语儿歌 | 19分钟 | `Super Simple Songs 高清 合集` | [BV16cudzaEeQ](https://www.bilibili.com/video/BV16cudzaEeQ) |
+| P038 | 嗨道奇 Hey Duggee · 第一季 第01集 | 英语启蒙 | 7分钟 | `Hey Duggee 嗨道奇 英文 合集` | [BV1Te4y1c7sA](https://www.bilibili.com/video/BV1Te4y1c7sA) |
+| P039 | 嗨道奇 Hey Duggee · 第二季 第01集 | 英语启蒙 | 7分钟 | `Hey Duggee 嗨道奇 英文 合集` | [BV1Te4y1c7sA](https://www.bilibili.com/video/BV1Te4y1c7sA) |
+| P040 | 嗨道奇 Hey Duggee · 第三季 第03集 | 英语启蒙 | 7分钟 | `Hey Duggee 嗨道奇 英文 合集` | [BV1Te4y1c7sA](https://www.bilibili.com/video/BV1Te4y1c7sA) |
+| P041 | 英语绘本动画 · 27 How is the weather。 | 双语精选 | 3分钟 | `英语启蒙绘本动画 中英双语` | [BV1vT411h7Lw](https://www.bilibili.com/video/BV1vT411h7Lw) |
+| P042 | 英语绘本动画 · 7 The Ugly Duckling | 双语精选 | 3分钟 | `英语启蒙绘本动画 中英双语` | [BV1vT411h7Lw](https://www.bilibili.com/video/BV1vT411h7Lw) |
 
 ### L2 基础（Basic）
 
@@ -421,6 +463,33 @@
 | N529 | 字母积木 S2 EP13 | 自然拼读 | 5分钟 | `Alphablocks 第二季 英文 13` | [BV1kHJX6qEiF](https://www.bilibili.com/video/BV1kHJX6qEiF) |
 | N530 | 字母积木 S2 EP14 | 自然拼读 | 5分钟 | `Alphablocks 第二季 英文 14` | [BV1kHJX6qEiF](https://www.bilibili.com/video/BV1kHJX6qEiF) |
 | N531 | 字母积木 S2 EP15 | 自然拼读 | 5分钟 | `Alphablocks 第二季 英文 15` | [BV1kHJX6qEiF](https://www.bilibili.com/video/BV1kHJX6qEiF) |
+| P043 | 牛津树 Biff and Chip · Elves to the Rescue | 分级阅读 | 11分钟 | `Biff and Chip 牛津树 真人剧` | [BV1iBBFYhEKZ](https://www.bilibili.com/video/BV1iBBFYhEKZ) |
+| P044 | 牛津树 Biff and Chip · S1E12 Paradise island | 分级阅读 | 11分钟 | `Biff and Chip 牛津树 真人剧` | [BV1iBBFYhEKZ](https://www.bilibili.com/video/BV1iBBFYhEKZ) |
+| P045 | 牛津树 Biff and Chip · S1E25 Nice Neighbours | 分级阅读 | 11分钟 | `Biff and Chip 牛津树 真人剧` | [BV1iBBFYhEKZ](https://www.bilibili.com/video/BV1iBBFYhEKZ) |
+| P046 | 牛津树 Biff and Chip · S2E13 Gardening Wizard | 分级阅读 | 11分钟 | `Biff and Chip 牛津树 真人剧` | [BV1iBBFYhEKZ](https://www.bilibili.com/video/BV1iBBFYhEKZ) |
+| P047 | 牛津树 Biff and Chip · S3E07 Being Baddies | 分级阅读 | 11分钟 | `Biff and Chip 牛津树 真人剧` | [BV1iBBFYhEKZ](https://www.bilibili.com/video/BV1iBBFYhEKZ) |
+| P048 | Do You Know · S1E01 Hamster Wheel and Insect Hotel | 科学英语 | 14分钟 | `BBC Do You Know Maddie` | [BV1Y1421y72F](https://www.bilibili.com/video/BV1Y1421y72F) |
+| P049 | Do You Know · S1E20 Eggs and Bread | 科学英语 | 14分钟 | `BBC Do You Know Maddie` | [BV1Y1421y72F](https://www.bilibili.com/video/BV1Y1421y72F) |
+| P050 | Do You Know · S2E18 Lift and Spacesuit | 科学英语 | 14分钟 | `BBC Do You Know Maddie` | [BV1Y1421y72F](https://www.bilibili.com/video/BV1Y1421y72F) |
+| P051 | Do You Know · S3E13 Beehive and Mug | 科学英语 | 14分钟 | `BBC Do You Know Maddie` | [BV1Y1421y72F](https://www.bilibili.com/video/BV1Y1421y72F) |
+| P052 | Do You Know · S4E08 Floating and Sand | 科学英语 | 14分钟 | `BBC Do You Know Maddie` | [BV1Y1421y72F](https://www.bilibili.com/video/BV1Y1421y72F) |
+| P053 | Go Jetters 探险冲冲冲 · S01E01 The_Eiffel_Tower_France | 地理启蒙 | 11分钟 | `Go Jetters 英文` | [BV1dkCCBRExW](https://www.bilibili.com/video/BV1dkCCBRExW) |
+| P054 | Go Jetters 探险冲冲冲 · S01E26 Big_Ben_England | 地理启蒙 | 11分钟 | `Go Jetters 英文` | [BV1dkCCBRExW](https://www.bilibili.com/video/BV1dkCCBRExW) |
+| P055 | Go Jetters 探险冲冲冲 · S02E02 The_Matterhorn_Italy_and_Switzerland | 地理启蒙 | 11分钟 | `Go Jetters 英文` | [BV1dkCCBRExW](https://www.bilibili.com/video/BV1dkCCBRExW) |
+| P056 | Go Jetters 第3季 · Go Jetters_S01E01_The Eiffel Tower France | 地理启蒙 | 11分钟 | `Go Jetters 第三季 英文` | [BV169rrBXExP](https://www.bilibili.com/video/BV169rrBXExP) |
+| P057 | Go Jetters 第3季 · Go Jetters_S01E26_Big Ben England | 地理启蒙 | 11分钟 | `Go Jetters 第三季 英文` | [BV169rrBXExP](https://www.bilibili.com/video/BV169rrBXExP) |
+| P058 | Colourblocks 颜色积木 · 1 Meet Red! | 单词启蒙 | 5分钟 | `Colourblocks 颜色积木 英文` | [BV1nt421G7wv](https://www.bilibili.com/video/BV1nt421G7wv) |
+| P059 | Colourblocks 颜色积木 · 15 Making Rainbows with Indigo and Violet | 单词启蒙 | 5分钟 | `Colourblocks 颜色积木 英文` | [BV1nt421G7wv](https://www.bilibili.com/video/BV1nt421G7wv) |
+| P060 | Colourblocks 第2季 | 单词启蒙 | 5分钟 | `Colourblocks 第二季 英文` | [BV1nA4m1N7n9](https://www.bilibili.com/video/BV1nA4m1N7n9) |
+| P061 | Messy Goes to Okido · Series 1 | 科学英语 | 11分钟 | `Messy Goes to Okido 英文` | [BV1fs3cz5EL3](https://www.bilibili.com/video/BV1fs3cz5EL3) |
+| P062 | Messy Goes to Okido · Series 1 | 科学英语 | 11分钟 | `Messy Goes to Okido 英文` | [BV1fs3cz5EL3](https://www.bilibili.com/video/BV1fs3cz5EL3) |
+| P063 | Messy Goes to Okido · Series 1 | 科学英语 | 11分钟 | `Messy Goes to Okido 英文` | [BV1fs3cz5EL3](https://www.bilibili.com/video/BV1fs3cz5EL3) |
+| P064 | JoJo & Gran Gran · Spring-01 Its Time to Post a Picture | 生活英语 | 11分钟 | `JoJo and Gran Gran 英文` | [BV1V94y1e7jG](https://www.bilibili.com/video/BV1V94y1e7jG) |
+| P065 | JoJo & Gran Gran · Summer-04 Its Time for a Race | 生活英语 | 11分钟 | `JoJo and Gran Gran 英文` | [BV1V94y1e7jG](https://www.bilibili.com/video/BV1V94y1e7jG) |
+| P066 | JoJo & Gran Gran · Autumn-09 Its Time for a Birthday Party | 生活英语 | 11分钟 | `JoJo and Gran Gran 英文` | [BV1V94y1e7jG](https://www.bilibili.com/video/BV1V94y1e7jG) |
+| P067 | 数字积木·双语版 · S07E01 Friendly_Fours_Beach_Day | 数学启蒙 | 20分钟 | `Numberblocks 数字积木 中英字幕` | [BV1QEnd6FEuj](https://www.bilibili.com/video/BV1QEnd6FEuj) |
+| P068 | 数字积木·双语版 · S07E12 Seventy-twos_Super_Surprise | 数学启蒙 | 20分钟 | `Numberblocks 数字积木 中英字幕` | [BV1QEnd6FEuj](https://www.bilibili.com/video/BV1QEnd6FEuj) |
+| P069 | 数字积木·双语版 · S08E09 Number_Rescue_Go | 数学启蒙 | 20分钟 | `Numberblocks 数字积木 中英字幕` | [BV1QEnd6FEuj](https://www.bilibili.com/video/BV1QEnd6FEuj) |
 
 ### L3 提高（Growing）
 
@@ -538,8 +607,6 @@
 | D199 | Two 数字2 | 数学英语 | 5分钟 | `Numberblocks 数字积木 英文版 two` | [BV1fdsR6SEDy](https://www.bilibili.com/video/BV1fdsR6SEDy) |
 | D200 | Three 数字3 | 数学英语 | 5分钟 | `Numberblocks 数字积木 英文版 three` | [BV1fdsR6SEDy](https://www.bilibili.com/video/BV1fdsR6SEDy) |
 | D201 | Four 数字4 | 数学英语 | 5分钟 | `Numberblocks 数字积木 英文版 four` | [BV1fdsR6SEDy](https://www.bilibili.com/video/BV1fdsR6SEDy) |
-| D202 | Five 数字5 | 数学英语 | 5分钟 | `Numberblocks 数字积木 英文版 five` | [BV1QEnd6FEuj](https://www.bilibili.com/video/BV1QEnd6FEuj) |
-| D203 | Ten 数字10 | 数学英语 | 5分钟 | `Numberblocks 数字积木 英文版 ten` | [BV1QEnd6FEuj](https://www.bilibili.com/video/BV1QEnd6FEuj) |
 | D204 | Alphablocks 自然拼读(一) | 自然拼读 | 5分钟 | `Alphablocks 字母积木 英文版` | [BV1Jtn46aEPK](https://www.bilibili.com/video/BV1Jtn46aEPK) |
 | D205 | Alphablocks 自然拼读(二) | 自然拼读 | 5分钟 | `Alphablocks 字母积木 英文版` | [BV1Jtn46aEPK](https://www.bilibili.com/video/BV1Jtn46aEPK) |
 | D206 | Alphablocks 自然拼读(三) | 自然拼读 | 5分钟 | `Alphablocks 字母积木 英文版` | [BV1Jtn46aEPK](https://www.bilibili.com/video/BV1Jtn46aEPK) |
@@ -712,6 +779,19 @@
 | N576 | 泡泡孔雀鱼 EP17 | 校园英语 | 5分钟 | `Bubble Guppies 英文版 17` | [BV1Ue4y1h7CW](https://www.bilibili.com/video/BV1Ue4y1h7CW) |
 | N577 | 泡泡孔雀鱼 EP18 | 校园英语 | 5分钟 | `Bubble Guppies 英文版 18` | [BV1Ue4y1h7CW](https://www.bilibili.com/video/BV1Ue4y1h7CW) |
 | N578 | 泡泡孔雀鱼 EP19 | 校园英语 | 5分钟 | `Bubble Guppies 英文版 19` | [BV1Ue4y1h7CW](https://www.bilibili.com/video/BV1Ue4y1h7CW) |
+| P070 | 小好奇埃莉诺 · S01E01E02 | 科学英语 | 26分钟 | `Elinor Wonders Why 英文` | [BV1sJ4m1w79t](https://www.bilibili.com/video/BV1sJ4m1w79t) |
+| P071 | 小好奇埃莉诺 · S03E05E06 | 科学英语 | 26分钟 | `Elinor Wonders Why 英文` | [BV1sJ4m1w79t](https://www.bilibili.com/video/BV1sJ4m1w79t) |
+| P072 | 小好奇埃莉诺 · S06E07E08 | 科学英语 | 26分钟 | `Elinor Wonders Why 英文` | [BV1sJ4m1w79t](https://www.bilibili.com/video/BV1sJ4m1w79t) |
+| P073 | 小好奇埃莉诺 · S09E07 | 科学英语 | 26分钟 | `Elinor Wonders Why 英文` | [BV1sJ4m1w79t](https://www.bilibili.com/video/BV1sJ4m1w79t) |
+| P074 | 少年侦探所·双语 · 新来的好奇女孩事件 失踪快递事件 | 推理趣味 | 5分钟 | `The Inbestigators 双语` | [BV1v98MzVEdT](https://www.bilibili.com/video/BV1v98MzVEdT) |
+| P075 | 少年侦探所·双语 · 新来的好奇女孩事件 失踪快递事件 | 推理趣味 | 5分钟 | `The Inbestigators 双语` | [BV1v98MzVEdT](https://www.bilibili.com/video/BV1v98MzVEdT) |
+| P076 | 少年侦探所·双语 · 丢失的太阳系事件 忧伤舞者事件 | 推理趣味 | 5分钟 | `The Inbestigators 双语` | [BV1v98MzVEdT](https://www.bilibili.com/video/BV1v98MzVEdT) |
+| P077 | 百诺博士秀 · 001 Bats – Myths Busted | 科学英语 | 6分钟 | `Dr Binocs 百诺博士 中英字幕` | [BV1q2bazGERu](https://www.bilibili.com/video/BV1q2bazGERu) |
+| P078 | 百诺博士秀 · 033 Layers Of Soil | 科学英语 | 6分钟 | `Dr Binocs 百诺博士 中英字幕` | [BV1q2bazGERu](https://www.bilibili.com/video/BV1q2bazGERu) |
+| P079 | 百诺博士秀 · 066 Animals With Superpowers! | 科学英语 | 6分钟 | `Dr Binocs 百诺博士 中英字幕` | [BV1q2bazGERu](https://www.bilibili.com/video/BV1q2bazGERu) |
+| P080 | Xavier 秘密博物馆 · E01E02 _Johann Sebastian Bach_Marie Curie | 历史趣味 | 24分钟 | `Xavier Riddle 秘密博物馆 英文` | [BV1j9qdB5E1j](https://www.bilibili.com/video/BV1j9qdB5E1j) |
+| P081 | Xavier 秘密博物馆 · E05E06 _George Washington_Wright Brothers | 历史趣味 | 24分钟 | `Xavier Riddle 秘密博物馆 英文` | [BV1j9qdB5E1j](https://www.bilibili.com/video/BV1j9qdB5E1j) |
+| P082 | Puffin Rock 大电影 | 动画电影 | 70分钟 | `Puffin Rock 海鹦鹉岛 电影` | [BV1M9pnz7EZF](https://www.bilibili.com/video/BV1M9pnz7EZF) |
 
 ### L4 进阶（Advanced）
 
@@ -834,6 +914,24 @@
 | N621 | 小猪佩奇 S8 EP8 | 生活英语 | 3分钟 | `小猪佩奇 第八季 英文版 8` | [BV1CtHA6TEfk](https://www.bilibili.com/video/BV1CtHA6TEfk) |
 | N622 | 小猪佩奇 S8 EP9 | 生活英语 | 2分钟 | `小猪佩奇 第八季 英文版 9` | [BV1CtHA6TEfk](https://www.bilibili.com/video/BV1CtHA6TEfk) |
 | N623 | 小猪佩奇 S8 EP10 | 生活英语 | 3分钟 | `小猪佩奇 第八季 英文版 10` | [BV1CtHA6TEfk](https://www.bilibili.com/video/BV1CtHA6TEfk) |
+| P083 | 怪诞小镇 · S1 1-5 | 冒险幽默 | 155分钟 | `Gravity Falls 怪诞小镇 全两季` | [BV1pB4kzrELU](https://www.bilibili.com/video/BV1pB4kzrELU) |
+| P084 | 怪诞小镇 · S1E16-20 | 冒险幽默 | 155分钟 | `Gravity Falls 怪诞小镇 全两季` | [BV1pB4kzrELU](https://www.bilibili.com/video/BV1pB4kzrELU) |
+| P085 | 怪诞小镇 · S2E16-20 | 冒险幽默 | 155分钟 | `Gravity Falls 怪诞小镇 全两季` | [BV1pB4kzrELU](https://www.bilibili.com/video/BV1pB4kzrELU) |
+| P086 | Who Was 名人秀·双语 · S01E01 甘地与本杰明·富兰克林 Gandhi & Benjamin Franklin | 历史趣味 | 24分钟 | `The Who Was Show 双语字幕` | [BV1zK4y1h7jg](https://www.bilibili.com/video/BV1zK4y1h7jg) |
+| P087 | Who Was 名人秀·双语 · S01E05 玛丽·安东尼与路易斯·阿姆斯特朗 Marie Antoinette & | 历史趣味 | 24分钟 | `The Who Was Show 双语字幕` | [BV1zK4y1h7jg](https://www.bilibili.com/video/BV1zK4y1h7jg) |
+| P088 | Who Was 名人秀·双语 · S01E09 乔治·华盛顿与马克·波罗 George Washington & Marco | 历史趣味 | 24分钟 | `The Who Was Show 双语字幕` | [BV1zK4y1h7jg](https://www.bilibili.com/video/BV1zK4y1h7jg) |
+| P089 | 妙想科学秀·双语 · S01E01 社交媒体 Social Media | 科学英语 | 22分钟 | `Brainchild 妙想科学秀 双语` | [BV1aE411L7GU](https://www.bilibili.com/video/BV1aE411L7GU) |
+| P090 | 妙想科学秀·双语 · S01E06 情绪 Emotions | 科学英语 | 22分钟 | `Brainchild 妙想科学秀 双语` | [BV1aE411L7GU](https://www.bilibili.com/video/BV1aE411L7GU) |
+| P091 | 妙想科学秀·双语 · S01E10 神秘力量 Hidden Forces | 科学英语 | 22分钟 | `Brainchild 妙想科学秀 双语` | [BV1aE411L7GU](https://www.bilibili.com/video/BV1aE411L7GU) |
+| P092 | 72危险动物·拉美 · S01E01 丛林险境 Jungle Jeopardy | 动物趣味 | 44分钟 | `72 Dangerous Animals 拉丁美洲` | [BV1qE41157bM](https://www.bilibili.com/video/BV1qE41157bM) |
+| P093 | 72危险动物·拉美 · S01E06 一击必杀 One Hit Wonders | 动物趣味 | 44分钟 | `72 Dangerous Animals 拉丁美洲` | [BV1qE41157bM](https://www.bilibili.com/video/BV1qE41157bM) |
+| P094 | 72危险动物·亚洲 · S01E02 口器和利爪 Jaws & Claws | 动物趣味 | 46分钟 | `72 Dangerous Animals 亚洲` | [BV1B7411F78V](https://www.bilibili.com/video/BV1B7411F78V) |
+| P095 | 72危险动物·亚洲 · S01E07 人迹罕至 The Road Less Travelled | 动物趣味 | 46分钟 | `72 Dangerous Animals 亚洲` | [BV1B7411F78V](https://www.bilibili.com/video/BV1B7411F78V) |
+| P096 | 怪诞星球·双语 第1集 | 动物趣味 | 20分钟 | `Absurd Planet 怪诞星球 中英双字` | [BV1sV411d7kW](https://www.bilibili.com/video/BV1sV411d7kW) |
+| P097 | 怪诞星球·双语 第6集 | 动物趣味 | 20分钟 | `Absurd Planet 怪诞星球 中英双字` | [BV1sV411d7kW](https://www.bilibili.com/video/BV1sV411d7kW) |
+| P098 | AumSum 时间 · 001 Why do we have 5 fingers | 趣味科学 | 6分钟 | `It's AumSum Time 英文` | [BV1Qwb5zJE6K](https://www.bilibili.com/video/BV1Qwb5zJE6K) |
+| P099 | AumSum 时间 · 027 Why do we Cry | 趣味科学 | 6分钟 | `It's AumSum Time 英文` | [BV1Qwb5zJE6K](https://www.bilibili.com/video/BV1Qwb5zJE6K) |
+| P100 | AumSum 时间 · 053 Why are Eggs Egg-shaped | 趣味科学 | 6分钟 | `It's AumSum Time 英文` | [BV1Qwb5zJE6K](https://www.bilibili.com/video/BV1Qwb5zJE6K) |
 
 ### L5 挑战（Challenge）
 
@@ -983,6 +1081,12 @@
 | N674 | 如果我是一只动物 EP12 | 动物纪录片 | 5分钟 | `If I Were an Animal 英文 纪录片 12` | [BV15dr5BiEh2](https://www.bilibili.com/video/BV15dr5BiEh2) |
 | N675 | 如果我是一只动物 EP13 | 动物纪录片 | 5分钟 | `If I Were an Animal 英文 纪录片 13` | [BV15dr5BiEh2](https://www.bilibili.com/video/BV15dr5BiEh2) |
 | N676 | 如果我是一只动物 EP14 | 动物纪录片 | 5分钟 | `If I Were an Animal 英文 纪录片 14` | [BV15dr5BiEh2](https://www.bilibili.com/video/BV15dr5BiEh2) |
+| P101 | TED-Ed 百科 · The uncertain location of electrons | 知识短片 | 5分钟 | `TED-Ed 中英CC` | [BV1Gf4y1y7wc](https://www.bilibili.com/video/BV1Gf4y1y7wc) |
+| P102 | TED-Ed 百科 · Can you solve 'Einstein’s Riddle' | 知识短片 | 5分钟 | `TED-Ed 中英CC` | [BV1Gf4y1y7wc](https://www.bilibili.com/video/BV1Gf4y1y7wc) |
+| P103 | TED-Ed 百科 · Why does your voice change as you get older | 知识短片 | 5分钟 | `TED-Ed 中英CC` | [BV1Gf4y1y7wc](https://www.bilibili.com/video/BV1Gf4y1y7wc) |
+| P104 | TED-Ed 高清精选 · 001-酒精的简史【双语字幕】 | 知识短片 | 5分钟 | `TED-Ed 高清` | [BV1TK421i72D](https://www.bilibili.com/video/BV1TK421i72D) |
+| P105 | TED-Ed 高清精选 · 043-亚瑟王的传说是真的吗【双语字幕】 | 知识短片 | 5分钟 | `TED-Ed 高清` | [BV1TK421i72D](https://www.bilibili.com/video/BV1TK421i72D) |
+| P106 | 统计学速成课·双语 | 学科英语 | 12分钟 | `Crash Course 统计学 中英` | [BV1B7411v73M](https://www.bilibili.com/video/BV1B7411v73M) |
 
 ### 纪录片（Documentaries）
 
@@ -1109,6 +1213,12 @@
 | D362 | Extreme Stars 极端恒星 | 天文物理 | 45分钟 | `宇宙如何运转 英文版 stars` | [BV1xM41137PJ](https://www.bilibili.com/video/BV1xM41137PJ) |
 | D363 | Planets 行星 | 天文物理 | 45分钟 | `宇宙如何运转 How the Universe Works` | [BV1hYtwz2ECG](https://www.bilibili.com/video/BV1hYtwz2ECG) |
 | D364 | Comets 彗星 | 天文物理 | 45分钟 | `宇宙如何运转 英文版 comets` | [BV1xBMB6gEra](https://www.bilibili.com/video/BV1xBMB6gEra) |
+| P107 | 我们的星球 · 第1集 一个地球 One Planet | 自然纪录片 | 50分钟 | `Our Planet 我们的星球` | [BV1oJ41137oE](https://www.bilibili.com/video/BV1oJ41137oE) |
+| P108 | 我们的星球 · 第5集 沙漠到草原 From Deserts To Grasslands | 自然纪录片 | 50分钟 | `Our Planet 我们的星球` | [BV1oJ41137oE](https://www.bilibili.com/video/BV1oJ41137oE) |
+| P109 | 夜色中的地球·双语 · S01E01 Lion Grasslands 草原狮子 | 自然纪录片 | 28分钟 | `Earth At Night 夜色中的地球` | [BV1Tm4y1b7Hq](https://www.bilibili.com/video/BV1Tm4y1b7Hq) |
+| P110 | 夜色中的地球·双语 · S02E01 Elephant Plains 平原的大象 | 自然纪录片 | 28分钟 | `Earth At Night 夜色中的地球` | [BV1Tm4y1b7Hq](https://www.bilibili.com/video/BV1Tm4y1b7Hq) |
+| P111 | 冰冻星球2·4K | 极地纪录片 | 53分钟 | `冰冻星球2 4K` | [BV1oDS1BUEUR](https://www.bilibili.com/video/BV1oDS1BUEUR) |
+| P112 | 七个世界精讲 | 自然纪录片 | 70分钟 | `七个世界 一个星球` | [BV1V64y1H7LZ](https://www.bilibili.com/video/BV1V64y1H7LZ) |
 
 ---
 
@@ -1118,6 +1228,6 @@
 - STEM科普动画（W23–W35）：91 部
 - 英语纪录片（W36–W52）：119 部
 - 新年特辑（W53）：1 部
-- 合计：1041 部
+- 合计：1151 部
 
 *由 `server/config.json` 自动生成，修改配置后运行 `node scripts/gen-md.js` 重新生成。*
