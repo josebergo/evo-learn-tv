@@ -68,15 +68,18 @@ class PlayerActivity : FragmentActivity() {
     /** DASH播放失败后本次会话内不再尝试DASH */
     private var dashBlocked = false
 
-    // 双语字幕（B站CC轨；AI字幕需登录）
+    // 双语字幕：B站CC轨（中文行，AI字幕需登录）+ Vosk实时识别（英文行，无轨时兜底）
     private lateinit var biSubtitle: BiSubtitleView
     private var enLines: List<BiliApi.SubLine> = emptyList()
     private var zhLines: List<BiliApi.SubLine> = emptyList()
+    private var liveEn: String? = null
+    private var liveStarted = false
+    private val pcmTap = com.evolearn.kidszone.core.PcmTapAudioProcessor()
     private val subtitleHandler = android.os.Handler(android.os.Looper.getMainLooper())
     private val subtitleTick = object : Runnable {
         override fun run() {
             if (::biSubtitle.isInitialized && player.isPlaying) {
-                biSubtitle.update(player.currentPosition, enLines, zhLines)
+                biSubtitle.update(player.currentPosition, enLines, zhLines, liveEn)
             }
             subtitleHandler.postDelayed(this, 250)
         }
@@ -99,7 +102,18 @@ class PlayerActivity : FragmentActivity() {
         biSubtitle = findViewById(R.id.bi_subtitle)
         subtitleHandler.post(subtitleTick)
 
-        player = ExoPlayer.Builder(this).build()
+        // 音频旁路：子类化RenderersFactory把PCM复制器插进AudioSink，供Vosk识别
+        val renderersFactory = object : androidx.media3.exoplayer.DefaultRenderersFactory(this) {
+            override fun buildAudioSink(
+                context: android.content.Context,
+                enableFloatOutput: Boolean,
+                enableAudioTrackTimestampPassthrough: Boolean
+            ): androidx.media3.exoplayer.audio.AudioSink? =
+                androidx.media3.exoplayer.audio.DefaultAudioSink.Builder(context)
+                    .setAudioProcessors(arrayOf(pcmTap))
+                    .build()
+        }
+        player = ExoPlayer.Builder(this, renderersFactory).build()
         findViewById<PlayerView>(R.id.player_view).player = player
         player.addListener(playerListener)
 
@@ -184,9 +198,12 @@ class PlayerActivity : FragmentActivity() {
                 player.playWhenReady = true
                 loadingOverlay.visibility = View.GONE
 
-                // 异步拉CC字幕（不阻塞起播）；AI字幕需登录，游客无轨时静默无字幕
+                // 异步拉CC字幕（不阻塞起播）；中文轨(AI)需登录
                 enLines = emptyList()
                 zhLines = emptyList()
+                liveEn = null
+                liveStarted = false
+                pcmTap.onPcm = null
                 lifecycleScope.launch {
                     val subs = BiliApi.subtitles(bvid, cid)
                     if (subs != null) {
@@ -194,6 +211,8 @@ class PlayerActivity : FragmentActivity() {
                         zhLines = subs.second
                     }
                     if (enLines.isEmpty() && zhLines.isEmpty()) {
+                        // 完全没有英中字幕轨：才启用Vosk实时识别英文行（有轨一律不跑识别）
+                        startLiveEnglish()
                         maybeDemoSubtitle()
                     }
                 }
@@ -205,9 +224,23 @@ class PlayerActivity : FragmentActivity() {
         }
     }
 
-    /**
-     * 字幕样式演示（隐藏调试入口，adb 启动时带 demo_subtitle 才生效）：
-     * 无真实字幕轨时注入英中对照演示句，验证"英文上行/中文小字下行"渲染。
+    /** Vosk实时英文识别：模型首次解压约1-3s，就绪后自动开始；识别文本实时上屏英文行 */
+    private fun startLiveEnglish() {
+        if (liveStarted) return
+        liveStarted = true
+        com.evolearn.kidszone.core.VoskEngine.onText = { text, _ ->
+            liveEn = text.ifBlank { null }
+        }
+        pcmTap.onPcm = { bytes, rate, ch ->
+            com.evolearn.kidszone.core.VoskEngine.feed(bytes, rate, ch)
+        }
+        com.evolearn.kidszone.core.VoskEngine.ensureModel(this) {
+            com.evolearn.kidszone.core.VoskEngine.start()
+        }
+    }
+
+    /** 字幕样式演示（隐藏调试入口，adb 启动时带 demo_subtitle 才生效）：
+     *  无真实字幕轨时注入英中对照演示句，验证"英文上行/中文小字下行"渲染。
      */
     private fun maybeDemoSubtitle() {
         if (!intent.getBooleanExtra("demo_subtitle", false)) return
@@ -265,6 +298,17 @@ class PlayerActivity : FragmentActivity() {
                 maybePlayNext()
             }
         }
+
+        override fun onPositionDiscontinuity(
+            oldPosition: Player.PositionInfo,
+            newPosition: Player.PositionInfo,
+            reason: Int
+        ) {
+            // seek后音频上下文断裂，重置识别器避免字幕串行
+            if (reason == Player.DISCONTINUITY_REASON_SEEK) {
+                com.evolearn.kidszone.core.VoskEngine.reset()
+            }
+        }
     }
 
     private fun maybePlayNext() {
@@ -293,6 +337,7 @@ class PlayerActivity : FragmentActivity() {
     override fun onDestroy() {
         super.onDestroy()
         subtitleHandler.removeCallbacks(subtitleTick)
+        com.evolearn.kidszone.core.VoskEngine.stop()
         player.removeListener(playerListener)
         player.release()
     }

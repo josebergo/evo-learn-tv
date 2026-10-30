@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 搜索输入框：白底圆角贴纸；焦点芒果底 -->
+<!-- 搜索输入框：白底直角矩形（无圆角，边角不露底色）；焦点芒果底 -->
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_focused="true">
         <shape>
             <solid android:color="#FFC94D" />
-            <corners android:radius="24dp" />
             <stroke android:width="4dp" android:color="@color/accent" />
         </shape>
     </item>
     <item>
         <shape>
             <solid android:color="@color/bg_panel" />
-            <corners android:radius="24dp" />
             <stroke android:width="3dp" android:color="@color/crayon" />
         </shape>
     </item>

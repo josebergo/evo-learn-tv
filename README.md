@@ -5,7 +5,7 @@
 - 📺 适配 Android TV / 65寸大屏（Leanback TV UI，D-pad遥控操作）
 - 📚 **1000+部素材，按难度分级**：L1 启蒙 → L5 挑战 从易到难，左侧入口即等级，卡片带 L1-L5 徽标；另有纪录片专区
 - 🔍 **白名单内搜索**：右侧顶部搜索卡，支持中文 / 英文 / 拼音（`peiqi`→小猪佩奇）甚至等级（`L1`），只在片单范围内
-- 💬 **英中双语字幕**：自动拉取B站CC字幕（英文轨+中文轨），上方英文大字、下方中文小字（AI字幕需扫码登录）
+- 💬 **英中双语字幕**：优先B站CC字幕轨（上方英文大字、下方中文小字，AI轨需扫码登录）；**完全没有字幕轨的视频自动启用Vosk离线实时英文识别**（设备端41MB模型，无需联网）
 - 🌐 三级配置来源：**应用内配置的地址** → 内置默认远程地址 → 离线内置片单
 - 📱 B站官方扫码登录（手机App扫码，电视端自动完成），免PIN直达、返回键直接退出
 - ▶️ 登录后走DASH音视频流（最高1080P，起播提示画质）；失败自动降级MP4直链 → ExoPlayer
@@ -68,6 +68,10 @@ adb install -r app/build/outputs/apk/debug/app-debug.apk
 | 全部影片+等级分类 | L2 基础分类 | 按等级搜索(L1) |
 |---|---|---|
 | ![等级入口](docs/screenshots/v1_levels.png) | ![L2](docs/screenshots/v2_level2.png) | ![等级搜索](docs/screenshots/v3_search_level.png) |
+
+| 双语字幕（英文上/中文下） | Vosk实时英文识别（无字幕轨时） |
+|---|---|
+| ![双语](docs/screenshots/13-bi-subtitle.png) | ![实时](docs/screenshots/14-vosk-live-en.png) |
 
 ## 首次使用（家长做一次）
 

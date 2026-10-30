@@ -37,9 +37,15 @@ class BiSubtitleView(ctx: Context, attrs: AttributeSet? = null) : View(ctx, attr
     private var enLayout: StaticLayout? = null
     private var zhLayout: StaticLayout? = null
 
-    /** 播放进度驱动：找到当前时间点的英/中字幕行，变化时重绘 */
-    fun update(posMs: Long, enLines: List<BiliApi.SubLine>, zhLines: List<BiliApi.SubLine>) {
-        val e = lineAt(enLines, posMs)
+    /** 播放进度驱动：找到当前时间点的英/中字幕行，变化时重绘；
+     *  liveEn 为Vosk实时识别的英文行，非空时优先于时间轴英文轨 */
+    fun update(
+        posMs: Long,
+        enLines: List<BiliApi.SubLine>,
+        zhLines: List<BiliApi.SubLine>,
+        liveEn: String? = null
+    ) {
+        val e = liveEn?.takeIf { it.isNotBlank() } ?: lineAt(enLines, posMs)
         val z = bestZh(enLines, zhLines, posMs)
         if (e != en || z != zh) {
             en = e

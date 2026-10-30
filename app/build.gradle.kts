@@ -12,8 +12,11 @@ android {
         applicationId = "com.evolearn.kidszone"
         minSdk = 21
         targetSdk = 35
-        versionCode = 4
-        versionName = "1.3.0"
+        versionCode = 5
+        versionName = "1.4.0"
+
+        // Vosk 实时英文识别：只保留主流电视盒子(arm64)与模拟器(x86_64)架构，控制APK体积
+        ndk { abiFilters += listOf("arm64-v8a", "x86_64") }
 
         // 内置默认远程配置地址（第2优先级）。部署 server/config.json 后改成你的地址，
         // 也可不改——在应用「家长设置 → 修改配置地址」里输入即可（第1优先级）。
@@ -54,5 +57,7 @@ dependencies {
     implementation("com.google.zxing:core:3.5.3")
     // 中文转拼音：TV遥控器难输中文，支持输入拼音搜片名（如 peiqi → 小猪佩奇）
     implementation("com.github.promeg:tinypinyin:2.0.3")
+    // 离线英文语音识别（Vosk）：无B站字幕轨的视频实时识别英文字幕行
+    implementation("com.alphacephei:vosk-android:0.3.47")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
 }

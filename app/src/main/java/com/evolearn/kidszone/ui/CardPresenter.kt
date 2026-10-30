@@ -91,7 +91,9 @@ class CardPresenter(private val colorRes: Int) : Presenter() {
                 ).joinToString(" · ")
             }
             is MenuCard -> {
-                view.background = stickerBackground(view, baseColor)
+                // 搜索入口做成矩形输入框样式（直角、白底、蜡笔描边），区别于贴纸卡片
+                view.background = if (item.action == MenuCard.ACTION_SEARCH)
+                    searchBoxBackground(view) else stickerBackground(view, baseColor)
                 badge.text = item.badge
                 title.text = item.title
                 sub.text = item.sub
@@ -120,6 +122,25 @@ class CardPresenter(private val colorRes: Int) : Presenter() {
         val focused = GradientDrawable().apply {
             setColor(ColorUtils.blendARGB(baseColor, Color.WHITE, 0.18f))
             cornerRadii = radii
+            setStroke((5 * d).toInt(), accentColor)
+        }
+        return StateListDrawable().apply {
+            addState(intArrayOf(android.R.attr.state_focused), focused)
+            addState(intArrayOf(), normal)
+        }
+    }
+
+    /** 搜索框背景：直角矩形（GradientDrawable 默认无圆角），白底蜡笔边，焦点芒果提亮橙边 */
+    private fun searchBoxBackground(v: View): StateListDrawable {
+        val d = v.resources.displayMetrics.density
+        val white = ContextCompat.getColor(v.context, R.color.bg_panel)
+        val focusedFill = ContextCompat.getColor(v.context, R.color.accent_dim)
+        val normal = GradientDrawable().apply {
+            setColor(white)
+            setStroke((3 * d).toInt(), crayonColor)
+        }
+        val focused = GradientDrawable().apply {
+            setColor(focusedFill)
             setStroke((5 * d).toInt(), accentColor)
         }
         return StateListDrawable().apply {
