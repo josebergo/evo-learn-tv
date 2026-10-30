@@ -121,26 +121,31 @@ class BiSubtitleView(ctx: Context, attrs: AttributeSet? = null) : View(ctx, attr
     }
 
     override fun onDraw(canvas: Canvas) {
-        val eOutline = enOutlineLayout ?: return
-        val eFill = enFillLayout ?: return
+        val eOutline = enOutlineLayout
+        val eFill = enFillLayout
         val zOutline = zhOutlineLayout
         val zFill = zhFillLayout
+        if (eOutline == null && zOutline == null) return // 两行都空才不绘制
         val gap = 5f * d
         val bottom = height - paddingBottom - 6f * d
-        val total = eOutline.height + ((zOutline?.height ?: 0) + if (zOutline != null) gap.toInt() else 0)
-        var top = (bottom - total).toFloat()
-
-        canvas.save()
-        canvas.translate((width - eOutline.width) / 2f, top)
-        eOutline.draw(canvas) // 黑边层
-        eFill.draw(canvas)    // 白字层
-        canvas.restore()
+        // 自底向上排：中文贴底、英文在其上；只有单轨时该轨贴底
+        // （修复：仅中文字幕轨的片子此前因英文行为空提前return，中文一行都不显示）
+        var top = bottom.toFloat()
         if (zOutline != null && zFill != null) {
-            top += eOutline.height + gap
+            top -= zOutline.height
             canvas.save()
             canvas.translate((width - zOutline.width) / 2f, top)
-            zOutline.draw(canvas)
-            zFill.draw(canvas)
+            zOutline.draw(canvas) // 黑边层
+            zFill.draw(canvas)    // 白字层
+            canvas.restore()
+            top -= gap
+        }
+        if (eOutline != null && eFill != null) {
+            top -= eOutline.height
+            canvas.save()
+            canvas.translate((width - eOutline.width) / 2f, top)
+            eOutline.draw(canvas)
+            eFill.draw(canvas)
             canvas.restore()
         }
     }

@@ -37,6 +37,9 @@ class PlayerActivity : FragmentActivity() {
         const val EXTRA_ITEM = "item"
         const val EXTRA_FORCE_SEARCH = "force_search"
 
+        /** 卡顿看护：起播后进度超过此时长（ms）无任何前进视为断流 */
+        const val STALL_TIMEOUT_MS = 30_000L
+
         fun start(ctx: Context, catIdx: Int, itemIdx: Int, forceSearch: Boolean) {
             ctx.startActivity(
                 Intent(ctx, PlayerActivity::class.java)
@@ -79,8 +82,49 @@ class PlayerActivity : FragmentActivity() {
             if (::biSubtitle.isInitialized && player.isPlaying) {
                 biSubtitle.update(player.currentPosition, enLines, zhLines, liveEn)
             }
+            watchdogTick()
             subtitleHandler.postDelayed(this, 250)
         }
+    }
+
+    // 卡顿看护：断网/CDN断链时ExoPlayer可能停在BUFFERING不报错，画面冻结且无提示；
+    // 以"playWhenReady但进度长期不前进"为判据，超时先降级重试、再不行给错误层+重试按钮
+    private var stallLastPos = -1L
+    private var stallLastMoveAt = 0L
+
+    private fun watchdogTick() {
+        val active = player.playWhenReady &&
+            player.playbackState != Player.STATE_IDLE &&
+            player.playbackState != Player.STATE_ENDED
+        if (!active) {
+            stallLastPos = -1
+            return
+        }
+        val pos = player.currentPosition
+        val now = android.os.SystemClock.elapsedRealtime()
+        if (pos != stallLastPos) {
+            stallLastPos = pos
+            stallLastMoveAt = now
+        } else if (now - stallLastMoveAt > STALL_TIMEOUT_MS) {
+            stallLastPos = -1
+            onStallDetected()
+        }
+    }
+
+    /** 断流处理：DASH先自动降级MP4直链重试一次；非DASH或已降级过则报错交给孩子/家长按重试 */
+    private fun onStallDetected() {
+        if (playingDash && !dashBlocked) {
+            dashBlocked = true
+            errorOverlay.visibility = View.GONE
+            loadingOverlay.visibility = View.VISIBLE
+            loadingText.text = getString(R.string.player_fallback_mp4)
+            resolveAndPlay()
+            return
+        }
+        player.playWhenReady = false
+        loadingOverlay.visibility = View.GONE
+        errorText.text = "${getString(R.string.player_error_title)}\n${getString(R.string.player_error_stall)}"
+        errorOverlay.visibility = View.VISIBLE
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -132,6 +176,7 @@ class PlayerActivity : FragmentActivity() {
             return
         }
         endedHandled = false
+        stallLastPos = -1 // 新一轮解析重置卡顿看护
         loadingOverlay.visibility = View.VISIBLE
         loadingText.text =
             if (announceTitle != null) getString(R.string.player_next, announceTitle)
@@ -145,7 +190,7 @@ class PlayerActivity : FragmentActivity() {
 
                 val pages = BiliApi.pagelist(bvid)
                     ?.takeIf { it.isNotEmpty() }
-                    ?: throw IllegalStateException("获取分P失败（可能已下架）")
+                    ?: throw IllegalStateException("获取分P失败（可能已下架或网络中断）")
                 val epIdx = ((item.ep ?: 1) - 1).coerceIn(0, pages.size - 1)
                 val cid = pages[epIdx].get("cid")?.asLong
                     ?: throw IllegalStateException("分P信息异常")
@@ -177,7 +222,10 @@ class PlayerActivity : FragmentActivity() {
                     playingDash = false
                     // 直链同样请求最高档：服务器按登录态自动返回允许的最高清晰度（游客720P，登录后更高）
                     val mp4 = BiliApi.playUrl(bvid, cid)
-                        ?: throw IllegalStateException("获取播放地址失败，请先在家长设置中扫码登录B站")
+                        ?: throw IllegalStateException(
+                            if (Prefs.isLoggedIn()) "获取播放地址失败，请检查网络后重试"
+                            else "获取播放地址失败，请先在家长设置中扫码登录B站"
+                        )
                     source = DefaultMediaSourceFactory(dataSourceFactory)
                         .createMediaSource(MediaItem.fromUri(mp4.url))
                     Ui.toast(this@PlayerActivity, getString(R.string.player_quality_mp4, BiliApi.qnLabel(mp4.qn)))
