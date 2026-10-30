@@ -1,0 +1,54 @@
+{
+ "version": 120,
+ "updated_at": "2026-10-30",
+ "server": {
+  "name": "t",
+  "notice": "【测试公告】chain v120 初始"
+ },
+ "play": {
+  "autoplay_next": true
+ },
+ "categories": [
+  {
+   "id": "c1",
+   "title": "L1 链A",
+   "level": 1,
+   "items": [
+    {
+     "id": "c01",
+     "t": "51秒儿歌A",
+     "bvid": "BV1Zg411t7ZQ",
+     "ep": 1,
+     "min": 1,
+     "tag": "儿歌",
+     "lv": 1
+    }
+   ]
+  },
+  {
+   "id": "c2",
+   "title": "L2 链B",
+   "level": 2,
+   "items": [
+    {
+     "id": "c02",
+     "t": "Go Away 儿歌B",
+     "bvid": "BV1XA4y1D7h8",
+     "ep": 1,
+     "min": 2,
+     "tag": "儿歌",
+     "lv": 2
+    },
+    {
+     "id": "c03",
+     "t": "51秒儿歌C",
+     "bvid": "BV1Zg411t7ZQ",
+     "ep": 1,
+     "min": 1,
+     "tag": "儿歌",
+     "lv": 2
+    }
+   ]
+  }
+ ]
+}

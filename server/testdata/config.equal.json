@@ -1,0 +1,105 @@
+{
+ "version": 100,
+ "updated_at": "2026-10-30",
+ "server": {
+  "name": "骁骁TV测试服",
+  "notice": "【测试公告】equal v100 同版本更新生效"
+ },
+ "play": {
+  "autoplay_next": true
+ },
+ "categories": [
+  {
+   "id": "t1",
+   "title": "L1 测试A",
+   "level": 1,
+   "items": [
+    {
+     "id": "ts01",
+     "t": "Muddy Puddles 踩泥坑",
+     "bvid": "BV1vfdrBJEpP",
+     "ep": 1,
+     "min": 5,
+     "tag": "英语启蒙",
+     "lv": 1,
+     "cover": "https://i0.hdslb.com/bfs/archive/706dca4122bce37791ba476055d2f2ccc1b55b75.jpg"
+    },
+    {
+     "id": "ts02",
+     "t": "无BV号条目(仅搜索词)",
+     "min": 5,
+     "tag": "英语启蒙",
+     "lv": 1,
+     "kw": "小猪佩奇 英文版 第1季 Muddy Puddles"
+    },
+    {
+     "id": "ts03",
+     "t": "已失效BV条目",
+     "bvid": "BV1ZZtestZZ99",
+     "min": 5,
+     "tag": "英语启蒙",
+     "lv": 1,
+     "kw": "Peppa Pig Muddy Puddles"
+    },
+    {
+     "id": "ts06",
+     "t": "搜索词无结果条目",
+     "min": 1,
+     "tag": "测试",
+     "lv": 1,
+     "kw": "zzzqqqxx不存在测试2026"
+    }
+   ]
+  },
+  {
+   "id": "t3",
+   "title": "L1 短片连播",
+   "level": 1,
+   "items": [
+    {
+     "id": "ts07",
+     "t": "51秒儿歌一号",
+     "bvid": "BV1Zg411t7ZQ",
+     "ep": 1,
+     "min": 1,
+     "tag": "儿歌",
+     "lv": 1
+    },
+    {
+     "id": "ts08",
+     "t": "Go Away 儿歌",
+     "bvid": "BV1XA4y1D7h8",
+     "ep": 1,
+     "min": 2,
+     "tag": "儿歌",
+     "lv": 1
+    }
+   ]
+  },
+  {
+   "id": "t2",
+   "title": "L2 测试B",
+   "level": 2,
+   "items": [
+    {
+     "id": "ts04",
+     "t": "选集越界ep99",
+     "bvid": "BV1vfdrBJEpP",
+     "ep": 99,
+     "min": 5,
+     "tag": "英语启蒙",
+     "lv": 2
+    },
+    {
+     "id": "ts05",
+     "t": "51秒儿歌(连播用)",
+     "bvid": "BV1Zg411t7ZQ",
+     "ep": 1,
+     "min": 1,
+     "tag": "儿歌",
+     "lv": 2
+    }
+   ]
+  }
+ ]
+}

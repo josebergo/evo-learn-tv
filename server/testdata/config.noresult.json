@@ -1,0 +1,25 @@
+{
+ "version": 111,
+ "updated_at": "2026-10-30",
+ "server": {
+  "name": "t",
+  "notice": "【测试公告】noresult v111"
+ },
+ "categories": [
+  {
+   "id": "n1",
+   "title": "L1 无结果",
+   "level": 1,
+   "items": [
+    {
+     "id": "nq01",
+     "t": "符号关键词条目",
+     "kw": "@@@###$$$%%%",
+     "min": 1,
+     "tag": "测试",
+     "lv": 1
+    }
+   ]
+  }
+ ]
+}

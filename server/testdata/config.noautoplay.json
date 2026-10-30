@@ -1,0 +1,28 @@
+{
+ "version": 110,
+ "updated_at": "2026-10-30",
+ "server": {
+  "name": "骁骁TV测试服",
+  "notice": "【测试公告】noautoplay v110"
+ },
+ "play": {
+  "autoplay_next": false
+ },
+ "categories": [
+  {
+   "id": "n1",
+   "title": "连播关闭",
+   "level": 1,
+   "items": [
+    {
+     "id": "ns01",
+     "t": "51秒儿歌(连播关闭)",
+     "bvid": "BV1Zg411t7ZQ",
+     "ep": 1,
+     "min": 1,
+     "lv": 1
+    }
+   ]
+  }
+ ]
+}
