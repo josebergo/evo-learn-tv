@@ -1,32 +1,22 @@
 package com.evolearn.kidszone.ui
 
 import android.graphics.Color
+import android.graphics.Outline
 import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.StateListDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewOutlineProvider
 import android.view.animation.OvershootInterpolator
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import androidx.leanback.widget.Presenter
+import coil.load
 import com.evolearn.kidszone.R
 import com.evolearn.kidszone.core.model.Item
-
-/** 家长专区/搜索卡的伪条目 */
-data class MenuCard(
-    val title: String,
-    val sub: String,
-    val action: Int,
-    val badge: String
-) {
-    companion object {
-        const val ACTION_SETTINGS = 1
-        const val ACTION_RELOAD = 2
-        const val ACTION_SEARCH = 3
-    }
-}
 
 /** 片单条目定位：搜索结果 / 分类行使用，携带原分类坐标与难度等级，点击直达详情 */
 data class CatalogEntry(
@@ -38,11 +28,14 @@ data class CatalogEntry(
 )
 
 /** 片单卡片：糖果贴纸风——糖果色底 + 蜡笔粗描边 + 不对称圆角（手绘歪扭感）；
+ *  有封面图时中间铺封面（小孩看图识片），底部压暗渐变 + 白字描边标题；
  *  焦点时弹跳放大 + 橙色描边加粗提亮。快乐体标题，65寸3米可视。 */
 class CardPresenter(private val colorRes: Int) : Presenter() {
 
     private var baseColor: Int = 0
     private var crayonColor: Int = 0
+    private var crayonDeepColor: Int = 0
+    private var crayonSoftColor: Int = 0
     private var accentColor: Int = 0
 
     override fun onCreateViewHolder(parent: ViewGroup): ViewHolder {
@@ -50,8 +43,11 @@ class CardPresenter(private val colorRes: Int) : Presenter() {
             .inflate(R.layout.card_item, parent, false)
         baseColor = ContextCompat.getColor(parent.context, colorRes)
         crayonColor = ContextCompat.getColor(parent.context, R.color.crayon)
+        crayonDeepColor = ContextCompat.getColor(parent.context, R.color.crayon_deep)
+        crayonSoftColor = ContextCompat.getColor(parent.context, R.color.crayon_soft)
         accentColor = ContextCompat.getColor(parent.context, R.color.accent)
         view.background = stickerBackground(view, baseColor)
+        clipMediaCorners(view.findViewById(R.id.card_media))
         view.onFocusChangeListener = View.OnFocusChangeListener { v, hasFocus ->
             val scale = if (hasFocus) 1.08f else 1.0f
             v.animate().scaleX(scale).scaleY(scale)
@@ -74,6 +70,7 @@ class CardPresenter(private val colorRes: Int) : Presenter() {
                 title.text = item.t
                 sub.text = listOfNotNull(item.tag, item.min?.let { "约${it}分钟" })
                     .joinToString(" · ")
+                bindCover(view, item.cover)
             }
             is CatalogEntry -> {
                 // 搜索/分类平铺场景：书脊色跟随原分类，徽标展示难度等级(L1-L5)
@@ -89,14 +86,7 @@ class CardPresenter(private val colorRes: Int) : Presenter() {
                     item.item.tag,
                     item.item.min?.let { "约${it}分钟" }
                 ).joinToString(" · ")
-            }
-            is MenuCard -> {
-                // 搜索入口做成矩形输入框样式（直角、白底、蜡笔描边），区别于贴纸卡片
-                view.background = if (item.action == MenuCard.ACTION_SEARCH)
-                    searchBoxBackground(view) else stickerBackground(view, baseColor)
-                badge.text = item.badge
-                title.text = item.title
-                sub.text = item.sub
+                bindCover(view, item.item.cover)
             }
         }
     }
@@ -105,6 +95,51 @@ class CardPresenter(private val colorRes: Int) : Presenter() {
         viewHolder.view.animate().cancel()
         viewHolder.view.scaleX = 1f
         viewHolder.view.scaleY = 1f
+    }
+
+    /** 封面图模式：媒体层可见 + 白字描边；无封面或加载失败回退糖果色纯文字。
+     *  加载中先白字（压暗渐变下可读），成功后封面淡入。 */
+    private fun bindCover(view: View, cover: String?) {
+        if (cover.isNullOrBlank()) return bindCoverFallback(view)
+        setCoverTextStyle(view, on = true)
+        view.findViewById<ImageView>(R.id.card_cover).load(cover) {
+            crossfade(160)
+            listener(onError = { _, _ -> bindCoverFallback(view) })
+        }
+    }
+
+    private fun bindCoverFallback(view: View) {
+        view.findViewById<View>(R.id.card_media).visibility = View.GONE
+        setCoverTextStyle(view, on = false)
+    }
+
+    private fun setCoverTextStyle(view: View, on: Boolean) {
+        val title = view.findViewById<StrokeTextView>(R.id.card_title)
+        val sub = view.findViewById<StrokeTextView>(R.id.card_sub)
+        if (on) {
+            view.findViewById<View>(R.id.card_media).visibility = View.VISIBLE
+            title.setTextColor(Color.WHITE)
+            title.setStroke(crayonDeepColor, 3f)
+            sub.setTextColor(Color.WHITE)
+            sub.setStroke(crayonDeepColor, 2f)
+        } else {
+            title.setTextColor(crayonColor)
+            title.clearStroke()
+            sub.setTextColor(crayonSoftColor)
+            sub.clearStroke()
+        }
+    }
+
+    /** 媒体层圆角裁剪：封面图不遮住贴纸手绘描边（相框感） */
+    private fun clipMediaCorners(media: View) {
+        media.clipToOutline = true
+        media.outlineProvider = object : ViewOutlineProvider() {
+            override fun getOutline(v: View, outline: Outline) {
+                outline.setRoundRect(
+                    0, 0, v.width, v.height, 22f * v.resources.displayMetrics.density
+                )
+            }
+        }
     }
 
     /** 贴纸背景：四角圆角各不相同（手绘感），常态蜡笔 3dp 描边，焦点橙 5dp 描边 + 提亮 */
@@ -122,25 +157,6 @@ class CardPresenter(private val colorRes: Int) : Presenter() {
         val focused = GradientDrawable().apply {
             setColor(ColorUtils.blendARGB(baseColor, Color.WHITE, 0.18f))
             cornerRadii = radii
-            setStroke((5 * d).toInt(), accentColor)
-        }
-        return StateListDrawable().apply {
-            addState(intArrayOf(android.R.attr.state_focused), focused)
-            addState(intArrayOf(), normal)
-        }
-    }
-
-    /** 搜索框背景：直角矩形（GradientDrawable 默认无圆角），白底蜡笔边，焦点芒果提亮橙边 */
-    private fun searchBoxBackground(v: View): StateListDrawable {
-        val d = v.resources.displayMetrics.density
-        val white = ContextCompat.getColor(v.context, R.color.bg_panel)
-        val focusedFill = ContextCompat.getColor(v.context, R.color.accent_dim)
-        val normal = GradientDrawable().apply {
-            setColor(white)
-            setStroke((3 * d).toInt(), crayonColor)
-        }
-        val focused = GradientDrawable().apply {
-            setColor(focusedFill)
             setStroke((5 * d).toInt(), accentColor)
         }
         return StateListDrawable().apply {

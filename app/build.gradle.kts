@@ -55,6 +55,8 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
     implementation("com.google.code.gson:gson:2.10.1")
     implementation("com.google.zxing:core:3.5.3")
+    // 片源封面图加载（B站封面CDN）
+    implementation("io.coil-kt:coil:2.6.0")
     // 中文转拼音：TV遥控器难输中文，支持输入拼音搜片名（如 peiqi → 小猪佩奇）
     implementation("com.github.promeg:tinypinyin:2.0.3")
     // 离线英文语音识别（Vosk）：无B站字幕轨的视频实时识别英文字幕行

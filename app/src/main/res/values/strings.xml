@@ -1,20 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">骁骁TV</string>
-    <string name="browse_title">骁骁TV · 英语小小影院</string>
-    <string name="settings_row_title">家长专区</string>
     <string name="menu_settings">家长设置</string>
-    <string name="menu_settings_sub">片单 · 登录</string>
     <string name="menu_reload">刷新片单</string>
-    <string name="menu_reload_sub">从配置地址重新拉取</string>
-    <string name="menu_badge_settings">家长</string>
-    <string name="menu_badge_tool">工具</string>
     <string name="all_row_title">全部影片</string>
     <string name="category_english">英语</string>
     <string name="category_documentary">纪录片</string>
-    <string name="search_card_title">搜索影片</string>
-    <string name="search_card_sub">支持中文 / 英文 / 拼音，如 peiqi</string>
-    <string name="search_card_badge">搜索</string>
+    <string name="nav_subtitle">英语小小影院</string>
+    <string name="search_bar_hint">搜索影片：支持中文 / 英文 / 拼音，如 peiqi / 恐龙 / Peppa</string>
+    <string name="search_go">去搜索</string>
 
     <string name="search_title">搜索片单</string>
     <string name="search_hint">支持中文、英文或拼音，如：peiqi / 恐龙 / Peppa；只在白名单内搜索</string>

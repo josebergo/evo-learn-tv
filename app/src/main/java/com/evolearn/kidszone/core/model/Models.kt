@@ -49,5 +49,7 @@ data class Item(
     val min: Int? = null,
     val tag: String? = null,
     /** v2：难度等级1-5，卡片徽标展示 */
-    val lv: Int? = null
+    val lv: Int? = null,
+    /** v3：封面图URL（B站封面CDN），卡片背景；无则回退糖果色 */
+    val cover: String? = null
 )

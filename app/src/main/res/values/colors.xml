@@ -8,6 +8,8 @@
     <!-- 蜡笔深藏蓝：手绘描边与正文字色，在糖果色和奶油底上都清晰 -->
     <color name="crayon">#3D4A6B</color>
     <color name="crayon_soft">#A63D4A6B</color>
+    <!-- 更深藏蓝：封面图上白字标题的描边色，与底部压暗渐变同色系 -->
+    <color name="crayon_deep">#1C2438</color>
     <color name="accent">#FF9F1C</color>
     <color name="accent_dim">#FFE9C8</color>
     <color name="text_primary">#3D4A6B</color>

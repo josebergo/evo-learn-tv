@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 贴纸卡片：糖果色底由 CardPresenter 动态生成，白药丸徽章斜放 -->
+<!-- 贴纸卡片：糖果色底+蜡笔描边由 CardPresenter 动态生成；
+     有封面时中间媒体层显示封面图（内缩4dp成相框感，圆角裁剪在代码里设 outline），
+     底部压暗渐变 + 白字描边保证标题可读；白药丸徽章斜放。固定宽度供网格计算列宽 -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="@dimen/card_width"
     android:layout_height="@dimen/card_height"
@@ -7,6 +9,28 @@
     android:clickable="true"
     android:focusable="true"
     android:focusableInTouchMode="true">
+
+    <!-- 封面媒体层：CardPresenter 按条目有无 cover 控制显隐 -->
+    <FrameLayout
+        android:id="@+id/card_media"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="4dp"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/card_cover"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:contentDescription="@null" />
+
+        <View
+            android:id="@+id/card_scrim"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_card_scrim" />
+    </FrameLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -30,7 +54,7 @@
             android:textStyle="bold"
             android:letterSpacing="0.1" />
 
-        <TextView
+        <com.evolearn.kidszone.ui.StrokeTextView
             android:id="@+id/card_title"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -42,7 +66,7 @@
             android:ellipsize="end"
             android:gravity="bottom" />
 
-        <TextView
+        <com.evolearn.kidszone.ui.StrokeTextView
             android:id="@+id/card_sub"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

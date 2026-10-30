@@ -1,55 +1,94 @@
 package com.evolearn.kidszone.ui
 
 import android.content.Intent
+import android.graphics.Rect
+import android.graphics.drawable.GradientDrawable
+import android.graphics.drawable.StateListDrawable
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import androidx.leanback.app.BrowseSupportFragment
-import androidx.leanback.widget.ArrayObjectAdapter
-import androidx.leanback.widget.HeaderItem
-import androidx.leanback.widget.ListRow
-import androidx.leanback.widget.ListRowPresenter
-import androidx.leanback.widget.OnItemViewClickedListener
 import androidx.leanback.widget.Presenter
-import androidx.leanback.widget.Row
-import androidx.leanback.widget.RowPresenter
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.evolearn.kidszone.R
 import com.evolearn.kidszone.core.ConfigRepo
 import com.evolearn.kidszone.core.model.KidsConfig
 import kotlinx.coroutines.launch
 
 /**
- * 主界面：左侧=分类（全部影片/L1启蒙~L5挑战/纪录片/家长专区），右侧=片单大卡片。
- * 搜索入口只有一张卡，固定在右侧顶部（第一行"全部影片"的开头），各分类行不再重复。
- * 分类按难度从易到难排序（v2配置的等级分类）；全部内容来自配置文件——搜索也只在白名单内查找。
+ * 固定双栏主界面：左侧分类栏常驻（含底部家长工具），右侧顶部固定搜索条 + 当前分类的片源网格。
+ * 浏览分类即过滤：聚焦/点击左侧分类，右侧网格只显示该分类的影片；"全部影片"显示整个白名单。
+ * 网格用标准 RecyclerView（3列），卡片边缘与搜索条严格对齐；全部内容来自配置文件。
  */
-class MainFragment : BrowseSupportFragment() {
+class MainFragment : Fragment() {
 
+    /** 左侧导航项：一个分类 + 它的片源 */
+    private class NavEntry(val title: String, val entries: List<CatalogEntry>)
+
+    private lateinit var navList: RecyclerView
+    private lateinit var contentGrid: RecyclerView
+    private lateinit var searchBar: View
+    private lateinit var navSettings: View
+    private lateinit var navReload: View
+    private val cardPresenter = CardPresenter(Ui.cardPalette()[0])
+    private val gridAdapter = GridAdapter()
+    private var navEntries: List<NavEntry> = emptyList()
+    private var selectedNav = 0
     private var builtTick = -1
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View = inflater.inflate(R.layout.fragment_main, container, false)
 
-        title = getString(R.string.browse_title)
-        badgeDrawable = ContextCompat.getDrawable(requireContext(), R.drawable.ic_app)
-        setHeadersState(HEADERS_ENABLED)
-        isHeadersTransitionOnBackEnabled = true
-        brandColor = ContextCompat.getColor(requireContext(), R.color.bg_panel)
-        setOnItemViewClickedListener(ItemViewClickedListener())
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        navList = view.findViewById(R.id.nav_list)
+        contentGrid = view.findViewById(R.id.content_grid)
+        searchBar = view.findViewById(R.id.search_bar)
+        navSettings = view.findViewById(R.id.nav_settings)
+        navReload = view.findViewById(R.id.nav_reload)
+
+        searchBar.setOnClickListener {
+            startActivity(Intent(requireContext(), SearchActivity::class.java))
+        }
+        Ui.bounce(searchBar)
+        navSettings.setOnClickListener {
+            startActivity(Intent(requireContext(), SettingsActivity::class.java))
+        }
+        navReload.setOnClickListener {
+            activity?.let { Ui.toast(it, it.getString(R.string.reload_loading)) }
+            loadAndBuild(force = true)
+        }
+        listOf(navSettings, navReload).forEach { it.background = navBackground(it, isCurrent = false) }
+
+        val gap = (10 * resources.displayMetrics.density).toInt()
+        contentGrid.layoutManager = GridLayoutManager(requireContext(), 3)
+        contentGrid.addItemDecoration(object : RecyclerView.ItemDecoration() {
+            override fun getItemOffsets(
+                outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State
+            ) {
+                outRect.set(gap / 2, gap / 2, gap / 2, gap / 2)
+            }
+        })
+        contentGrid.adapter = gridAdapter
+
+        navList.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(requireContext())
+        navList.adapter = NavAdapter()
 
         if (ConfigRepo.current != null) {
-            buildRows(ConfigRepo.current!!)
+            build(ConfigRepo.current!!)
         } else {
-            title = getString(R.string.player_loading)
             loadAndBuild()
         }
 
-        // 手绘体注入：rows/headers 是 Leanback 内部 presenter 创建的，布局上屏后遍历设置；
-        // 片单加载较慢时 800ms 后再兜底一轮（幂等，重复调用无害）
-        val root = requireView()
-        root.post { Ui.applyFont(root) }
-        root.postDelayed({ Ui.applyFont(root) }, 800)
+        // 手绘体注入：布局上屏后遍历设置；片单加载较慢时再兜底一轮（幂等）
+        Ui.applyFont(view)
+        view.postDelayed({ Ui.applyFont(view) }, 800)
     }
 
     override fun onResume() {
@@ -57,7 +96,7 @@ class MainFragment : BrowseSupportFragment() {
         // 设置页刷新过片单（或换了配置地址）后回到首页自动重建
         val tick = ConfigRepo.reloadTick
         if (ConfigRepo.current != null && tick != builtTick) {
-            buildRows(ConfigRepo.current!!)
+            build(ConfigRepo.current!!)
         }
     }
 
@@ -68,15 +107,12 @@ class MainFragment : BrowseSupportFragment() {
             if (cfg.categories.isEmpty()) {
                 Ui.toast(act, act.getString(R.string.reload_fail), long = true)
             }
-            buildRows(cfg)
-            title = getString(R.string.browse_title)
+            build(cfg)
         }
     }
 
-    private fun buildRows(cfg: KidsConfig) {
+    private fun build(cfg: KidsConfig) {
         builtTick = ConfigRepo.reloadTick
-        val rowsAdapter = ArrayObjectAdapter(ListRowPresenter())
-        val palette = Ui.cardPalette()
 
         // 全条目展开（带难度等级徽标）；v1旧配置无level时按theme归入 英语/纪录片
         val isV2 = cfg.categories.any { it.level != null || it.items.any { i -> i.lv != null } }
@@ -96,73 +132,115 @@ class MainFragment : BrowseSupportFragment() {
             }
         }
 
-        fun addCategoryRow(
-            headerId: Long,
-            title: String,
-            colorRes: Int,
-            entries: List<CatalogEntry>,
-            withSearch: Boolean = false
-        ) {
-            if (entries.isEmpty()) return
-            val listAdapter = ArrayObjectAdapter(CardPresenter(colorRes))
-            if (withSearch) listAdapter.add(searchCard())
-            listAdapter.addAll(listAdapter.size(), entries)
-            rowsAdapter.add(ListRow(HeaderItem(headerId, title), listAdapter))
-        }
-
         // 等级从易到难排序展示；v1兜底为 英语/纪录片
         val ordered = if (isV2) buckets else {
             val docu = buckets[getString(R.string.category_documentary)] ?: mutableListOf()
             val english = buckets[getString(R.string.category_english)] ?: mutableListOf()
             linkedMapOf(getString(R.string.category_english) to english, getString(R.string.category_documentary) to docu)
         }
-        addCategoryRow(0, getString(R.string.all_row_title), palette[2], all, withSearch = true)
-        ordered.entries.forEachIndexed { idx, (title, entries) ->
-            addCategoryRow((idx + 1).toLong(), title, palette[(idx + 1) % palette.size], entries)
+
+        val list = ArrayList<NavEntry>()
+        if (all.isNotEmpty()) list.add(NavEntry(getString(R.string.all_row_title), all))
+        ordered.entries.forEach { (title, entries) ->
+            if (entries.isNotEmpty()) list.add(NavEntry(title, entries))
         }
-
-        // 家长专区
-        val menu = ArrayObjectAdapter(CardPresenter(palette[3]))
-        menu.add(MenuCard(
-            getString(R.string.menu_settings), getString(R.string.menu_settings_sub),
-            MenuCard.ACTION_SETTINGS, getString(R.string.menu_badge_settings)
-        ))
-        menu.add(MenuCard(
-            getString(R.string.menu_reload), getString(R.string.menu_reload_sub),
-            MenuCard.ACTION_RELOAD, getString(R.string.menu_badge_tool)
-        ))
-        rowsAdapter.add(ListRow(HeaderItem(999L, getString(R.string.settings_row_title)), menu))
-
-        adapter = rowsAdapter
+        navEntries = list
+        if (selectedNav >= list.size) selectedNav = 0
+        navList.adapter?.notifyDataSetChanged()
+        showCategory(selectedNav)
     }
 
-    /** 右侧顶部唯一的搜索入口卡（只在"全部影片"行开头出现一次） */
-    private fun searchCard() = MenuCard(
-        getString(R.string.search_card_title), getString(R.string.search_card_sub),
-        MenuCard.ACTION_SEARCH, getString(R.string.search_card_badge)
-    )
+    /** 切换右侧网格到指定分类并高亮导航项 */
+    private fun showCategory(index: Int) {
+        val entry = navEntries.getOrNull(index) ?: return
+        selectedNav = index
+        gridAdapter.submit(entry.entries)
+        (navList.adapter as? NavAdapter)?.setCurrent(index)
+    }
 
-    private inner class ItemViewClickedListener : OnItemViewClickedListener {
-        override fun onItemClicked(
-            itemViewHolder: Presenter.ViewHolder,
-            item: Any,
-            rowViewHolder: RowPresenter.ViewHolder,
-            row: Row
-        ) {
-            val act: FragmentActivity = activity ?: return
-            when (item) {
-                is CatalogEntry -> DetailActivity.start(act, item.catIdx, item.itemIdx)
-                is MenuCard -> when (item.action) {
-                    MenuCard.ACTION_SEARCH ->
-                        startActivity(Intent(act, SearchActivity::class.java))
-                    MenuCard.ACTION_SETTINGS ->
-                        startActivity(Intent(act, SettingsActivity::class.java))
-                    MenuCard.ACTION_RELOAD -> {
-                        Ui.toast(act, act.getString(R.string.reload_loading))
-                        loadAndBuild(force = true)
-                    }
-                }
+    /** 分类栏项背景：常态白底蜡笔边；焦点芒果底橙边；当前分类橙边 */
+    private fun navBackground(v: View, isCurrent: Boolean): StateListDrawable {
+        val d = v.resources.displayMetrics.density
+        val white = ContextCompat.getColor(v.context, R.color.bg_panel)
+        val mango = ContextCompat.getColor(v.context, R.color.card_c1)
+        val crayon = ContextCompat.getColor(v.context, R.color.crayon)
+        val accent = ContextCompat.getColor(v.context, R.color.accent)
+        val normal = GradientDrawable().apply {
+            setColor(white)
+            setStroke(((if (isCurrent) 4 else 2) * d).toInt(), if (isCurrent) accent else crayon)
+        }
+        val focused = GradientDrawable().apply {
+            setColor(mango)
+            setStroke((4 * d).toInt(), accent)
+        }
+        return StateListDrawable().apply {
+            addState(intArrayOf(android.R.attr.state_focused), focused)
+            addState(intArrayOf(), normal)
+        }
+    }
+
+    /** 右侧片源网格：卡片由 CardPresenter 渲染（书脊色按原分类，徽标难度等级） */
+    private inner class GridAdapter : RecyclerView.Adapter<GridHolder>() {
+
+        private var entries: List<CatalogEntry> = emptyList()
+
+        fun submit(list: List<CatalogEntry>) {
+            entries = list
+            notifyDataSetChanged()
+        }
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GridHolder =
+            GridHolder(cardPresenter.onCreateViewHolder(parent))
+
+        override fun getItemCount(): Int = entries.size
+
+        override fun onBindViewHolder(holder: GridHolder, position: Int) {
+            val entry = entries[position]
+            cardPresenter.onBindViewHolder(holder.presenterHolder, entry)
+            holder.itemView.setOnClickListener {
+                DetailActivity.start(requireActivity(), entry.catIdx, entry.itemIdx)
             }
         }
+    }
+
+    /** 把 leanback Presenter.ViewHolder 包成 RecyclerView.ViewHolder */
+    private class GridHolder(val presenterHolder: Presenter.ViewHolder) :
+        RecyclerView.ViewHolder(presenterHolder.view)
+
+    /** 左侧分类栏：聚焦即切换右侧网格；OK/点击跳入网格 */
+    private inner class NavAdapter : RecyclerView.Adapter<NavAdapter.Holder>() {
+
+        private var current = -1
+
+        fun setCurrent(index: Int) {
+            if (index == current || navEntries.isEmpty()) return
+            val old = current
+            current = index
+            if (old >= 0) notifyItemChanged(old)
+            notifyItemChanged(index)
+        }
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
+            val v = LayoutInflater.from(parent.context).inflate(R.layout.nav_item, parent, false)
+            return Holder(v)
+        }
+
+        override fun getItemCount(): Int = navEntries.size
+
+        override fun onBindViewHolder(holder: Holder, position: Int) {
+            val tv = holder.itemView as TextView
+            tv.text = navEntries[position].title
+            tv.background = navBackground(tv, position == current)
+            tv.setOnFocusChangeListener { _, hasFocus ->
+                if (hasFocus) showCategory(position)
+            }
+            tv.setOnClickListener {
+                // 遥控器聚焦时已切换；鼠标/触摸点击不走焦点，这里兜底再切一次
+                showCategory(position)
+                (contentGrid.getChildAt(0) ?: contentGrid).requestFocus()
+            }
+        }
+
+        inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView)
     }
 }

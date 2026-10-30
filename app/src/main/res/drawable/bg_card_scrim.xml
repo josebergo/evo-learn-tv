@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 封面底部压暗渐变：上半透明，往下加深到藏蓝，保证白字标题在亮色画面上也可读 -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <gradient
+        android:angle="270"
+        android:startColor="#00000000"
+        android:centerColor="#4D1C2438"
+        android:centerX="0.55"
+        android:endColor="#D91C2438" />
+</shape>

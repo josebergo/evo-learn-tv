@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- 贴纸卡片基准尺寸：大屏电视 3 米可视距离（快乐体视觉偏小，字号略增） -->
-    <dimen name="card_width">244dp</dimen>
+    <!-- 网格卡片：3列×210dp 适配右侧内容栏（搜索页4列） -->
+    <dimen name="card_width">210dp</dimen>
     <dimen name="card_height">148dp</dimen>
     <dimen name="card_padding">16dp</dimen>
     <dimen name="card_title">22sp</dimen>
@@ -10,4 +11,5 @@
     <dimen name="detail_body">22sp</dimen>
     <dimen name="button_text">24sp</dimen>
     <dimen name="qr_size">420dp</dimen>
+    <dimen name="nav_width">236dp</dimen>
 </resources>
