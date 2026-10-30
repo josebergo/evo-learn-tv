@@ -43,19 +43,23 @@
             android:paddingBottom="8dp"
             android:clipToPadding="false" />
 
-        <!-- 导航下方：家长工具 -->
+        <!-- 导航下方：家长工具（工具箱底板+虚线框） -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="12dp">
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="14dp"
+            android:background="@drawable/bg_tool_zone"
+            android:padding="8dp">
 
             <LinearLayout
                 android:id="@+id/nav_settings"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="14dp"
-                android:layout_marginRight="14dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
                 android:layout_marginBottom="8dp"
                 android:background="@drawable/bg_tool_button"
                 android:gravity="center"
@@ -85,8 +89,8 @@
                 android:id="@+id/nav_reload"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="14dp"
-                android:layout_marginRight="14dp"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
                 android:background="@drawable/bg_tool_button"
                 android:gravity="center"
                 android:orientation="horizontal"
