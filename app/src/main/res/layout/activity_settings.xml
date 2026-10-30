@@ -128,11 +128,11 @@
             android:textSize="19sp" />
 
         <Button
-            android:id="@+id/btn_exit_app"
+            android:id="@+id/btn_back_home"
             style="@style/Widget.EvoKids.Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_power"
-            android:text="@string/settings_exit" />
+            android:drawableStart="@drawable/ic_home"
+            android:text="@string/settings_back_home" />
     </LinearLayout>
 </ScrollView>

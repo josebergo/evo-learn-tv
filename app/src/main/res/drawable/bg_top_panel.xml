@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 顶部固定条底板：白底 + 仅下缘蜡笔描边（直角），与左侧分类栏构成固定边框 -->
+<!-- 顶部固定条底板：透明天空主背景（与下方视频区同底），仅保留下缘蜡笔分隔线 -->
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item>
-        <shape android:shape="rectangle">
-            <solid android:color="@color/bg_panel" />
-        </shape>
-    </item>
     <item android:gravity="bottom" android:height="3dp">
         <shape android:shape="rectangle">
             <solid android:color="@color/crayon" />

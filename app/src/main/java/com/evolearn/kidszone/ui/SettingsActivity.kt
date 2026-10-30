@@ -13,7 +13,7 @@ import com.evolearn.kidszone.core.ConfigRepo
 import com.evolearn.kidszone.core.Prefs
 import kotlinx.coroutines.launch
 
-/** 家长设置：登录 / 配置地址 / 退出 */
+/** 家长设置：登录 / 配置地址 / 返回主页 */
 class SettingsActivity : FragmentActivity() {
 
     private val qrLoginLauncher =
@@ -43,7 +43,7 @@ class SettingsActivity : FragmentActivity() {
             Prefs.liveSubtitleEnabled = !Prefs.liveSubtitleEnabled
             refreshStatus()
         }
-        findViewById<Button>(R.id.btn_exit_app).setOnClickListener { finishAffinity() }
+        findViewById<Button>(R.id.btn_back_home).setOnClickListener { finish() }
     }
 
     private fun refreshStatus() {

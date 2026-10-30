@@ -3,6 +3,8 @@ package com.evolearn.kidszone.ui
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.FragmentActivity
@@ -14,6 +16,7 @@ class DetailActivity : FragmentActivity() {
     companion object {
         const val EXTRA_CAT = "cat"
         const val EXTRA_ITEM = "item"
+        private const val AUTO_PLAY_DELAY_MS = 3000L
 
         fun start(ctx: Context, catIdx: Int, itemIdx: Int) {
             ctx.startActivity(
@@ -26,6 +29,15 @@ class DetailActivity : FragmentActivity() {
 
     private var catIdx = 0
     private var itemIdx = 0
+    private val mainHandler = Handler(Looper.getMainLooper())
+
+    // 进详情页3秒内无任何操作则自动起播；用户一按键/触摸就取消，避免抢操作
+    private val autoPlay = Runnable {
+        if (!isFinishing && !isDestroyed) {
+            PlayerActivity.start(this, catIdx, itemIdx, forceSearch = false)
+        }
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,11 +69,31 @@ class DetailActivity : FragmentActivity() {
         findViewById<TextView>(R.id.detail_meta).text = meta
         findViewById<TextView>(R.id.detail_notice).text = cfg.server?.notice ?: ""
 
-        findViewById<Button>(R.id.btn_play).setOnClickListener {
+        val btnPlay = findViewById<Button>(R.id.btn_play)
+        btnPlay.setOnClickListener {
             PlayerActivity.start(this, catIdx, itemIdx, forceSearch = false)
         }
         findViewById<Button>(R.id.btn_re_resolve).setOnClickListener {
             PlayerActivity.start(this, catIdx, itemIdx, forceSearch = true)
         }
+
+        // 进入即选中播放按钮，3秒无操作自动起播
+        btnPlay.post { btnPlay.requestFocus() }
+        mainHandler.postDelayed(autoPlay, AUTO_PLAY_DELAY_MS)
+    }
+
+    override fun onUserInteraction() {
+        super.onUserInteraction()
+        mainHandler.removeCallbacks(autoPlay)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        mainHandler.removeCallbacks(autoPlay)
+    }
+
+    override fun onDestroy() {
+        mainHandler.removeCallbacks(autoPlay)
+        super.onDestroy()
     }
 }

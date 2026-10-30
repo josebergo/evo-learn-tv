@@ -36,7 +36,7 @@
     <string name="settings_title">家长设置</string>
     <string name="settings_section_account">B站账号</string>
     <string name="settings_section_config">片单配置</string>
-    <string name="settings_section_security">退出</string>
+    <string name="settings_section_security">返回</string>
     <string name="settings_account">B站账号</string>
     <string name="settings_not_login">未登录（建议登录，画质更高更稳定）</string>
     <string name="settings_login">扫码登录B站</string>
@@ -46,7 +46,7 @@
     <string name="settings_edit_config_url">修改配置地址</string>
     <string name="settings_reset_config">恢复内置默认来源</string>
     <string name="settings_reload">立即刷新片单</string>
-    <string name="settings_exit">退出应用</string>
+    <string name="settings_back_home">返回主页</string>
     <string name="settings_input_url">输入配置 JSON 的完整地址（http/https）</string>
 
     <string name="settings_section_subtitle">自动字幕</string>
