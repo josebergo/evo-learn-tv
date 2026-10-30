@@ -63,13 +63,5 @@
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_refresh"
             android:text="@string/player_error_retry" />
-
-        <Button
-            android:id="@+id/btn_open_bili"
-            style="@style/Widget.EvoKids.Button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_tv"
-            android:text="@string/player_open_bili" />
     </LinearLayout>
 </FrameLayout>

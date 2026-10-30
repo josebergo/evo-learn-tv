@@ -35,7 +35,7 @@
 |---|---|---|---|
 | A. 拉流直放：`playurl(platform=html5)` 取MP4 → ExoPlayer | 体验最好：全屏、无广告位、可控UI、白名单闭环 | 依赖B站web接口；清晰度上限720p(html5) | ✅ 主方案 |
 | B. WebView 嵌入 player.bilibili.com | 接口稳 | TV遥控器D-pad操作网页困难、有页面导航逃逸风险（可点击"去看推荐"） | ❌ |
-| C. 深链跳转B站TV版App（`bilibili://video/BV...`） | 最省事 | 跳出去后孩子可自由浏览B站——违背R6 | ✅ 仅作降级/家长手动 |
+| C. 深链跳转B站TV版App（`bilibili://video/BV...`） | 最省事 | 跳出去后孩子可自由浏览B站——违背R6 | ❌（跳转入口已移除） |
 
 播放链路（App内自动执行，失败自动降级）：
 
@@ -50,7 +50,7 @@ playurl?bvid=..&cid=..&platform=html5&qn=64 → durl[0].url（MP4直链）
   ↓
 ExoPlayer + 请求头(Referer: bilibili.com / Cookie: SESSDATA…)
   ↓ 播放失败(403/下架)
-提示家长 + 一键"去B站TV版观看"（PIN确认后跳转）
+提示家长 + 重试（应用内闭环，不跳B站）
 ```
 
 ### 2.2 登录方案（决策：B站官方网页版扫码登录）

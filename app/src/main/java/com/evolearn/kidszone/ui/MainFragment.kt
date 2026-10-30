@@ -150,11 +150,11 @@ class MainFragment : Fragment() {
         showCategory(selectedNav)
     }
 
-    /** 切换右侧网格到指定分类并高亮导航项 */
+    /** 切换右侧网格到指定分类并高亮导航项（post出当前布局 pass，避免在焦点回调里同步notify崩溃） */
     private fun showCategory(index: Int) {
         val entry = navEntries.getOrNull(index) ?: return
         selectedNav = index
-        gridAdapter.submit(entry.entries)
+        navList.post { gridAdapter.submit(entry.entries) }
         (navList.adapter as? NavAdapter)?.setCurrent(index)
     }
 

@@ -2,13 +2,11 @@ package com.evolearn.kidszone.ui
 
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.media3.common.MediaItem
@@ -30,7 +28,7 @@ import kotlinx.coroutines.launch
 
 /**
  * 播放页：BV号(配置/缓存/搜索) → cid → html5 MP4直链 → ExoPlayer。
- * 播放失败提供重试与"去B站TV版"降级（家长PIN确认）。
+ * 播放失败提供重试。
  */
 class PlayerActivity : FragmentActivity() {
 
@@ -121,23 +119,12 @@ class PlayerActivity : FragmentActivity() {
             errorOverlay.visibility = View.GONE
             resolveAndPlay()
         }
-        findViewById<Button>(R.id.btn_open_bili).setOnClickListener {
-            val bvid = lastBvid
-            if (bvid.isNullOrBlank()) {
-                Ui.toast(this, getString(R.string.need_login_play_fail), long = true)
-            } else {
-                runCatching {
-                    startActivity(
-                        Intent(Intent.ACTION_VIEW, Uri.parse("https://www.bilibili.com/video/$bvid"))
-                    )
-                }
-            }
-        }
 
         resolveAndPlay()
     }
 
-    private fun resolveAndPlay() {
+    /** announceTitle：自动连播切换时传入下一部标题，加载页显示"即将播放：xxx" */
+    private fun resolveAndPlay(announceTitle: String? = null) {
         val cfg = ConfigRepo.current
         val item = cfg?.let { ConfigRepo.itemAt(it, catIdx, itemIdx) }
         if (cfg == null || item == null) {
@@ -146,7 +133,9 @@ class PlayerActivity : FragmentActivity() {
         }
         endedHandled = false
         loadingOverlay.visibility = View.VISIBLE
-        loadingText.text = getString(R.string.player_loading)
+        loadingText.text =
+            if (announceTitle != null) getString(R.string.player_next, announceTitle)
+            else getString(R.string.player_loading)
 
         lifecycleScope.launch {
             try {
@@ -326,7 +315,7 @@ class PlayerActivity : FragmentActivity() {
         nextItem?.let { Ui.toast(this, getString(R.string.player_next, it.t)) }
         catIdx = c
         itemIdx = i
-        resolveAndPlay()
+        resolveAndPlay(nextItem?.t)
     }
 
     override fun onStop() {

@@ -2,15 +2,12 @@ package com.evolearn.kidszone.ui
 
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import com.evolearn.kidszone.R
 import com.evolearn.kidszone.core.ConfigRepo
-import com.evolearn.kidszone.core.Prefs
 
 class DetailActivity : FragmentActivity() {
 
@@ -65,19 +62,6 @@ class DetailActivity : FragmentActivity() {
         }
         findViewById<Button>(R.id.btn_re_resolve).setOnClickListener {
             PlayerActivity.start(this, catIdx, itemIdx, forceSearch = true)
-        }
-        findViewById<Button>(R.id.btn_open_bili).setOnClickListener {
-            openInBiliApp(item.bvid ?: Prefs.cachedBvid(item.id))
-        }
-    }
-
-    private fun openInBiliApp(bvid: String?) {
-        if (bvid.isNullOrBlank()) {
-            Ui.toast(this, getString(R.string.need_login_play_fail), long = true)
-            return
-        }
-        runCatching {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://www.bilibili.com/video/$bvid")))
         }
     }
 }

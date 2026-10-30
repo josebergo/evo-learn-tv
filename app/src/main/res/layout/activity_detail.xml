@@ -93,14 +93,6 @@
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/ic_search"
                 android:text="@string/detail_re_resolve" />
-
-            <Button
-                android:id="@+id/btn_open_bili"
-                style="@style/Widget.EvoKids.Button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableStart="@drawable/ic_tv"
-                android:text="@string/detail_open_bili" />
         </LinearLayout>
     </LinearLayout>
 </FrameLayout>

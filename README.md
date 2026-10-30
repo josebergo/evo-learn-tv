@@ -72,7 +72,7 @@ adb install -r app/build/outputs/apk/debug/app-debug.apk
 
 | 双语字幕（英文上/中文下） | Vosk实时英文识别（无字幕轨时） |
 |---|---|
-| ![双语](docs/screenshots/15-subtitle-sticker.png) | ![实时](docs/screenshots/14-vosk-live-en.png) |
+| ![双语](docs/screenshots/15-subtitle-classic.png) | ![实时](docs/screenshots/14-vosk-live-en.png) |
 
 | 封面图卡片（小孩看图识片） | 封面卡片 · 焦点态 |
 |---|---|
