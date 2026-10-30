@@ -104,14 +104,6 @@
             android:textSize="19sp" />
 
         <Button
-            android:id="@+id/btn_change_pin"
-            style="@style/Widget.EvoKids.Button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_lock"
-            android:text="@string/settings_change_pin" />
-
-        <Button
             android:id="@+id/btn_exit_app"
             style="@style/Widget.EvoKids.Button"
             android:layout_width="match_parent"

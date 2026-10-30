@@ -5,7 +5,7 @@ import android.content.SharedPreferences
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
-/** 应用全部持久化状态（家长配置、登录Cookie、片单缓存、解析缓存） */
+/** 应用全部持久化状态（登录Cookie、片单缓存、解析缓存） */
 object Prefs {
     private lateinit var sp: SharedPreferences
 
@@ -13,15 +13,6 @@ object Prefs {
         if (::sp.isInitialized) return
         sp = ctx.applicationContext.getSharedPreferences("kidszone", Context.MODE_PRIVATE)
     }
-
-    // ---- 家长 PIN ----
-    var pinSalt: String
-        get() = sp.getString("pin_salt", "") ?: ""
-        set(v) = sp.edit().putString("pin_salt", v).apply()
-
-    var pinHash: String
-        get() = sp.getString("pin_hash", "") ?: ""
-        set(v) = sp.edit().putString("pin_hash", v).apply()
 
     // ---- 配置来源 ----
     /** 应用内配置的地址（第1优先级）。空=未设置 */

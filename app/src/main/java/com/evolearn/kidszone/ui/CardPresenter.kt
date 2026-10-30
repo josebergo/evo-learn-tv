@@ -27,12 +27,13 @@ data class MenuCard(
     }
 }
 
-/** 片单条目定位：搜索结果 / 全部影片行使用，携带原分类坐标，点击直达详情 */
+/** 片单条目定位：搜索结果 / 分类行使用，携带原分类坐标与难度等级，点击直达详情 */
 data class CatalogEntry(
     val catIdx: Int,
     val itemIdx: Int,
     val item: Item,
-    val catTitle: String
+    val catTitle: String,
+    val level: Int? = null
 )
 
 /** 片单卡片：糖果贴纸风——糖果色底 + 蜡笔粗描边 + 不对称圆角（手绘歪扭感）；
@@ -74,13 +75,13 @@ class CardPresenter(private val colorRes: Int) : Presenter() {
                     .joinToString(" · ")
             }
             is CatalogEntry -> {
-                // 搜索/全部影片平铺场景：书脊色跟随原周次，方便辨认归属
+                // 搜索/分类平铺场景：书脊色跟随原分类，徽标展示难度等级(L1-L5)
                 val palette = Ui.cardPalette()
                 val color = ContextCompat.getColor(
                     view.context, palette[item.catIdx.mod(palette.size)]
                 )
                 view.background = stickerBackground(view, color)
-                badge.text = item.item.id.uppercase()
+                badge.text = item.level?.let { "L$it" } ?: item.item.id.uppercase()
                 title.text = item.item.t
                 sub.text = listOfNotNull(
                     item.catTitle,

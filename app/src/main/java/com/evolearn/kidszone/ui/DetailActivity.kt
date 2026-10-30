@@ -67,15 +67,13 @@ class DetailActivity : FragmentActivity() {
             PlayerActivity.start(this, catIdx, itemIdx, forceSearch = true)
         }
         findViewById<Button>(R.id.btn_open_bili).setOnClickListener {
-            PinDialog.show(supportFragmentManager, getString(R.string.detail_open_bili)) {
-                openInBiliApp(item.bvid ?: Prefs.cachedBvid(item.id))
-            }
+            openInBiliApp(item.bvid ?: Prefs.cachedBvid(item.id))
         }
     }
 
     private fun openInBiliApp(bvid: String?) {
         if (bvid.isNullOrBlank()) {
-            Toast.makeText(this, R.string.need_login_play_fail, Toast.LENGTH_LONG).show()
+            Ui.toast(this, getString(R.string.need_login_play_fail), long = true)
             return
         }
         runCatching {

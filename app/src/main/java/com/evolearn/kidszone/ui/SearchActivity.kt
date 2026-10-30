@@ -80,11 +80,12 @@ class SearchActivity : FragmentActivity() {
             cat.items.forEachIndexed { ii, item ->
                 val raw = listOfNotNull(
                     item.t, item.kw, item.tag, item.id,
+                    item.lv?.let { "L$it" },
                     cat.title, cat.en, cat.theme, cat.id
                 ).joinToString(" ")
                 list.add(
                     Doc(
-                        CatalogEntry(ci, ii, item, cat.title),
+                        CatalogEntry(ci, ii, item, cat.title, item.lv ?: cat.level),
                         raw.lowercase(),
                         Pinyin.toPinyin(raw, "").lowercase()
                     )

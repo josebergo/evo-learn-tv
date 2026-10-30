@@ -2,7 +2,6 @@ package com.evolearn.kidszone.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.leanback.app.BrowseSupportFragment
@@ -14,16 +13,16 @@ import androidx.leanback.widget.OnItemViewClickedListener
 import androidx.leanback.widget.Presenter
 import androidx.leanback.widget.Row
 import androidx.leanback.widget.RowPresenter
+import androidx.leanback.widget.SearchOrbView
 import androidx.lifecycle.lifecycleScope
 import com.evolearn.kidszone.R
 import com.evolearn.kidszone.core.ConfigRepo
-import com.evolearn.kidszone.core.model.Item
 import com.evolearn.kidszone.core.model.KidsConfig
 import kotlinx.coroutines.launch
 
 /**
- * 主界面：左侧=全部影片 / 每周主题（52周+家长专区），右侧=片单大卡片。
- * 全部内容来自配置文件——搜索也只在白名单内查找，孩子看不到任何配置之外的内容。
+ * 主界面：左侧=分类（全部影片/L1启蒙~L5挑战/纪录片/家长专区），右上角=唯一搜索入口，右侧=片单大卡片。
+ * 分类按难度从易到难排序（v2配置的等级分类）；全部内容来自配置文件——搜索也只在白名单内查找。
  */
 class MainFragment : BrowseSupportFragment() {
 
@@ -37,8 +36,14 @@ class MainFragment : BrowseSupportFragment() {
         setHeadersState(HEADERS_ENABLED)
         isHeadersTransitionOnBackEnabled = true
         brandColor = ContextCompat.getColor(requireContext(), R.color.bg_panel)
-
-        // 搜索球：进入白名单内搜索页
+        // 右上角唯一的搜索入口（Leanback 自带 search orb）；左侧菜单仅保留分类
+        setSearchAffordanceColors(
+            SearchOrbView.Colors(
+                ContextCompat.getColor(requireContext(), R.color.accent),
+                ContextCompat.getColor(requireContext(), R.color.card_c1),
+                ContextCompat.getColor(requireContext(), R.color.cloud_white)
+            )
+        )
         setOnSearchClickedListener {
             activity?.startActivity(Intent(activity, SearchActivity::class.java))
         }
@@ -72,7 +77,7 @@ class MainFragment : BrowseSupportFragment() {
         lifecycleScope.launch {
             val cfg = ConfigRepo.load(act, force)
             if (cfg.categories.isEmpty()) {
-                Toast.makeText(act, R.string.reload_fail, Toast.LENGTH_LONG).show()
+                Ui.toast(act, act.getString(R.string.reload_fail), long = true)
             }
             buildRows(cfg)
             title = getString(R.string.browse_title)
@@ -84,24 +89,43 @@ class MainFragment : BrowseSupportFragment() {
         val rowsAdapter = ArrayObjectAdapter(ListRowPresenter())
         val palette = Ui.cardPalette()
 
-        // 全部影片：365部平铺，不必按周找片
-        val all = ArrayObjectAdapter(CardPresenter(palette[2]))
-        val entries = ArrayList<CatalogEntry>(ConfigRepo.totalItems(cfg))
+        // 全条目展开（带难度等级徽标）；v1旧配置无level时按theme归入 英语/纪录片
+        val isV2 = cfg.categories.any { it.level != null || it.items.any { i -> i.lv != null } }
+        val buckets = LinkedHashMap<String, MutableList<CatalogEntry>>()
+        val all = ArrayList<CatalogEntry>(ConfigRepo.totalItems(cfg))
         cfg.categories.forEachIndexed { ci, cat ->
-            cat.items.forEachIndexed { ii, item -> entries.add(CatalogEntry(ci, ii, item, cat.title)) }
-        }
-        if (entries.isNotEmpty()) {
-            all.addAll(0, entries)
-            rowsAdapter.add(ListRow(HeaderItem(998L, getString(R.string.all_row_title)), all))
+            val bucketTitle = when {
+                isV2 -> cat.title
+                cat.theme.orEmpty().contains("纪录片") -> getString(R.string.category_documentary)
+                else -> getString(R.string.category_english)
+            }
+            val bucket = buckets.getOrPut(bucketTitle) { mutableListOf() }
+            cat.items.forEachIndexed { ii, item ->
+                val e = CatalogEntry(ci, ii, item, cat.title, item.lv ?: cat.level)
+                all.add(e)
+                bucket.add(e)
+            }
         }
 
-        cfg.categories.forEachIndexed { idx, cat ->
-            val listAdapter = ArrayObjectAdapter(CardPresenter(palette[idx % palette.size]))
-            listAdapter.addAll(0, cat.items)
-            rowsAdapter.add(ListRow(HeaderItem(idx.toLong(), cat.title), listAdapter))
+        fun addCategoryRow(headerId: Long, title: String, colorRes: Int, entries: List<CatalogEntry>) {
+            if (entries.isEmpty()) return
+            val listAdapter = ArrayObjectAdapter(CardPresenter(colorRes))
+            listAdapter.addAll(0, entries)
+            rowsAdapter.add(ListRow(HeaderItem(headerId, title), listAdapter))
         }
 
-        // 家长专区（入口不显眼，PIN门禁）
+        // 等级从易到难排序展示；v1兜底为 英语/纪录片
+        val ordered = if (isV2) buckets else {
+            val docu = buckets[getString(R.string.category_documentary)] ?: mutableListOf()
+            val english = buckets[getString(R.string.category_english)] ?: mutableListOf()
+            linkedMapOf(getString(R.string.category_english) to english, getString(R.string.category_documentary) to docu)
+        }
+        addCategoryRow(0, getString(R.string.all_row_title), palette[2], all)
+        ordered.entries.forEachIndexed { idx, (title, entries) ->
+            addCategoryRow((idx + 1).toLong(), title, palette[(idx + 1) % palette.size], entries)
+        }
+
+        // 家长专区
         val menu = ArrayObjectAdapter(CardPresenter(palette[3]))
         menu.add(MenuCard(
             getString(R.string.menu_settings), getString(R.string.menu_settings_sub),
@@ -125,22 +149,12 @@ class MainFragment : BrowseSupportFragment() {
         ) {
             val act: FragmentActivity = activity ?: return
             when (item) {
-                is Item -> {
-                    val listRow = row as? ListRow ?: return
-                    val adapter = listRow.adapter as? ArrayObjectAdapter ?: return
-                    val itemIdx = adapter.indexOf(item)
-                    if (itemIdx >= 0) {
-                        DetailActivity.start(act, listRow.headerItem.id.toInt(), itemIdx)
-                    }
-                }
                 is CatalogEntry -> DetailActivity.start(act, item.catIdx, item.itemIdx)
                 is MenuCard -> when (item.action) {
                     MenuCard.ACTION_SETTINGS ->
-                        PinDialog.show(act.supportFragmentManager, getString(R.string.menu_settings)) {
-                            startActivity(Intent(act, SettingsActivity::class.java))
-                        }
+                        startActivity(Intent(act, SettingsActivity::class.java))
                     MenuCard.ACTION_RELOAD -> {
-                        Toast.makeText(act, R.string.reload_loading, Toast.LENGTH_SHORT).show()
+                        Ui.toast(act, act.getString(R.string.reload_loading))
                         loadAndBuild(force = true)
                     }
                 }

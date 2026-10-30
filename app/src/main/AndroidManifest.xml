@@ -31,11 +31,6 @@
         </activity>
 
         <activity
-            android:name=".ui.SetupActivity"
-            android:exported="false"
-            android:screenOrientation="landscape" />
-
-        <activity
             android:name=".ui.DetailActivity"
             android:exported="false"
             android:parentActivityName=".ui.MainActivity"

@@ -2,21 +2,18 @@ package com.evolearn.kidszone.ui
 
 import android.os.Bundle
 import android.widget.Button
-import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import android.app.AlertDialog
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
 import com.evolearn.kidszone.BuildConfig
 import com.evolearn.kidszone.R
 import com.evolearn.kidszone.core.ConfigRepo
 import com.evolearn.kidszone.core.Prefs
-import com.evolearn.kidszone.core.PinLock
 import kotlinx.coroutines.launch
 
-/** 家长设置（已过PIN门禁）：登录 / 配置地址 / PIN / 退出 */
+/** 家长设置：登录 / 配置地址 / 退出 */
 class SettingsActivity : FragmentActivity() {
 
     private val qrLoginLauncher =
@@ -42,7 +39,6 @@ class SettingsActivity : FragmentActivity() {
             reloadConfig()
         }
         findViewById<Button>(R.id.btn_reload_config).setOnClickListener { reloadConfig() }
-        findViewById<Button>(R.id.btn_change_pin).setOnClickListener { showChangePinDialog() }
         findViewById<Button>(R.id.btn_exit_app).setOnClickListener { finishAffinity() }
     }
 
@@ -65,101 +61,32 @@ class SettingsActivity : FragmentActivity() {
         findViewById<TextView>(R.id.setting_config_status).text = config
     }
 
-    /** 弹窗内输入框：白底圆角贴纸样式（Holo 默认输入框与浅色卡冲突） */
-    private fun styledInput(hintRes: Int): EditText = EditText(this).apply {
-        setHint(hintRes)
-        setBackgroundResource(R.drawable.bg_search_input)
-        setPadding(48, 28, 48, 28)
-        textSize = 20f
-        setTextColor(getColor(R.color.text_primary))
-        setHintTextColor(getColor(R.color.text_secondary))
-    }
-
     /** 应用内配置的地址：保存后立即拉取并生效（第1优先级来源） */
     private fun showEditUrlDialog() {
-        val input = styledInput(R.string.settings_input_url).apply {
-            setText(Prefs.customConfigUrl)
-            inputType = android.text.InputType.TYPE_TEXT_VARIATION_URI
-        }
-        val dialog = AlertDialog.Builder(this)
-            .setTitle(R.string.settings_edit_config_url)
-            .setView(input)
-            .setPositiveButton(R.string.ok) { _, _ ->
-                val url = input.text.toString().trim()
-                if (url.startsWith("http://") || url.startsWith("https://")) {
-                    Prefs.customConfigUrl = url
-                    reloadConfig()
-                } else {
-                    Toast.makeText(this, R.string.reload_fail, Toast.LENGTH_SHORT).show()
-                }
-            }
-            .setNegativeButton(R.string.cancel, null)
-            .show()
-        Ui.styleDialog(dialog)
-    }
-
-    private fun showChangePinDialog() {
-        val old = styledInput(R.string.settings_input_pin_old).apply {
-            inputType = android.text.InputType.TYPE_CLASS_NUMBER or android.text.InputType.TYPE_NUMBER_VARIATION_PASSWORD
-        }
-        val dialog = AlertDialog.Builder(this)
-            .setTitle(R.string.settings_change_pin)
-            .setView(old)
-            .setPositiveButton(R.string.ok, null)
-            .setNegativeButton(R.string.cancel, null)
-            .create()
-        dialog.setOnShowListener {
-            Ui.styleDialog(dialog)
-            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
-                if (PinLock.verify(old.text.toString())) {
-                    dialog.dismiss()
-                    showNewPinDialog()
-                } else {
-                    old.setText("")
-                    old.hint = getString(R.string.pin_error)
-                }
+        InputDialogFragment.show(
+            supportFragmentManager,
+            getString(R.string.settings_edit_config_url),
+            getString(R.string.settings_input_url),
+            initial = Prefs.customConfigUrl
+        ) { _, url ->
+            if (url.startsWith("http://") || url.startsWith("https://")) {
+                Prefs.customConfigUrl = url
+                reloadConfig()
+                true
+            } else {
+                Ui.toast(this, getString(R.string.reload_fail))
+                false
             }
         }
-        dialog.show()
-    }
-
-    private fun showNewPinDialog() {
-        val input = styledInput(R.string.settings_input_pin_new).apply {
-            inputType = android.text.InputType.TYPE_CLASS_NUMBER or android.text.InputType.TYPE_NUMBER_VARIATION_PASSWORD
-        }
-        val dialog = AlertDialog.Builder(this)
-            .setTitle(R.string.settings_change_pin)
-            .setView(input)
-            .setPositiveButton(R.string.ok, null)
-            .setNegativeButton(R.string.cancel, null)
-            .create()
-        dialog.setOnShowListener {
-            Ui.styleDialog(dialog)
-            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
-                val pin = input.text.toString()
-                if (pin.length == 4 && pin.all { it.isDigit() }) {
-                    PinLock.setup(pin)
-                    dialog.dismiss()
-                    Toast.makeText(this, R.string.pin_ok, Toast.LENGTH_SHORT).show()
-                } else {
-                    input.setText("")
-                }
-            }
-        }
-        dialog.show()
     }
 
     private fun reloadConfig() {
         lifecycleScope.launch {
             val cfg = ConfigRepo.load(this@SettingsActivity, forceRefresh = true)
             if (cfg.categories.isNotEmpty()) {
-                Toast.makeText(
-                    this@SettingsActivity,
-                    getString(R.string.reload_done, cfg.categories.size, ConfigRepo.totalItems(cfg)),
-                    Toast.LENGTH_LONG
-                ).show()
+                Ui.toast(this@SettingsActivity, getString(R.string.reload_done, cfg.categories.size, ConfigRepo.totalItems(cfg)), long = true)
             } else {
-                Toast.makeText(this@SettingsActivity, R.string.reload_fail, Toast.LENGTH_LONG).show()
+                Ui.toast(this@SettingsActivity, getString(R.string.reload_fail), long = true)
             }
             refreshStatus()
         }

@@ -8,7 +8,16 @@ data class KidsConfig(
     @SerializedName("updated_at") val updatedAt: String? = null,
     val server: ServerInfo? = null,
     val play: PlayInfo? = null,
+    val levels: List<LevelInfo>? = null,
     val categories: List<Category> = emptyList()
+)
+
+/** 难度等级定义（v2配置）：L1启蒙~L5挑战 */
+data class LevelInfo(
+    val lv: Int = 0,
+    val title: String? = null,
+    val en: String? = null,
+    val theme: String? = null
 )
 
 data class ServerInfo(
@@ -26,6 +35,8 @@ data class Category(
     val title: String = "",
     val en: String? = null,
     val theme: String? = null,
+    /** v2：该分类的难度等级（1-5）；纪录片分类=4 */
+    val level: Int? = null,
     val items: List<Item> = emptyList()
 )
 
@@ -36,5 +47,7 @@ data class Item(
     val bvid: String? = null,
     val ep: Int? = null,
     val min: Int? = null,
-    val tag: String? = null
+    val tag: String? = null,
+    /** v2：难度等级1-5，卡片徽标展示 */
+    val lv: Int? = null
 )

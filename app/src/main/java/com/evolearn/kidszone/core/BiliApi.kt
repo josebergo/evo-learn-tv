@@ -227,4 +227,55 @@ object BiliApi {
         48, 32 -> "480P 标清"
         else -> "360P 流畅"
     }
+
+    // ---------------- CC字幕（英中双语） ----------------
+
+    data class SubLine(val fromMs: Long, val toMs: Long, val text: String)
+
+    /**
+     * 拉取视频CC字幕的英文/中文轨（AI字幕需登录态；游客通常无轨）。
+     * 返回 (enLines, zhLines)，两轨都空返回null。
+     */
+    suspend fun subtitles(bvid: String, cid: Long): Pair<List<SubLine>, List<SubLine>>? {
+        val obj = getJson("https://api.bilibili.com/x/player/v2?bvid=$bvid&cid=$cid") ?: return null
+        if (obj.int("code", -1) != 0) return null
+        val subs = obj.dataObj()
+            ?.get("subtitle")?.takeIf { it.isJsonObject }?.asJsonObject
+            ?.get("subtitles")?.takeIf { it.isJsonArray }?.asJsonArray
+            ?: return null
+        var enUrl: String? = null
+        var zhUrl: String? = null
+        for (e in subs) {
+            if (!e.isJsonObject) continue
+            val o = e.asJsonObject
+            val lan = o.str("lan") ?: continue
+            val url = o.str("subtitle_url") ?: continue
+            val full = if (url.startsWith("//")) "https:$url" else url
+            when {
+                lan == "en" || lan.startsWith("en-") -> if (enUrl == null) enUrl = full
+                lan == "zh-CN" || lan == "zh-Hans" -> if (zhUrl == null) zhUrl = full
+                lan.startsWith("ai-en") -> if (enUrl == null) enUrl = full
+                lan.startsWith("ai-zh") -> if (zhUrl == null) zhUrl = full
+            }
+        }
+        val en = enUrl?.let { fetchSubLines(it) } ?: emptyList()
+        val zh = zhUrl?.let { fetchSubLines(it) } ?: emptyList()
+        if (en.isEmpty() && zh.isEmpty()) return null
+        return en to zh
+    }
+
+    private suspend fun fetchSubLines(url: String): List<SubLine> {
+        val raw = httpGetString(url) ?: return emptyList()
+        return runCatching {
+            val body = JsonParser.parseString(raw).asJsonObject
+                .get("body")?.takeIf { it.isJsonArray }?.asJsonArray ?: return emptyList()
+            body.filter { it.isJsonObject }.mapNotNull { e ->
+                val o = e.asJsonObject
+                val from = o.get("from")?.takeIf { it.isJsonPrimitive }?.asDouble ?: return@mapNotNull null
+                val to = o.get("to")?.takeIf { it.isJsonPrimitive }?.asDouble ?: return@mapNotNull null
+                val text = o.str("content") ?: return@mapNotNull null
+                SubLine((from * 1000).toLong(), (to * 1000).toLong(), text.trim())
+            }.sortedBy { it.fromMs }
+        }.getOrDefault(emptyList())
+    }
 }

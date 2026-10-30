@@ -12,8 +12,8 @@ android {
         applicationId = "com.evolearn.kidszone"
         minSdk = 21
         targetSdk = 35
-        versionCode = 2
-        versionName = "1.1.0"
+        versionCode = 4
+        versionName = "1.3.0"
 
         // 内置默认远程配置地址（第2优先级）。部署 server/config.json 后改成你的地址，
         // 也可不改——在应用「家长设置 → 修改配置地址」里输入即可（第1优先级）。

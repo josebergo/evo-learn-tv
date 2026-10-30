@@ -41,13 +41,18 @@ object Ui {
         }
     }
 
-    /** Holo 深色 AlertDialog 改造成贴纸白卡（须在 show() 之后调用） */
-    fun styleDialog(dialog: android.app.AlertDialog) {
-        dialog.window?.setBackgroundDrawableResource(R.drawable.bg_panel_card)
-        val crayon = dialog.context.getColor(R.color.crayon)
-        dialog.getButton(android.app.AlertDialog.BUTTON_POSITIVE)?.setTextColor(crayon)
-        dialog.getButton(android.app.AlertDialog.BUTTON_NEGATIVE)?.setTextColor(crayon)
-        dialog.findViewById<View>(android.R.id.content)?.let { applyFont(it) }
+    /** 贴纸提示条：白底药丸 + 蜡笔字，取代系统灰色 Toast */
+    fun toast(context: android.content.Context, text: String, long: Boolean = false) {
+        val v = android.view.LayoutInflater.from(context).inflate(R.layout.view_toast, null)
+        v.findViewById<TextView>(R.id.toast_text).apply {
+            this.text = text
+            typeface = font(context)
+        }
+        android.widget.Toast(context).apply {
+            duration = if (long) android.widget.Toast.LENGTH_LONG else android.widget.Toast.LENGTH_SHORT
+            view = v
+            show()
+        }
     }
 
     /** 电视全屏沉浸模式，隐藏系统栏，孩子无法下拉看到通知。

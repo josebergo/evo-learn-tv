@@ -4,12 +4,14 @@
     <string name="browse_title">骁骁TV · 英语小小影院</string>
     <string name="settings_row_title">家长专区</string>
     <string name="menu_settings">家长设置</string>
-    <string name="menu_settings_sub">输入家长PIN后进入</string>
+    <string name="menu_settings_sub">片单 · 登录</string>
     <string name="menu_reload">刷新片单</string>
     <string name="menu_reload_sub">从配置地址重新拉取</string>
     <string name="menu_badge_settings">家长</string>
     <string name="menu_badge_tool">工具</string>
     <string name="all_row_title">全部影片</string>
+    <string name="category_english">英语</string>
+    <string name="category_documentary">纪录片</string>
 
     <string name="search_title">搜索片单</string>
     <string name="search_hint">支持中文、英文或拼音，如：peiqi / 恐龙 / Peppa；只在白名单内搜索</string>
@@ -17,17 +19,6 @@
     <string name="search_help">输入关键词，从 %1$d 部白名单影片中查找</string>
     <string name="search_no_result">没有找到“%1$s”相关的影片</string>
     <string name="search_result_count">找到 %1$d 部，按 OK 键查看详情</string>
-
-    <string name="setup_title">欢迎使用骁骁TV</string>
-    <string name="setup_hint">请家长设置一个 4 位数字 PIN 码。\n孩子将无法进入设置或退出应用（需 PIN 验证）。\n忘记 PIN 只能卸载重装。</string>
-    <string name="setup_pin">请输入 PIN（4位数字）</string>
-    <string name="setup_pin2">再输入一次确认</string>
-    <string name="setup_btn">保存并进入</string>
-    <string name="setup_mismatch">两次输入不一致或不是4位数字</string>
-
-    <string name="pin_title">请输入家长 PIN</string>
-    <string name="pin_error">PIN 错误</string>
-    <string name="pin_ok">验证通过</string>
 
     <string name="detail_play">播放</string>
     <string name="detail_re_resolve">用搜索词重新匹配</string>
@@ -49,7 +40,7 @@
     <string name="settings_title">家长设置</string>
     <string name="settings_section_account">B站账号</string>
     <string name="settings_section_config">片单配置</string>
-    <string name="settings_section_security">安全与退出</string>
+    <string name="settings_section_security">退出</string>
     <string name="settings_account">B站账号</string>
     <string name="settings_not_login">未登录（建议登录，画质更高更稳定）</string>
     <string name="settings_login">扫码登录B站</string>
@@ -59,11 +50,8 @@
     <string name="settings_edit_config_url">修改配置地址</string>
     <string name="settings_reset_config">恢复内置默认来源</string>
     <string name="settings_reload">立即刷新片单</string>
-    <string name="settings_change_pin">修改家长 PIN</string>
     <string name="settings_exit">退出应用</string>
     <string name="settings_input_url">输入配置 JSON 的完整地址（http/https）</string>
-    <string name="settings_input_pin_old">输入旧 PIN</string>
-    <string name="settings_input_pin_new">输入新 PIN（4位数字）</string>
 
     <string name="qr_title">扫码登录 B 站</string>
     <string name="qr_hint">打开手机上的「哔哩哔哩」App → 首页左上角扫一扫 → 扫描电视上的二维码并确认</string>

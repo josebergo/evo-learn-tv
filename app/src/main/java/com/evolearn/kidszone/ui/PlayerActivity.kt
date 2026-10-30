@@ -68,6 +68,20 @@ class PlayerActivity : FragmentActivity() {
     /** DASH播放失败后本次会话内不再尝试DASH */
     private var dashBlocked = false
 
+    // 双语字幕（B站CC轨；AI字幕需登录）
+    private lateinit var biSubtitle: BiSubtitleView
+    private var enLines: List<BiliApi.SubLine> = emptyList()
+    private var zhLines: List<BiliApi.SubLine> = emptyList()
+    private val subtitleHandler = android.os.Handler(android.os.Looper.getMainLooper())
+    private val subtitleTick = object : Runnable {
+        override fun run() {
+            if (::biSubtitle.isInitialized && player.isPlaying) {
+                biSubtitle.update(player.currentPosition, enLines, zhLines)
+            }
+            subtitleHandler.postDelayed(this, 250)
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Ui.hideBars(this)
@@ -82,6 +96,8 @@ class PlayerActivity : FragmentActivity() {
         loadingText = findViewById(R.id.loading_text)
         errorOverlay = findViewById(R.id.error_overlay)
         errorText = findViewById(R.id.error_text)
+        biSubtitle = findViewById(R.id.bi_subtitle)
+        subtitleHandler.post(subtitleTick)
 
         player = ExoPlayer.Builder(this).build()
         findViewById<PlayerView>(R.id.player_view).player = player
@@ -92,16 +108,14 @@ class PlayerActivity : FragmentActivity() {
             resolveAndPlay()
         }
         findViewById<Button>(R.id.btn_open_bili).setOnClickListener {
-            PinDialog.show(supportFragmentManager, getString(R.string.player_open_bili)) {
-                val bvid = lastBvid
-                if (bvid.isNullOrBlank()) {
-                    Toast.makeText(this, R.string.need_login_play_fail, Toast.LENGTH_LONG).show()
-                } else {
-                    runCatching {
-                        startActivity(
-                            Intent(Intent.ACTION_VIEW, Uri.parse("https://www.bilibili.com/video/$bvid"))
-                        )
-                    }
+            val bvid = lastBvid
+            if (bvid.isNullOrBlank()) {
+                Ui.toast(this, getString(R.string.need_login_play_fail), long = true)
+            } else {
+                runCatching {
+                    startActivity(
+                        Intent(Intent.ACTION_VIEW, Uri.parse("https://www.bilibili.com/video/$bvid"))
+                    )
                 }
             }
         }
@@ -155,11 +169,7 @@ class PlayerActivity : FragmentActivity() {
                     val audio = ProgressiveMediaSource.Factory(dataSourceFactory)
                         .createMediaSource(MediaItem.fromUri(dash.audioUrl))
                     source = MergingMediaSource(video, audio)
-                    Toast.makeText(
-                        this@PlayerActivity,
-                        getString(R.string.player_quality_info, BiliApi.qnLabel(dash.qn)),
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    Ui.toast(this@PlayerActivity, getString(R.string.player_quality_info, BiliApi.qnLabel(dash.qn)))
                 } else {
                     playingDash = false
                     val qn = cfg.play?.defaultQn ?: 64
@@ -173,6 +183,17 @@ class PlayerActivity : FragmentActivity() {
                 player.prepare()
                 player.playWhenReady = true
                 loadingOverlay.visibility = View.GONE
+
+                // 异步拉CC字幕（不阻塞起播）；AI字幕需登录，游客无轨时静默无字幕
+                enLines = emptyList()
+                zhLines = emptyList()
+                lifecycleScope.launch {
+                    val subs = BiliApi.subtitles(bvid, cid)
+                    if (subs != null) {
+                        enLines = subs.first
+                        zhLines = subs.second
+                    }
+                }
             } catch (t: Throwable) {
                 loadingOverlay.visibility = View.GONE
                 errorText.text = "${getString(R.string.player_error_title)}\n${t.message ?: ""}"
@@ -224,13 +245,13 @@ class PlayerActivity : FragmentActivity() {
         if (!autoplay) return
         val next = ConfigRepo.nextOf(cfg, catIdx, itemIdx)
         if (next == null) {
-            Toast.makeText(this, R.string.player_week_done, Toast.LENGTH_LONG).show()
+            Ui.toast(this, getString(R.string.player_week_done), long = true)
             finish()
             return
         }
         val (c, i) = next
         val nextItem = ConfigRepo.itemAt(cfg, c, i)
-        nextItem?.let { Toast.makeText(this, getString(R.string.player_next, it.t), Toast.LENGTH_SHORT).show() }
+        nextItem?.let { Ui.toast(this, getString(R.string.player_next, it.t)) }
         catIdx = c
         itemIdx = i
         resolveAndPlay()
@@ -243,6 +264,7 @@ class PlayerActivity : FragmentActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+        subtitleHandler.removeCallbacks(subtitleTick)
         player.removeListener(playerListener)
         player.release()
     }

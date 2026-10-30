@@ -1,13 +1,13 @@
 # 骁骁TV · EvoKids（Android TV）
 
-给小学生二~三年级孩子的B站英语动画/纪录片**白名单播放器**：孩子在电视上**只能**看到家长通过服务器配置的片单，没有站内搜索、没有推荐、没有任意视频入口；家长用手机扫码登录B站账号后，应用内直接拉流播放（登录后**1080P高清**）。
+给小学生的B站英语动画/纪录片**白名单播放器**：孩子在电视上**只能**看到家长通过服务器配置的片单，没有站内搜索、没有推荐、没有任意视频入口；家长用手机扫码登录B站账号后，应用内直接拉流播放（登录后**1080P高清 + 英中双语字幕**）。
 
 - 📺 适配 Android TV / 65寸大屏（Leanback TV UI，D-pad遥控操作）
-- 🔍 **白名单内搜索**：主界面搜索球，支持中文 / 英文 / 拼音（输入 `peiqi` 即可找到小猪佩奇），只在片单范围内
-- 🗂 **全部影片**：365部平铺一行，不必按周找片；想按周学仍保留52周主题视图
-- 🔐 家长PIN锁：进入设置、退出应用均需验证；孩子按返回键无法退出
+- 📚 **1000+部素材，按难度分级**：L1 启蒙 → L5 挑战 从易到难，左侧入口即等级，卡片带 L1-L5 徽标；另有纪录片专区
+- 🔍 **白名单内搜索**：右侧顶部搜索卡，支持中文 / 英文 / 拼音（`peiqi`→小猪佩奇）甚至等级（`L1`），只在片单范围内
+- 💬 **英中双语字幕**：自动拉取B站CC字幕（英文轨+中文轨），上方英文大字、下方中文小字（AI字幕需扫码登录）
 - 🌐 三级配置来源：**应用内配置的地址** → 内置默认远程地址 → 离线内置片单
-- 📱 B站官方扫码登录（手机App扫码，电视端自动完成）
+- 📱 B站官方扫码登录（手机App扫码，电视端自动完成），免PIN直达、返回键直接退出
 - ▶️ 登录后走DASH音视频流（最高1080P，起播提示画质）；失败自动降级MP4直链 → ExoPlayer
 
 ## 项目结构
@@ -49,55 +49,56 @@ adb install -r app/build/outputs/apk/debug/app-debug.apk
 
 ## 界面实拍（Android 15 模拟器 · 1920×1080）
 
-| 首启PIN向导 | 主界面 · 52周片单 |
+| 主界面 · 全部影片 | 卡片焦点 |
 |---|---|
-| ![PIN设置](docs/screenshots/01-setup-pin.png) | ![主界面](docs/screenshots/02-main-browse.png) |
+| ![主界面](docs/screenshots/02-main-browse.png) | ![焦点](docs/screenshots/03-card-focused.png) |
 
 | 焦点卡片 | 详情页 |
 |---|---|
 | ![焦点](docs/screenshots/03-card-focused.png) | ![详情](docs/screenshots/04-detail.png) |
 
-| 播放中 | 家长PIN门禁 |
+| 播放中 | 详情页 |
 |---|---|
-| ![播放](docs/screenshots/06-player-video.png) | ![PIN弹窗](docs/screenshots/07-pin-dialog.png) |
+| ![播放](docs/screenshots/06-player-video.png) | ![详情](docs/screenshots/04-detail.png) |
 
 | 家长设置 | 扫码登录 |
 |---|---|
 | ![设置](docs/screenshots/08-settings.png) | ![扫码](docs/screenshots/09-qr-login.png) |
 
-| 全部影片（不按周） | 白名单搜索（拼音） | 登录后画质提示 |
+| 全部影片+等级分类 | L2 基础分类 | 按等级搜索(L1) |
 |---|---|---|
-| ![全部](docs/screenshots/10-all-row.png) | ![搜索](docs/screenshots/11-search-peiqi.png) | ![画质](docs/screenshots/12-player-quality.png) |
+| ![等级入口](docs/screenshots/v1_levels.png) | ![L2](docs/screenshots/v2_level2.png) | ![等级搜索](docs/screenshots/v3_search_level.png) |
 
 ## 首次使用（家长做一次）
 
-1. 启动App → 设置4位**家长PIN**；
-2. `家长专区 → 家长设置`（输PIN）→ `扫码登录B站`：手机哔哩哔哩App扫码确认；
+1. 启动App直接进入主界面（无PIN，返回键直接退出）；
+2. `家长专区 → 家长设置` → `扫码登录B站`：手机哔哩哔哩App扫码确认（解锁1080P高清与双语字幕）；
 3. （可选）`修改配置地址`：填入你部署的 `server/config.json` 地址（见 `server/README.md`）；
 4. 把遥控器交给孩子。
 
 ## 日常使用（孩子）
 
-- `全部影片` 一行平铺365部直接选片；左侧也保留52周主题视图；
-- 顶部搜索球：输入中文 / 英文 / 拼音关键词（遥控器字母键即可），OK进入详情播放；
-- 播完自动连播下一部（可在配置里关掉 `play.autoplay_next`）；
-- 想退出应用 / 进设置 / 跳转B站官方App → 全部需要家长PIN。
+- 左侧按难度选等级（L1启蒙~L5挑战 / 纪录片），右侧上方搜索卡可按片名 / 拼音 / 等级（如L1）搜索；
+- 卡片左上角 L1-L5 徽标即难度等级，从易到难循序渐进；
+- 播完自动连播下一部（可在配置里关掉 `play.autoplay_next`）。
 
 ## 配置格式
 
-见 `docs/DESIGN.md` 第4节。核心字段：
+见 `docs/DESIGN.md` 第4节。v2 核心字段：
 
 ```jsonc
-{ "id": "d001", "t": "Muddy Puddles 踩泥坑",
-  "kw": "小猪佩奇 英文版 第1季 Muddy Puddles",  // BV号失效时的兜底搜索词
-  "bvid": "BV1xx...",   // 可选
-  "ep": 1,              // 选集P数
-  "min": 5, "tag": "英语启蒙" }
+// categories 按难度等级组织（L1启蒙~L5挑战 + 纪录片），共 1041 部
+{ "id": "n001", "t": "Muddy Puddles",
+  "kw": "小猪佩奇 英文版 第1季 Muddy Puddles 1",  // BV号失效时的兜底搜索词
+  "bvid": "BV1xx...", "ep": 1,      // BV号 + 选集P数（合集按分P展开）
+  "min": 5, "tag": "英语启蒙",
+  "lv": 1 }                          // 难度等级1-5，卡片徽标与分类入口
 ```
 
 ## 已知限制
 
 - 未登录时走B站网页端公开接口（html5直链，约480P）；**扫码登录后**走DASH流（普通账号最高1080P，大会员账号可到4K）；
+- 双语字幕依赖B站CC/AI字幕轨（登录后自动拉取，英文上/中文下）；无字幕轨的视频不显示外挂字幕；
 - 大会员专享高清番剧不在本片单范围；
 - 视频若被下架，应用自动回退到"搜索词匹配"，仍失败则提示家长；
 - 本应用仅供家庭自用，请遵守B站用户协议，勿商用分发。
