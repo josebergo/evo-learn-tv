@@ -200,8 +200,8 @@ class PlayerActivity : FragmentActivity() {
                         zhLines = subs.second
                     }
                     if (enLines.isEmpty() && zhLines.isEmpty()) {
-                        // 完全没有英中字幕轨：才启用Vosk实时识别英文行（有轨一律不跑识别）
-                        startLiveEnglish()
+                        // 完全没有英中字幕轨且家长未关闭自动字幕：才启用Vosk实时识别英文行（有轨一律不跑识别）
+                        if (Prefs.liveSubtitleEnabled) startLiveEnglish()
                         maybeDemoSubtitle()
                     }
                 }

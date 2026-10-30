@@ -39,6 +39,10 @@ class SettingsActivity : FragmentActivity() {
             reloadConfig()
         }
         findViewById<Button>(R.id.btn_reload_config).setOnClickListener { reloadConfig() }
+        findViewById<Button>(R.id.btn_toggle_live_subtitle).setOnClickListener {
+            Prefs.liveSubtitleEnabled = !Prefs.liveSubtitleEnabled
+            refreshStatus()
+        }
         findViewById<Button>(R.id.btn_exit_app).setOnClickListener { finishAffinity() }
     }
 
@@ -59,6 +63,12 @@ class SettingsActivity : FragmentActivity() {
             "\n" + getString(R.string.settings_config_url_current, effectiveUrl)
         findViewById<TextView>(R.id.setting_account_status).text = account
         findViewById<TextView>(R.id.setting_config_status).text = config
+        findViewById<TextView>(R.id.setting_live_subtitle_status).text =
+            getString(if (Prefs.liveSubtitleEnabled) R.string.settings_live_subtitle_state_on else R.string.settings_live_subtitle_state_off) +
+                "\n" + getString(if (Prefs.liveSubtitleEnabled) R.string.settings_live_subtitle_hint_on else R.string.settings_live_subtitle_hint_off)
+        findViewById<Button>(R.id.btn_toggle_live_subtitle).setText(
+            if (Prefs.liveSubtitleEnabled) R.string.settings_live_subtitle_turn_off else R.string.settings_live_subtitle_turn_on
+        )
     }
 
     /** 应用内配置的地址：保存后立即拉取并生效（第1优先级来源） */

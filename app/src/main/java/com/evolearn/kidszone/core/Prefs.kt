@@ -32,6 +32,12 @@ object Prefs {
         get() = sp.getInt("config_version", 0)
         set(v) = sp.edit().putInt("config_version", v).apply()
 
+    // ---- 播放 ----
+    /** 自动字幕（Vosk离线语音识别）总开关，片源自带字幕时家长可关闭。默认开 */
+    var liveSubtitleEnabled: Boolean
+        get() = sp.getBoolean("live_subtitle_enabled", true)
+        set(v) = sp.edit().putBoolean("live_subtitle_enabled", v).apply()
+
     // ---- B站登录 ----
     /** 形如 "SESSDATA=xxx; buvid3=yyy" */
     var cookieString: String

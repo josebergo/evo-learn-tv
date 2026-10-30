@@ -48,6 +48,14 @@
     <string name="settings_exit">退出应用</string>
     <string name="settings_input_url">输入配置 JSON 的完整地址（http/https）</string>
 
+    <string name="settings_section_subtitle">自动字幕</string>
+    <string name="settings_live_subtitle_state_on">自动字幕：开启中</string>
+    <string name="settings_live_subtitle_state_off">自动字幕：已关闭</string>
+    <string name="settings_live_subtitle_hint_on">没有字幕轨的片子，自动用离线语音识别生成英文字幕（不联网）</string>
+    <string name="settings_live_subtitle_hint_off">只显示片源自带的字幕；片子画面里已经带有字幕时，建议关闭</string>
+    <string name="settings_live_subtitle_turn_off">关闭自动字幕</string>
+    <string name="settings_live_subtitle_turn_on">开启自动字幕</string>
+
     <string name="qr_title">扫码登录 B 站</string>
     <string name="qr_hint">打开手机上的「哔哩哔哩」App → 首页左上角扫一扫 → 扫描电视上的二维码并确认</string>
     <string name="qr_waiting">等待扫码…</string>
