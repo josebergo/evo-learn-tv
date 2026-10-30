@@ -12,8 +12,8 @@ android {
         applicationId = "com.evolearn.kidszone"
         minSdk = 21
         targetSdk = 35
-        versionCode = 5
-        versionName = "1.4.0"
+        versionCode = 6
+        versionName = "1.5.0"
 
         // Vosk 实时英文识别：只保留主流电视盒子(arm64)与模拟器(x86_64)架构，控制APK体积
         ndk { abiFilters += listOf("arm64-v8a", "x86_64") }

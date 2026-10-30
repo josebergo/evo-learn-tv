@@ -25,6 +25,7 @@
 │   └── README.md           # 配置服务器部署说明
 └── scripts/
     ├── resolve-bvids.js    # 调B站搜索接口解析BV号
+    ├── fetch-covers.js     # 调B站详情接口抓封面图URL（卡片背景）
     └── gen-md.js           # 由config.json生成片单MD
 ```
 
@@ -73,6 +74,10 @@ adb install -r app/build/outputs/apk/debug/app-debug.apk
 |---|---|
 | ![双语](docs/screenshots/15-subtitle-sticker.png) | ![实时](docs/screenshots/14-vosk-live-en.png) |
 
+| 封面图卡片（小孩看图识片） | 封面卡片 · 焦点态 |
+|---|---|
+| ![封面卡片](docs/screenshots/v4_cover_cards.png) | ![焦点](docs/screenshots/v4_cover_focus.png) |
+
 ## 首次使用（家长做一次）
 
 1. 启动App直接进入主界面（无PIN，返回键直接退出）；
@@ -96,6 +101,7 @@ adb install -r app/build/outputs/apk/debug/app-debug.apk
   "kw": "小猪佩奇 英文版 第1季 Muddy Puddles 1",  // BV号失效时的兜底搜索词
   "bvid": "BV1xx...", "ep": 1,      // BV号 + 选集P数（合集按分P展开）
   "min": 5, "tag": "英语启蒙",
+  "cover": "https://i0.hdslb.com/...",  // 封面图URL（卡片背景，scripts/fetch-covers.js生成）
   "lv": 1 }                          // 难度等级1-5，卡片徽标与分类入口
 ```
 
