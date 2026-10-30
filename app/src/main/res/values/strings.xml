@@ -12,6 +12,9 @@
     <string name="all_row_title">全部影片</string>
     <string name="category_english">英语</string>
     <string name="category_documentary">纪录片</string>
+    <string name="search_card_title">搜索影片</string>
+    <string name="search_card_sub">支持中文 / 英文 / 拼音，如 peiqi</string>
+    <string name="search_card_badge">搜索</string>
 
     <string name="search_title">搜索片单</string>
     <string name="search_hint">支持中文、英文或拼音，如：peiqi / 恐龙 / Peppa；只在白名单内搜索</string>

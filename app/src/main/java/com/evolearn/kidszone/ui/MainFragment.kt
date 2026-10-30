@@ -13,7 +13,6 @@ import androidx.leanback.widget.OnItemViewClickedListener
 import androidx.leanback.widget.Presenter
 import androidx.leanback.widget.Row
 import androidx.leanback.widget.RowPresenter
-import androidx.leanback.widget.SearchOrbView
 import androidx.lifecycle.lifecycleScope
 import com.evolearn.kidszone.R
 import com.evolearn.kidszone.core.ConfigRepo
@@ -21,7 +20,8 @@ import com.evolearn.kidszone.core.model.KidsConfig
 import kotlinx.coroutines.launch
 
 /**
- * 主界面：左侧=分类（全部影片/L1启蒙~L5挑战/纪录片/家长专区），右上角=唯一搜索入口，右侧=片单大卡片。
+ * 主界面：左侧=分类（全部影片/L1启蒙~L5挑战/纪录片/家长专区），右侧=片单大卡片。
+ * 搜索入口只有一张卡，固定在右侧顶部（第一行"全部影片"的开头），各分类行不再重复。
  * 分类按难度从易到难排序（v2配置的等级分类）；全部内容来自配置文件——搜索也只在白名单内查找。
  */
 class MainFragment : BrowseSupportFragment() {
@@ -36,17 +36,6 @@ class MainFragment : BrowseSupportFragment() {
         setHeadersState(HEADERS_ENABLED)
         isHeadersTransitionOnBackEnabled = true
         brandColor = ContextCompat.getColor(requireContext(), R.color.bg_panel)
-        // 右上角唯一的搜索入口（Leanback 自带 search orb）；左侧菜单仅保留分类
-        setSearchAffordanceColors(
-            SearchOrbView.Colors(
-                ContextCompat.getColor(requireContext(), R.color.accent),
-                ContextCompat.getColor(requireContext(), R.color.card_c1),
-                ContextCompat.getColor(requireContext(), R.color.cloud_white)
-            )
-        )
-        setOnSearchClickedListener {
-            activity?.startActivity(Intent(activity, SearchActivity::class.java))
-        }
         setOnItemViewClickedListener(ItemViewClickedListener())
 
         if (ConfigRepo.current != null) {
@@ -107,10 +96,17 @@ class MainFragment : BrowseSupportFragment() {
             }
         }
 
-        fun addCategoryRow(headerId: Long, title: String, colorRes: Int, entries: List<CatalogEntry>) {
+        fun addCategoryRow(
+            headerId: Long,
+            title: String,
+            colorRes: Int,
+            entries: List<CatalogEntry>,
+            withSearch: Boolean = false
+        ) {
             if (entries.isEmpty()) return
             val listAdapter = ArrayObjectAdapter(CardPresenter(colorRes))
-            listAdapter.addAll(0, entries)
+            if (withSearch) listAdapter.add(searchCard())
+            listAdapter.addAll(listAdapter.size(), entries)
             rowsAdapter.add(ListRow(HeaderItem(headerId, title), listAdapter))
         }
 
@@ -120,7 +116,7 @@ class MainFragment : BrowseSupportFragment() {
             val english = buckets[getString(R.string.category_english)] ?: mutableListOf()
             linkedMapOf(getString(R.string.category_english) to english, getString(R.string.category_documentary) to docu)
         }
-        addCategoryRow(0, getString(R.string.all_row_title), palette[2], all)
+        addCategoryRow(0, getString(R.string.all_row_title), palette[2], all, withSearch = true)
         ordered.entries.forEachIndexed { idx, (title, entries) ->
             addCategoryRow((idx + 1).toLong(), title, palette[(idx + 1) % palette.size], entries)
         }
@@ -140,6 +136,12 @@ class MainFragment : BrowseSupportFragment() {
         adapter = rowsAdapter
     }
 
+    /** 右侧顶部唯一的搜索入口卡（只在"全部影片"行开头出现一次） */
+    private fun searchCard() = MenuCard(
+        getString(R.string.search_card_title), getString(R.string.search_card_sub),
+        MenuCard.ACTION_SEARCH, getString(R.string.search_card_badge)
+    )
+
     private inner class ItemViewClickedListener : OnItemViewClickedListener {
         override fun onItemClicked(
             itemViewHolder: Presenter.ViewHolder,
@@ -151,6 +153,8 @@ class MainFragment : BrowseSupportFragment() {
             when (item) {
                 is CatalogEntry -> DetailActivity.start(act, item.catIdx, item.itemIdx)
                 is MenuCard -> when (item.action) {
+                    MenuCard.ACTION_SEARCH ->
+                        startActivity(Intent(act, SearchActivity::class.java))
                     MenuCard.ACTION_SETTINGS ->
                         startActivity(Intent(act, SettingsActivity::class.java))
                     MenuCard.ACTION_RELOAD -> {

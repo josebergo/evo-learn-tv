@@ -14,7 +14,7 @@ import androidx.leanback.widget.Presenter
 import com.evolearn.kidszone.R
 import com.evolearn.kidszone.core.model.Item
 
-/** 家长专区行的伪条目 */
+/** 家长专区/搜索卡的伪条目 */
 data class MenuCard(
     val title: String,
     val sub: String,
@@ -24,6 +24,7 @@ data class MenuCard(
     companion object {
         const val ACTION_SETTINGS = 1
         const val ACTION_RELOAD = 2
+        const val ACTION_SEARCH = 3
     }
 }
 

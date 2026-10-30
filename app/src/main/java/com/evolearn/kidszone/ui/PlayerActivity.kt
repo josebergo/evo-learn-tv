@@ -193,6 +193,9 @@ class PlayerActivity : FragmentActivity() {
                         enLines = subs.first
                         zhLines = subs.second
                     }
+                    if (enLines.isEmpty() && zhLines.isEmpty()) {
+                        maybeDemoSubtitle()
+                    }
                 }
             } catch (t: Throwable) {
                 loadingOverlay.visibility = View.GONE
@@ -200,6 +203,31 @@ class PlayerActivity : FragmentActivity() {
                 errorOverlay.visibility = View.VISIBLE
             }
         }
+    }
+
+    /**
+     * 字幕样式演示（隐藏调试入口，adb 启动时带 demo_subtitle 才生效）：
+     * 无真实字幕轨时注入英中对照演示句，验证"英文上行/中文小字下行"渲染。
+     */
+    private fun maybeDemoSubtitle() {
+        if (!intent.getBooleanExtra("demo_subtitle", false)) return
+        val lines = listOf(
+            "Peppa loves jumping in muddy puddles." to "佩奇最喜欢在泥坑里跳来跳去。",
+            "If you jump in muddy puddles, you must wear your boots." to "如果你要跳泥坑，一定要穿上小靴子。",
+            "George, let's find another puddle!" to "乔治，我们再去找一个泥坑吧！"
+        )
+        val en = ArrayList<BiliApi.SubLine>()
+        val zh = ArrayList<BiliApi.SubLine>()
+        for (round in 0 until 200) {
+            val base = round * 16_000L + 4_000
+            lines.forEachIndexed { i, (e, z) ->
+                val from = base + i * 5_000L
+                en.add(BiliApi.SubLine(from, from + 4_600, e))
+                zh.add(BiliApi.SubLine(from + 200, from + 4_600, z))
+            }
+        }
+        enLines = en
+        zhLines = zh
     }
 
     /** 优先级：强制搜索 > 配置BV号 > 本地解析缓存 > 关键词搜索 */
