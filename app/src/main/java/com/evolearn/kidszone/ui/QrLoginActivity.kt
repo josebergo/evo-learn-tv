@@ -31,6 +31,7 @@ class QrLoginActivity : FragmentActivity() {
         super.onCreate(savedInstanceState)
         Ui.hideBars(this)
         setContentView(R.layout.activity_qrlogin)
+        Ui.applyFont(findViewById(android.R.id.content))
         qrImage = findViewById(R.id.qr_image)
         statusText = findViewById(R.id.qr_status)
 

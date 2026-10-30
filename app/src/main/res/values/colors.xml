@@ -1,19 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- 夜幕故事书：夜幕 / 灯火 / 月光 / 雾 / 书脊五色 -->
-    <color name="bg_dark">#0C1420</color>
-    <color name="bg_panel">#16222F</color>
-    <color name="bg_card">#1B2A3A</color>
-    <color name="bg_card_focused">#24384D</color>
-    <color name="accent">#FF8A3D</color>
-    <color name="accent_dim">#3D2A1A</color>
-    <color name="text_primary">#F4F7FA</color>
-    <color name="text_secondary">#93A7BC</color>
-    <!-- 书脊：钢蓝 / 黛紫 / 松绿 / 赭金 / 绛红 -->
-    <color name="card_c0">#27476B</color>
-    <color name="card_c1">#413A63</color>
-    <color name="card_c2">#1F4E4A</color>
-    <color name="card_c3">#5A4430</color>
-    <color name="card_c4">#54333E</color>
+    <!-- 糖果绘本：天空 / 奶油 / 蜡笔 / 五色糖果（儿童手绘贴纸风） -->
+    <color name="bg_dark">#FFF6E5</color>
+    <color name="bg_panel">#FFFFFF</color>
+    <color name="bg_card">#FFFFFF</color>
+    <color name="bg_card_focused">#FFF3D9</color>
+    <!-- 蜡笔深藏蓝：手绘描边与正文字色，在糖果色和奶油底上都清晰 -->
+    <color name="crayon">#3D4A6B</color>
+    <color name="crayon_soft">#A63D4A6B</color>
+    <color name="accent">#FF9F1C</color>
+    <color name="accent_dim">#FFE9C8</color>
+    <color name="text_primary">#3D4A6B</color>
+    <color name="text_secondary">#7B89A6</color>
+    <!-- 五色糖果贴纸：珊瑚 / 芒果 / 薄荷 / 湖蓝 / 葡萄 -->
+    <color name="card_c0">#FF6B6B</color>
+    <color name="card_c1">#FFC94D</color>
+    <color name="card_c2">#5FC96B</color>
+    <color name="card_c3">#4D96FF</color>
+    <color name="card_c4">#9B6BFF</color>
+    <!-- 绘本天空与草地 -->
+    <color name="sky_top">#9FE0FF</color>
+    <color name="sky_bottom">#FFF6E5</color>
+    <color name="hill_back">#A9E8A4</color>
+    <color name="hill_front">#7ED97F</color>
+    <color name="sun_yellow">#FFD93D</color>
+    <color name="cloud_white">#FFFFFF</color>
     <color name="qr_bg">#FFFFFF</color>
 </resources>

@@ -26,6 +26,7 @@ class SettingsActivity : FragmentActivity() {
         super.onCreate(savedInstanceState)
         Ui.hideBars(this)
         setContentView(R.layout.activity_settings)
+        Ui.applyFont(findViewById(android.R.id.content))
         refreshStatus()
 
         findViewById<Button>(R.id.btn_qr_login).setOnClickListener {
@@ -64,14 +65,23 @@ class SettingsActivity : FragmentActivity() {
         findViewById<TextView>(R.id.setting_config_status).text = config
     }
 
+    /** 弹窗内输入框：白底圆角贴纸样式（Holo 默认输入框与浅色卡冲突） */
+    private fun styledInput(hintRes: Int): EditText = EditText(this).apply {
+        setHint(hintRes)
+        setBackgroundResource(R.drawable.bg_search_input)
+        setPadding(48, 28, 48, 28)
+        textSize = 20f
+        setTextColor(getColor(R.color.text_primary))
+        setHintTextColor(getColor(R.color.text_secondary))
+    }
+
     /** 应用内配置的地址：保存后立即拉取并生效（第1优先级来源） */
     private fun showEditUrlDialog() {
-        val input = EditText(this).apply {
-            hint = getString(R.string.settings_input_url)
+        val input = styledInput(R.string.settings_input_url).apply {
             setText(Prefs.customConfigUrl)
             inputType = android.text.InputType.TYPE_TEXT_VARIATION_URI
         }
-        AlertDialog.Builder(this)
+        val dialog = AlertDialog.Builder(this)
             .setTitle(R.string.settings_edit_config_url)
             .setView(input)
             .setPositiveButton(R.string.ok) { _, _ ->
@@ -85,11 +95,11 @@ class SettingsActivity : FragmentActivity() {
             }
             .setNegativeButton(R.string.cancel, null)
             .show()
+        Ui.styleDialog(dialog)
     }
 
     private fun showChangePinDialog() {
-        val old = EditText(this).apply {
-            hint = getString(R.string.settings_input_pin_old)
+        val old = styledInput(R.string.settings_input_pin_old).apply {
             inputType = android.text.InputType.TYPE_CLASS_NUMBER or android.text.InputType.TYPE_NUMBER_VARIATION_PASSWORD
         }
         val dialog = AlertDialog.Builder(this)
@@ -99,6 +109,7 @@ class SettingsActivity : FragmentActivity() {
             .setNegativeButton(R.string.cancel, null)
             .create()
         dialog.setOnShowListener {
+            Ui.styleDialog(dialog)
             dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
                 if (PinLock.verify(old.text.toString())) {
                     dialog.dismiss()
@@ -113,8 +124,7 @@ class SettingsActivity : FragmentActivity() {
     }
 
     private fun showNewPinDialog() {
-        val input = EditText(this).apply {
-            hint = getString(R.string.settings_input_pin_new)
+        val input = styledInput(R.string.settings_input_pin_new).apply {
             inputType = android.text.InputType.TYPE_CLASS_NUMBER or android.text.InputType.TYPE_NUMBER_VARIATION_PASSWORD
         }
         val dialog = AlertDialog.Builder(this)
@@ -124,6 +134,7 @@ class SettingsActivity : FragmentActivity() {
             .setNegativeButton(R.string.cancel, null)
             .create()
         dialog.setOnShowListener {
+            Ui.styleDialog(dialog)
             dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
                 val pin = input.text.toString()
                 if (pin.length == 4 && pin.all { it.isDigit() }) {

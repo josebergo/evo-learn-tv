@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 独立星星装饰：芒果黄五角星 + 蜡笔描边 -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="64dp" android:height="64dp"
+    android:viewportWidth="64" android:viewportHeight="64">
+    <path android:fillColor="@color/sun_yellow" android:strokeColor="@color/crayon"
+        android:strokeWidth="4" android:strokeLineJoin="round"
+        android:pathData="M32,6 L39.6,23.9 L59,26 L44.7,39.3 L48.5,58.5 L32,49.5 L15.5,58.5 L19.3,39.3 L5,26 L24.4,23.9 Z" />
+</vector>

@@ -1,89 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- 详情页：左侧白色贴纸大卡 + 右侧按钮列，天空绘本背景透出 -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="horizontal"
-    android:padding="48dp">
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_gravity="top|end"
+        android:layout_marginTop="40dp"
+        android:layout_marginRight="56dp"
+        android:src="@drawable/deco_star"
+        android:contentDescription="@null" />
 
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="3"
-        android:orientation="vertical"
-        android:gravity="center_vertical"
-        android:paddingRight="48dp">
+        android:orientation="horizontal"
+        android:padding="48dp">
 
-        <TextView
-            android:id="@+id/detail_badge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/pill_badge"
-            android:paddingLeft="12dp"
-            android:paddingRight="12dp"
-            android:paddingTop="4dp"
-            android:paddingBottom="4dp"
-            android:textColor="@color/accent"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:letterSpacing="0.15" />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:orientation="vertical"
+            android:gravity="center_vertical"
+            android:background="@drawable/bg_panel_card"
+            android:padding="44dp"
+            android:layout_marginRight="48dp">
 
-        <TextView
-            android:id="@+id/detail_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:textColor="@color/text_primary"
-            android:textSize="@dimen/detail_title"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/detail_badge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/pill_badge"
+                android:paddingLeft="14dp"
+                android:paddingRight="14dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:rotation="-2"
+                android:textColor="@color/crayon"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.1" />
 
-        <TextView
-            android:id="@+id/detail_meta"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:textColor="@color/text_secondary"
-            android:textSize="@dimen/detail_body" />
+            <TextView
+                android:id="@+id/detail_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:textColor="@color/text_primary"
+                android:textSize="@dimen/detail_title" />
 
-        <TextView
-            android:id="@+id/detail_notice"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:textColor="@color/text_secondary"
-            android:textSize="18sp"
-            android:maxLines="4"
-            android:ellipsize="end" />
+            <TextView
+                android:id="@+id/detail_meta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:textColor="@color/text_secondary"
+                android:textSize="@dimen/detail_body" />
+
+            <TextView
+                android:id="@+id/detail_notice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:textColor="@color/text_secondary"
+                android:textSize="18sp"
+                android:maxLines="4"
+                android:ellipsize="end" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:orientation="vertical"
+            android:gravity="center_vertical">
+
+            <Button
+                android:id="@+id/btn_play"
+                style="@style/Widget.EvoKids.Button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_play"
+                android:text="@string/detail_play" />
+
+            <Button
+                android:id="@+id/btn_re_resolve"
+                style="@style/Widget.EvoKids.Button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_search"
+                android:text="@string/detail_re_resolve" />
+
+            <Button
+                android:id="@+id/btn_open_bili"
+                style="@style/Widget.EvoKids.Button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_tv"
+                android:text="@string/detail_open_bili" />
+        </LinearLayout>
     </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="2"
-        android:orientation="vertical"
-        android:gravity="center_vertical">
-
-        <Button
-            android:id="@+id/btn_play"
-            style="@style/Widget.EvoKids.Button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_play"
-            android:text="@string/detail_play" />
-
-        <Button
-            android:id="@+id/btn_re_resolve"
-            style="@style/Widget.EvoKids.Button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_search"
-            android:text="@string/detail_re_resolve" />
-
-        <Button
-            android:id="@+id/btn_open_bili"
-            style="@style/Widget.EvoKids.Button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_tv"
-            android:text="@string/detail_open_bili" />
-    </LinearLayout>
-</LinearLayout>
+</FrameLayout>

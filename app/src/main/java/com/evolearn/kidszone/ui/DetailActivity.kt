@@ -34,6 +34,7 @@ class DetailActivity : FragmentActivity() {
         super.onCreate(savedInstanceState)
         Ui.hideBars(this)
         setContentView(R.layout.activity_detail)
+        Ui.applyFont(findViewById(android.R.id.content))
 
         catIdx = intent.getIntExtra(EXTRA_CAT, 0)
         itemIdx = intent.getIntExtra(EXTRA_ITEM, 0)

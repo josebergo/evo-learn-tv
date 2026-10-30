@@ -1,21 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Android TV 桌面横幅（320x180 比例，矢量自适应） -->
+<!-- TV 启动器横幅（320x180）：天空绘本底 + 糖果小电视 + 星星 -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="320dp"
-    android:height="180dp"
-    android:viewportWidth="320"
-    android:viewportHeight="180">
-    <path android:fillColor="#0E1621" android:pathData="M0,0h320v180h-320z" />
-    <path android:fillColor="#FF8A3D"
-        android:pathData="M24,36h112a12,12 0 0 1 12,12v84a12,12 0 0 1 -12,12h-112a12,12 0 0 1 -12,-12v-84a12,12 0 0 1 12,-12z" />
-    <path android:fillColor="#FFFFFF"
-        android:pathData="M66,66l56,27l-56,27z" />
-    <path android:fillColor="#F4F7FA"
-        android:pathData="M164,58h120v14h-120z" />
-    <path android:fillColor="#93A7BC"
-        android:pathData="M164,84h96v12h-96z" />
-    <path android:fillColor="#93A7BC"
-        android:pathData="M164,104h76v12h-76z" />
-    <path android:fillColor="#FF8A3D"
-        android:pathData="M164,126a10,10 0 1 0 20,0a10,10 0 1 0 -20,0z" />
+    android:width="320dp" android:height="180dp"
+    android:viewportWidth="320" android:viewportHeight="180">
+    <path android:fillColor="@color/sky_top"
+        android:pathData="M0,0 h320 v180 h-320 z" />
+    <path android:fillColor="@color/sky_bottom"
+        android:pathData="M0,0 h320 v96 q-160,34 -320,0 z" />
+    <!-- 云 -->
+    <path android:fillColor="@color/cloud_white"
+        android:pathData="M24,52 a9,9 0 1 0 18,0 a9,9 0 1 0 -18,0 M38,46 a12,12 0 1 0 24,0 a12,12 0 1 0 -24,0 M56,54 a8,8 0 1 0 16,0 a8,8 0 1 0 -16,0 M22,56 h56 a5,5 0 0 1 0,10 h-56 a5,5 0 0 1 0,-10 z" />
+    <path android:fillColor="@color/cloud_white" android:fillAlpha="0.85"
+        android:pathData="M230,96 a8,8 0 1 0 16,0 a8,8 0 1 0 -16,0 M242,90 a10,10 0 1 0 20,0 a10,10 0 1 0 -20,0 M258,98 a7,7 0 1 0 14,0 a7,7 0 1 0 -14,0 M228,100 h48 a4.5,4.5 0 0 1 0,9 h-48 a4.5,4.5 0 0 1 0,-9 z" />
+    <!-- 星星 -->
+    <path android:fillColor="@color/sun_yellow" android:strokeColor="@color/crayon"
+        android:strokeWidth="3" android:strokeLineJoin="round"
+        android:pathData="M292,34 l4.8,9.7 10.7,1.6 -7.7,7.5 1.8,10.6 -9.6,-5 -9.6,5 1.8,-10.6 -7.7,-7.5 10.7,-1.6 z" />
+    <path android:fillColor="@color/card_c0" android:strokeColor="@color/crayon"
+        android:strokeWidth="3" android:strokeLineJoin="round"
+        android:pathData="M84,110 l3.2,6.5 7.1,1 -5.1,5 1.2,7.1 -6.4,-3.4 -6.4,3.4 1.2,-7.1 -5.1,-5 7.1,-1 z" />
+    <!-- 小电视 -->
+    <path android:strokeColor="@color/crayon" android:strokeWidth="4"
+        android:strokeLineCap="round"
+        android:pathData="M148,52 L140,38 M196,52 L204,38" />
+    <path android:fillColor="@color/card_c3" android:strokeColor="@color/crayon"
+        android:strokeWidth="5" android:strokeLineJoin="round"
+        android:pathData="M134,54 h76 a7,7 0 0 1 7,7 v46 a7,7 0 0 1 -7,7 h-76 a7,7 0 0 1 -7,-7 v-46 a7,7 0 0 1 7,-7 z" />
+    <path android:fillColor="@color/cloud_white"
+        android:pathData="M141,63 h52 a4,4 0 0 1 4,4 v34 a4,4 0 0 1 -4,4 h-52 a4,4 0 0 1 -4,-4 v-34 a4,4 0 0 1 4,-4 z" />
+    <path android:fillColor="@color/card_c1" android:strokeColor="@color/crayon"
+        android:strokeWidth="3.5" android:strokeLineJoin="round"
+        android:pathData="M159,70 L177,81 L159,92 Z" />
+    <path android:fillColor="@color/card_c0" android:strokeColor="@color/crayon"
+        android:strokeWidth="3.5"
+        android:pathData="M202,72 m-5.5,0 a5.5,5.5 0 1 0 11,0 a5.5,5.5 0 1 0 -11,0 M202,88 m-5.5,0 a5.5,5.5 0 1 0 11,0 a5.5,5.5 0 1 0 -11,0" />
+    <path android:fillColor="@color/card_c2" android:strokeColor="@color/crayon"
+        android:strokeWidth="4"
+        android:pathData="M156,114 h12 a4,4 0 0 1 0,8 h-12 a4,4 0 0 1 0,-8 z M178,114 h12 a4,4 0 0 1 0,8 h-12 a4,4 0 0 1 0,-8 z" />
+    <!-- 草地 -->
+    <path android:fillColor="@color/hill_front"
+        android:pathData="M0,180 q80,-26 160,-14 T320,158 V180 Z" />
+    <path android:fillColor="@color/hill_back" android:fillAlpha="0.9"
+        android:pathData="M0,180 q60,-18 140,-8 T320,168 V180 Z" />
 </vector>

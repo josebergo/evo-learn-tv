@@ -12,3 +12,4 @@ local.properties
 # 脚本临时文件
 node_modules/
 .kotlin/
+.scratch/

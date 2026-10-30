@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- 徽章药丸：白底小贴纸 -->
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="#33FF8A3D" />
-    <corners android:radius="8dp" />
+    <solid android:color="@color/bg_panel" />
+    <corners android:radius="16dp" />
+    <stroke android:width="2dp" android:color="@color/crayon" />
 </shape>

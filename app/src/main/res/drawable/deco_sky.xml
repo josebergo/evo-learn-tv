@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 天空装饰：左上暖太阳（光芒圆帽线）+ 三朵手绘白云，全屏铺放 -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="1080dp" android:height="600dp"
+    android:viewportWidth="1080" android:viewportHeight="600">
+    <!-- 太阳光芒（圆帽短线，蜡笔色） -->
+    <path android:strokeColor="@color/crayon" android:strokeWidth="11"
+        android:strokeLineCap="round" android:pathData="M150,40 L150,14 M232,74 L253,53 M266,150 L292,150 M68,74 L47,53 M33,150 L7,150" />
+    <!-- 太阳圆脸 -->
+    <path android:fillColor="@color/sun_yellow" android:strokeColor="@color/crayon"
+        android:strokeWidth="10" android:pathData="M150,150 m-72,0 a72,72 0 1 0 144,0 a72,72 0 1 0 -144,0" />
+    <!-- 大云右上 -->
+    <group>
+        <path android:fillColor="@color/cloud_white"
+            android:pathData="M810,168 a34,34 0 1 0 68,0 a34,34 0 1 0 -68,0 M872,148 a44,44 0 1 0 88,0 a44,44 0 1 0 -88,0 M942,172 a30,30 0 1 0 60,0 a30,30 0 1 0 -60,0 M806,176 h188 a14,14 0 0 1 0,28 h-188 a14,14 0 0 1 0,-28 z" />
+    </group>
+    <!-- 中左小云 -->
+    <path android:fillColor="@color/cloud_white" android:fillAlpha="0.9"
+        android:pathData="M240,352 a24,24 0 1 0 48,0 a24,24 0 1 0 -48,0 M284,338 a30,30 0 1 0 60,0 a30,30 0 1 0 -60,0 M334,356 a20,20 0 1 0 40,0 a20,20 0 1 0 -40,0 M238,360 h130 a10,10 0 0 1 0,20 h-130 a10,10 0 0 1 0,-20 z" />
+    <!-- 中右小云 -->
+    <path android:fillColor="@color/cloud_white" android:fillAlpha="0.75"
+        android:pathData="M600,300 a20,20 0 1 0 40,0 a20,20 0 1 0 -40,0 M636,288 a26,26 0 1 0 52,0 a26,26 0 1 0 -52,0 M682,304 a17,17 0 1 0 34,0 a17,17 0 1 0 -34,0 M598,308 h112 a9,9 0 0 1 0,18 h-112 a9,9 0 0 1 0,-18 z" />
+</vector>

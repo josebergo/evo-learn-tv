@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- 贴纸卡片：糖果色底由 CardPresenter 动态生成，白药丸徽章斜放 -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="@dimen/card_width"
     android:layout_height="@dimen/card_height"
@@ -19,24 +20,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/pill_badge"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
             android:paddingTop="3dp"
             android:paddingBottom="3dp"
-            android:textColor="@color/accent"
-            android:textSize="12sp"
+            android:rotation="-2"
+            android:textColor="@color/crayon"
+            android:textSize="13sp"
             android:textStyle="bold"
-            android:letterSpacing="0.15" />
+            android:letterSpacing="0.1" />
 
         <TextView
             android:id="@+id/card_title"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:layout_marginTop="4dp"
-            android:textColor="@color/text_primary"
+            android:layout_marginTop="6dp"
+            android:textColor="@color/crayon"
             android:textSize="@dimen/card_title"
-            android:textStyle="bold"
             android:maxLines="2"
             android:ellipsize="end"
             android:gravity="bottom" />
@@ -46,7 +47,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:textColor="@color/text_secondary"
+            android:textColor="@color/crayon_soft"
             android:textSize="@dimen/card_sub"
             android:maxLines="1"
             android:ellipsize="end" />

@@ -17,6 +17,9 @@ import androidx.media3.common.Player
 import androidx.media3.datasource.DefaultHttpDataSource
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.source.DefaultMediaSourceFactory
+import androidx.media3.exoplayer.source.MediaSource
+import androidx.media3.exoplayer.source.MergingMediaSource
+import androidx.media3.exoplayer.source.ProgressiveMediaSource
 import androidx.media3.ui.PlayerView
 import com.evolearn.kidszone.R
 import com.evolearn.kidszone.core.BiliApi
@@ -59,10 +62,17 @@ class PlayerActivity : FragmentActivity() {
     private var lastBvid: String? = null
     private var endedHandled = false
 
+    /** 当前是否用DASH流起播（用于播放出错时自动降级MP4） */
+    private var playingDash = false
+
+    /** DASH播放失败后本次会话内不再尝试DASH */
+    private var dashBlocked = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Ui.hideBars(this)
         setContentView(R.layout.activity_player)
+        Ui.applyFont(findViewById(android.R.id.content))
 
         catIdx = intent.getIntExtra(EXTRA_CAT, 0)
         itemIdx = intent.getIntExtra(EXTRA_ITEM, 0)
@@ -123,10 +133,6 @@ class PlayerActivity : FragmentActivity() {
                 val cid = pages[epIdx].get("cid")?.asLong
                     ?: throw IllegalStateException("分P信息异常")
 
-                val qn = cfg.play?.defaultQn ?: 64
-                val url = BiliApi.playUrl(bvid, cid, qn)
-                    ?: throw IllegalStateException("获取播放地址失败，请先在家长设置中扫码登录B站")
-
                 val dataSourceFactory = DefaultHttpDataSource.Factory()
                     .setUserAgent(BiliApi.UA)
                     .setDefaultRequestProperties(
@@ -139,8 +145,29 @@ class PlayerActivity : FragmentActivity() {
                     .setConnectTimeoutMs(15_000)
                     .setReadTimeoutMs(15_000)
 
-                val source = DefaultMediaSourceFactory(dataSourceFactory)
-                    .createMediaSource(MediaItem.fromUri(url))
+                // 已登录：优先DASH音视频分离流（可达1080P高清）；游客或DASH不可用：HTML5 MP4直链
+                val dash = if (Prefs.isLoggedIn() && !dashBlocked) BiliApi.playDash(bvid, cid) else null
+                val source: MediaSource
+                if (dash != null) {
+                    playingDash = true
+                    val video = ProgressiveMediaSource.Factory(dataSourceFactory)
+                        .createMediaSource(MediaItem.fromUri(dash.videoUrl))
+                    val audio = ProgressiveMediaSource.Factory(dataSourceFactory)
+                        .createMediaSource(MediaItem.fromUri(dash.audioUrl))
+                    source = MergingMediaSource(video, audio)
+                    Toast.makeText(
+                        this@PlayerActivity,
+                        getString(R.string.player_quality_info, BiliApi.qnLabel(dash.qn)),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    playingDash = false
+                    val qn = cfg.play?.defaultQn ?: 64
+                    val url = BiliApi.playUrl(bvid, cid, qn)
+                        ?: throw IllegalStateException("获取播放地址失败，请先在家长设置中扫码登录B站")
+                    source = DefaultMediaSourceFactory(dataSourceFactory)
+                        .createMediaSource(MediaItem.fromUri(url))
+                }
 
                 player.setMediaSource(source)
                 player.prepare()
@@ -169,6 +196,15 @@ class PlayerActivity : FragmentActivity() {
 
     private val playerListener = object : Player.Listener {
         override fun onPlayerError(error: PlaybackException) {
+            if (playingDash && !dashBlocked) {
+                // DASH流起播失败（部分 CDN/盒子兼容问题）：自动降级MP4直链重试
+                dashBlocked = true
+                errorOverlay.visibility = View.GONE
+                loadingOverlay.visibility = View.VISIBLE
+                loadingText.text = getString(R.string.player_fallback_mp4)
+                resolveAndPlay()
+                return
+            }
             loadingOverlay.visibility = View.GONE
             errorText.text = "${getString(R.string.player_error_title)}\n${error.errorCodeName}"
             errorOverlay.visibility = View.VISIBLE

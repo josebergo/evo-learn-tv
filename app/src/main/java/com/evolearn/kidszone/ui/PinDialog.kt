@@ -34,6 +34,7 @@ class PinDialog(private val message: String, private val onVerified: () -> Unit)
             .create()
 
         dialog.setOnShowListener {
+            Ui.styleDialog(dialog)
             dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
                 if (PinLock.verify(input.text.toString())) {
                     dismiss()

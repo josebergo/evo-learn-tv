@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 独立太阳装饰（布局摆放用） -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="96dp" android:height="96dp"
+    android:viewportWidth="96" android:viewportHeight="96">
+    <path android:strokeColor="@color/crayon" android:strokeWidth="7"
+        android:strokeLineCap="round"
+        android:pathData="M48,14 L48,3 M73,23 L81,15 M82,48 L93,48 M73,73 L81,81 M48,82 L48,93 M23,73 L15,81 M14,48 L3,48 M23,23 L15,15" />
+    <path android:fillColor="@color/sun_yellow" android:strokeColor="@color/crayon"
+        android:strokeWidth="6"
+        android:pathData="M48,48 m-26,0 a26,26 0 1 0 52,0 a26,26 0 1 0 -52,0" />
+</vector>

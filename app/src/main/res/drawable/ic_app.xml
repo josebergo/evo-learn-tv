@@ -1,11 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- 应用图标：糖果小电视（湖蓝机身 + 芒果播放键 + 蜡笔描边） -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="108dp"
-    android:height="108dp"
-    android:viewportWidth="108"
-    android:viewportHeight="108">
-    <path android:fillColor="#0E1621" android:pathData="M0,0h108v108h-108z" />
-    <path android:fillColor="#FF8A3D"
-        android:pathData="M24,26h60a10,10 0 0 1 10,10v46a10,10 0 0 1 -10,10h-60a10,10 0 0 1 -10,-10v-46a10,10 0 0 1 10,-10z" />
-    <path android:fillColor="#FFFFFF" android:pathData="M46,42l26,14l-26,14z" />
+    android:width="108dp" android:height="108dp"
+    android:viewportWidth="108" android:viewportHeight="108">
+    <!-- 天线 -->
+    <path android:strokeColor="@color/crayon" android:strokeWidth="6"
+        android:strokeLineCap="round"
+        android:pathData="M36,30 L26,12 M72,30 L82,12" />
+    <path android:fillColor="@color/card_c0" android:strokeColor="@color/crayon"
+        android:strokeWidth="5"
+        android:pathData="M22,14 m-7,0 a7,7 0 1 0 14,0 a7,7 0 1 0 -14,0 M86,14 m-7,0 a7,7 0 1 0 14,0 a7,7 0 1 0 -14,0" />
+    <!-- 机身 -->
+    <path android:fillColor="@color/card_c3" android:strokeColor="@color/crayon"
+        android:strokeWidth="6" android:strokeLineJoin="round"
+        android:pathData="M12,32 h84 a8,8 0 0 1 8,8 v38 a8,8 0 0 1 -8,8 h-84 a8,8 0 0 1 -8,-8 v-38 a8,8 0 0 1 8,-8 z" />
+    <!-- 屏幕 -->
+    <path android:fillColor="@color/cloud_white"
+        android:pathData="M20,42 h50 a5,5 0 0 1 5,5 v24 a5,5 0 0 1 -5,5 h-50 a5,5 0 0 1 -5,-5 v-24 a5,5 0 0 1 5,-5 z" />
+    <!-- 播放三角（芒果） -->
+    <path android:fillColor="@color/card_c1" android:strokeColor="@color/crayon"
+        android:strokeWidth="4" android:strokeLineJoin="round"
+        android:pathData="M38,50 L55,59 L38,68 Z" />
+    <!-- 旋钮：珊瑚 + 薄荷 -->
+    <path android:fillColor="@color/card_c0" android:strokeColor="@color/crayon"
+        android:strokeWidth="4"
+        android:pathData="M82,50 m-6,0 a6,6 0 1 0 12,0 a6,6 0 1 0 -12,0 M82,66 m-6,0 a6,6 0 1 0 12,0 a6,6 0 1 0 -12,0" />
+    <!-- 底座小脚 -->
+    <path android:fillColor="@color/card_c2" android:strokeColor="@color/crayon"
+        android:strokeWidth="5"
+        android:pathData="M30,88 h12 a4,4 0 0 1 0,8 h-12 a4,4 0 0 1 0,-8 z M66,88 h12 a4,4 0 0 1 0,8 h-12 a4,4 0 0 1 0,-8 z" />
 </vector>

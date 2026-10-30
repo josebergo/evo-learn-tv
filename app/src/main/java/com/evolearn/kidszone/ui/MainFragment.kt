@@ -22,8 +22,8 @@ import com.evolearn.kidszone.core.model.KidsConfig
 import kotlinx.coroutines.launch
 
 /**
- * 主界面：左侧=每周主题（52周+家长专区），右侧=该周7部片单大卡片。
- * 全部内容来自配置文件——孩子在这里看不到任何配置之外的推荐/搜索入口。
+ * 主界面：左侧=全部影片 / 每周主题（52周+家长专区），右侧=片单大卡片。
+ * 全部内容来自配置文件——搜索也只在白名单内查找，孩子看不到任何配置之外的内容。
  */
 class MainFragment : BrowseSupportFragment() {
 
@@ -38,7 +38,10 @@ class MainFragment : BrowseSupportFragment() {
         isHeadersTransitionOnBackEnabled = true
         brandColor = ContextCompat.getColor(requireContext(), R.color.bg_panel)
 
-        // 不设置 OnSearchClickedListener：TV端不出现搜索球，杜绝任意搜索
+        // 搜索球：进入白名单内搜索页
+        setOnSearchClickedListener {
+            activity?.startActivity(Intent(activity, SearchActivity::class.java))
+        }
         setOnItemViewClickedListener(ItemViewClickedListener())
 
         if (ConfigRepo.current != null) {
@@ -47,6 +50,12 @@ class MainFragment : BrowseSupportFragment() {
             title = getString(R.string.player_loading)
             loadAndBuild()
         }
+
+        // 手绘体注入：rows/headers 是 Leanback 内部 presenter 创建的，布局上屏后遍历设置；
+        // 片单加载较慢时 800ms 后再兜底一轮（幂等，重复调用无害）
+        val root = requireView()
+        root.post { Ui.applyFont(root) }
+        root.postDelayed({ Ui.applyFont(root) }, 800)
     }
 
     override fun onResume() {
@@ -74,6 +83,17 @@ class MainFragment : BrowseSupportFragment() {
         builtTick = ConfigRepo.reloadTick
         val rowsAdapter = ArrayObjectAdapter(ListRowPresenter())
         val palette = Ui.cardPalette()
+
+        // 全部影片：365部平铺，不必按周找片
+        val all = ArrayObjectAdapter(CardPresenter(palette[2]))
+        val entries = ArrayList<CatalogEntry>(ConfigRepo.totalItems(cfg))
+        cfg.categories.forEachIndexed { ci, cat ->
+            cat.items.forEachIndexed { ii, item -> entries.add(CatalogEntry(ci, ii, item, cat.title)) }
+        }
+        if (entries.isNotEmpty()) {
+            all.addAll(0, entries)
+            rowsAdapter.add(ListRow(HeaderItem(998L, getString(R.string.all_row_title)), all))
+        }
 
         cfg.categories.forEachIndexed { idx, cat ->
             val listAdapter = ArrayObjectAdapter(CardPresenter(palette[idx % palette.size]))
@@ -113,6 +133,7 @@ class MainFragment : BrowseSupportFragment() {
                         DetailActivity.start(act, listRow.headerItem.id.toInt(), itemIdx)
                     }
                 }
+                is CatalogEntry -> DetailActivity.start(act, item.catIdx, item.itemIdx)
                 is MenuCard -> when (item.action) {
                     MenuCard.ACTION_SETTINGS ->
                         PinDialog.show(act.supportFragmentManager, getString(R.string.menu_settings)) {

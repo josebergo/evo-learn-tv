@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 底部草地：两层圆弧山丘 + 两朵小白花，全屏铺放 -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="1080dp" android:height="600dp"
+    android:viewportWidth="1080" android:viewportHeight="600">
+    <!-- 后山（薄荷浅绿，不描边做层次） -->
+    <path android:fillColor="@color/hill_back"
+        android:pathData="M0,470 Q250,398 520,458 T1080,430 L1080,600 L0,600 Z" />
+    <!-- 前山（草绿，蜡笔描边） -->
+    <path android:fillColor="@color/hill_front" android:strokeColor="@color/crayon"
+        android:strokeWidth="9" android:strokeLineJoin="round"
+        android:pathData="M0,516 Q330,452 660,506 T1080,486 L1080,600 L0,600 Z" />
+    <!-- 小白花：四瓣 + 黄心 -->
+    <path android:fillColor="@color/cloud_white"
+        android:pathData="M220,540 a11,11 0 1 0 22,0 a11,11 0 1 0 -22,0 M229,518 a11,11 0 1 0 22,0 a11,11 0 1 0 -22,0 M207,518 a11,11 0 1 0 22,0 a11,11 0 1 0 -22,0 M220,522 h18 v18 h-18 z" />
+    <path android:fillColor="@color/sun_yellow" android:strokeColor="@color/crayon" android:strokeWidth="4"
+        android:pathData="M219,529 m-7,0 a7,7 0 1 0 14,0 a7,7 0 1 0 -14,0" />
+    <path android:fillColor="@color/cloud_white"
+        android:pathData="M830,556 a11,11 0 1 0 22,0 a11,11 0 1 0 -22,0 M839,534 a11,11 0 1 0 22,0 a11,11 0 1 0 -22,0 M817,534 a11,11 0 1 0 22,0 a11,11 0 1 0 -22,0 M830,538 h18 v18 h-18 z" />
+    <path android:fillColor="@color/sun_yellow" android:strokeColor="@color/crayon" android:strokeWidth="4"
+        android:pathData="M829,545 m-7,0 a7,7 0 1 0 14,0 a7,7 0 1 0 -14,0" />
+</vector>

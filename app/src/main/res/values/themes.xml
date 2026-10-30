@@ -1,22 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- 糖果绘本主题：浅色天空背景 + 蜡笔深字。
+         Theme.Leanback 基于 Holo 深色系，必须显式覆盖文字/强调色，否则 headers 白字看不见。 -->
     <style name="Theme.EvoKids" parent="Theme.Leanback">
         <item name="android:windowBackground">@drawable/bg_main</item>
         <item name="android:colorAccent">@color/accent</item>
         <item name="colorAccent">@color/accent</item>
         <item name="android:textColorPrimary">@color/text_primary</item>
         <item name="android:textColorSecondary">@color/text_secondary</item>
+        <item name="android:textColorHint">@color/text_secondary</item>
     </style>
 
     <style name="Theme.EvoKids.Browse" parent="Theme.Leanback.Browse">
         <item name="android:windowBackground">@drawable/bg_main</item>
         <item name="android:colorAccent">@color/accent</item>
         <item name="colorAccent">@color/accent</item>
+        <item name="android:textColorPrimary">@color/text_primary</item>
+        <item name="android:textColorSecondary">@color/text_secondary</item>
+        <item name="android:textColorHint">@color/text_secondary</item>
     </style>
 
     <style name="Widget.EvoKids.Button" parent="android:Widget.Material.Button">
         <item name="android:textSize">@dimen/button_text</item>
-        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textColor">@color/crayon</item>
         <item name="android:background">@drawable/bg_button</item>
         <item name="android:paddingLeft">28dp</item>
         <item name="android:paddingRight">28dp</item>

@@ -160,4 +160,71 @@ object BiliApi {
         val first = durl.firstOrNull()?.asJsonObject ?: return null
         return first.str("url")
     }
+
+    /** DASH 音视频分离流（登录后可达1080P及以上；游客通常只有480P以下） */
+    data class DashStream(
+        val videoUrl: String,
+        val videoBackupUrl: String?,
+        val audioUrl: String,
+        val audioBackupUrl: String?,
+        val qn: Int
+    )
+
+    /**
+     * 拉取DASH流：在账号允许范围内选最高清晰度，视频优先H.264(codecid=7)保证盒子解码兼容，
+     * 音频选码率最高的一条；URL优先upos正式节点（mcdn节点是http+端口直连，部分网络不稳）。
+     */
+    suspend fun playDash(bvid: String, cid: Long): DashStream? {
+        val url = "https://api.bilibili.com/x/player/playurl" +
+            "?bvid=$bvid&cid=$cid&qn=116&fnval=16&fourk=1"
+        val obj = getJson(url) ?: return null
+        if (obj.int("code", -1) != 0) return null
+        val dash = obj.dataObj()?.get("dash")?.takeIf { it.isJsonObject }?.asJsonObject ?: return null
+
+        val videos = dash.get("video")?.takeIf { it.isJsonArray }?.asJsonArray
+            ?.filter { it.isJsonObject }?.map { it.asJsonObject } ?: return null
+        if (videos.isEmpty()) return null
+
+        fun JsonObject.qnId(): Int = int("id", 0)
+        fun JsonObject.urls(): List<String> =
+            listOfNotNull(str("baseUrl")).plus(
+                (get("backupUrl")?.takeIf { it.isJsonArray }?.asJsonArray ?: emptyList())
+                    .mapNotNull { e -> e.takeIf { it.isJsonPrimitive }?.asString }
+            )
+
+        val avc = videos.filter { it.int("codecid", 0) == 7 }
+        val pool = avc.ifEmpty { videos }
+        val bestVideo = pool.maxByOrNull { it.qnId() } ?: return null
+
+        val audios = dash.get("audio")?.takeIf { it.isJsonArray }?.asJsonArray
+            ?.filter { it.isJsonObject }?.map { it.asJsonObject } ?: return null
+        val bestAudio = audios.maxByOrNull { it.int("id", 0) } ?: return null
+
+        val vUrls = bestVideo.urls().let { list ->
+            list.filterNot { it.contains("mcdn") }.ifEmpty { list }
+        }
+        val aUrls = bestAudio.urls().let { list ->
+            list.filterNot { it.contains("mcdn") }.ifEmpty { list }
+        }
+        if (vUrls.isEmpty() || aUrls.isEmpty()) return null
+
+        return DashStream(
+            videoUrl = vUrls.first(),
+            videoBackupUrl = vUrls.getOrNull(1),
+            audioUrl = aUrls.first(),
+            audioBackupUrl = aUrls.getOrNull(1),
+            qn = bestVideo.qnId()
+        )
+    }
+
+    /** 画质qn → 展示名 */
+    fun qnLabel(qn: Int): String = when (qn) {
+        127, 126, 125, 120 -> "4K 超清"
+        116 -> "1080P60 高帧率"
+        112 -> "1080P+ 高码率"
+        80 -> "1080P 高清"
+        74, 64 -> "720P 高清"
+        48, 32 -> "480P 标清"
+        else -> "360P 流畅"
+    }
 }

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 独立云朵装饰（布局摆放用） -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="120dp" android:height="60dp"
+    android:viewportWidth="120" android:viewportHeight="60">
+    <path android:fillColor="@color/cloud_white"
+        android:pathData="M24,44 a13,13 0 1 0 26,0 a13,13 0 1 0 -26,0 M42,32 a17,17 0 1 0 34,0 a17,17 0 1 0 -34,0 M66,42 a11,11 0 1 0 22,0 a11,11 0 1 0 -22,0 M20,46 h78 a8,8 0 0 1 -8,8 h-62 a8,8 0 0 1 -8,-8 z" />
+</vector>

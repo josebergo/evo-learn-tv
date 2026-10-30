@@ -9,6 +9,14 @@
     <string name="menu_reload_sub">从配置地址重新拉取</string>
     <string name="menu_badge_settings">家长</string>
     <string name="menu_badge_tool">工具</string>
+    <string name="all_row_title">全部影片</string>
+
+    <string name="search_title">搜索片单</string>
+    <string name="search_hint">支持中文、英文或拼音，如：peiqi / 恐龙 / Peppa；只在白名单内搜索</string>
+    <string name="search_input_hint">输入片名关键词…</string>
+    <string name="search_help">输入关键词，从 %1$d 部白名单影片中查找</string>
+    <string name="search_no_result">没有找到“%1$s”相关的影片</string>
+    <string name="search_result_count">找到 %1$d 部，按 OK 键查看详情</string>
 
     <string name="setup_title">欢迎使用骁骁TV</string>
     <string name="setup_hint">请家长设置一个 4 位数字 PIN 码。\n孩子将无法进入设置或退出应用（需 PIN 验证）。\n忘记 PIN 只能卸载重装。</string>
@@ -35,6 +43,8 @@
     <string name="player_open_bili">去B站TV版观看（家长）</string>
     <string name="player_week_done">本周片单已看完啦</string>
     <string name="player_next">即将播放：%1$s</string>
+    <string name="player_quality_info">已登录 · 正在播放 %1$s</string>
+    <string name="player_fallback_mp4">高清流连接失败，正在切换直链重试…</string>
 
     <string name="settings_title">家长设置</string>
     <string name="settings_section_account">B站账号</string>

@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <gradient
-        android:angle="135"
-        android:startColor="#152233"
-        android:centerColor="#0E1725"
-        android:endColor="#080E16"
-        android:type="linear" />
-</shape>
+<!-- 糖果绘本主背景：天空渐变 → 云朵太阳 → 底部草地山丘（同 viewport 全屏拉伸对齐） -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape>
+            <gradient
+                android:angle="270"
+                android:startColor="@color/sky_top"
+                android:centerColor="#D9F1FF"
+                android:endColor="@color/sky_bottom"
+                android:type="linear" />
+        </shape>
+    </item>
+    <item android:drawable="@drawable/deco_sky" />
+    <item android:drawable="@drawable/deco_hills" />
+</layer-list>

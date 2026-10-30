@@ -16,6 +16,7 @@ class SetupActivity : FragmentActivity() {
         super.onCreate(savedInstanceState)
         Ui.hideBars(this)
         setContentView(R.layout.activity_setup)
+        Ui.applyFont(findViewById(android.R.id.content))
 
         val pin = findViewById<EditText>(R.id.setup_pin)
         val pin2 = findViewById<EditText>(R.id.setup_pin2)

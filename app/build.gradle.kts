@@ -12,8 +12,8 @@ android {
         applicationId = "com.evolearn.kidszone"
         minSdk = 21
         targetSdk = 35
-        versionCode = 1
-        versionName = "1.0.0"
+        versionCode = 2
+        versionName = "1.1.0"
 
         // 内置默认远程配置地址（第2优先级）。部署 server/config.json 后改成你的地址，
         // 也可不改——在应用「家长设置 → 修改配置地址」里输入即可（第1优先级）。
@@ -52,5 +52,7 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
     implementation("com.google.code.gson:gson:2.10.1")
     implementation("com.google.zxing:core:3.5.3")
+    // 中文转拼音：TV遥控器难输中文，支持输入拼音搜片名（如 peiqi → 小猪佩奇）
+    implementation("com.github.promeg:tinypinyin:2.0.3")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
 }

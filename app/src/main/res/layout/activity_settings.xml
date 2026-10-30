@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- 家长设置：内容装进白色贴纸大卡，分区标题用糖果三色 -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -8,6 +9,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:orientation="vertical"
+        android:background="@drawable/bg_panel_card"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="40dp"
         android:padding="48dp">
 
         <TextView
@@ -17,17 +21,15 @@
             android:drawablePadding="18dp"
             android:text="@string/settings_title"
             android:textColor="@color/text_primary"
-            android:textSize="40sp"
-            android:textStyle="bold" />
+            android:textSize="40sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="36dp"
             android:text="@string/settings_section_account"
-            android:textColor="@color/accent"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textColor="@color/card_c3"
+            android:textSize="19sp" />
 
         <TextView
             android:id="@+id/setting_account_status"
@@ -58,9 +60,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="36dp"
             android:text="@string/settings_section_config"
-            android:textColor="@color/accent"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textColor="@color/card_c2"
+            android:textSize="19sp" />
 
         <TextView
             android:id="@+id/setting_config_status"
@@ -99,9 +100,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="36dp"
             android:text="@string/settings_section_security"
-            android:textColor="@color/accent"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textColor="@color/card_c0"
+            android:textSize="19sp" />
 
         <Button
             android:id="@+id/btn_change_pin"

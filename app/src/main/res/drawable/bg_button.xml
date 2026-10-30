@@ -1,16 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- 贴纸按钮：常态白底蜡笔描边；焦点芒果糖底 + 橙描边加粗 -->
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:state_focused="true">
         <shape>
-            <solid android:color="#2A4159" />
-            <corners android:radius="28dp" />
-            <stroke android:width="3dp" android:color="@color/accent" />
+            <solid android:color="#FFC94D" />
+            <corners
+                android:topLeftRadius="34dp"
+                android:topRightRadius="26dp"
+                android:bottomLeftRadius="30dp"
+                android:bottomRightRadius="38dp" />
+            <stroke android:width="5dp" android:color="@color/accent" />
         </shape>
     </item>
     <item>
         <shape>
-            <solid android:color="#1C2B3C" />
-            <corners android:radius="28dp" />
+            <solid android:color="@color/bg_panel" />
+            <corners
+                android:topLeftRadius="34dp"
+                android:topRightRadius="26dp"
+                android:bottomLeftRadius="30dp"
+                android:bottomRightRadius="38dp" />
+            <stroke android:width="3dp" android:color="@color/crayon" />
         </shape>
     </item>
 </selector>
