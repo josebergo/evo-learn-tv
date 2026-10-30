@@ -150,15 +150,22 @@ object BiliApi {
         return arr.filter { it.isJsonObject }.map { it.asJsonObject }
     }
 
-    /** HTML5 平台直链MP4（默认qn=64即720p上限）；需带Referer/Cookie拉流 */
-    suspend fun playUrl(bvid: String, cid: Long, qn: Int): String? {
+    data class Mp4Stream(val url: String, val qn: Int)
+
+    /**
+     * HTML5 平台直链MP4：固定请求最高qn，B站按当前登录态自动返回允许的最高档
+     * （实测游客被夹到720P，登录后更高）；需带Referer/Cookie拉流。
+     */
+    suspend fun playUrl(bvid: String, cid: Long, qn: Int = 127): Mp4Stream? {
         val url = "https://api.bilibili.com/x/player/playurl" +
-            "?bvid=$bvid&cid=$cid&qn=$qn&fnval=1&platform=html5&high_quality=1&fourk=0"
+            "?bvid=$bvid&cid=$cid&qn=$qn&fnval=1&platform=html5&high_quality=1&fourk=1"
         val obj = getJson(url) ?: return null
         if (obj.int("code", -1) != 0) return null
-        val durl = obj.dataObj()?.get("durl")?.takeIf { it.isJsonArray }?.asJsonArray ?: return null
+        val data = obj.dataObj() ?: return null
+        val durl = data.get("durl")?.takeIf { it.isJsonArray }?.asJsonArray ?: return null
         val first = durl.firstOrNull()?.asJsonObject ?: return null
-        return first.str("url")
+        val link = first.str("url") ?: return null
+        return Mp4Stream(link, data.int("quality", qn))
     }
 
     /** DASH 音视频分离流（登录后可达1080P及以上；游客通常只有480P以下） */

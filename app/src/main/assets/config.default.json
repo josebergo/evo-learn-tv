@@ -6,7 +6,6 @@
   "notice": "本片单为二~三年级小学生定制，仅包含英语动画与纪录片。家长可通过服务器远程更新此配置。"
  },
  "play": {
-  "default_qn": 64,
   "autoplay_next": true
  },
  "levels": [

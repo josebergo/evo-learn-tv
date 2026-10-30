@@ -30,6 +30,7 @@
     <string name="player_week_done">本周片单已看完啦</string>
     <string name="player_next">即将播放：%1$s</string>
     <string name="player_quality_info">已登录 · 正在播放 %1$s</string>
+    <string name="player_quality_mp4">正在播放 %1$s</string>
     <string name="player_fallback_mp4">高清流连接失败，正在切换直链重试…</string>
 
     <string name="settings_title">家长设置</string>

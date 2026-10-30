@@ -33,7 +33,7 @@
 
 | 方案 | 优点 | 缺点 | 结论 |
 |---|---|---|---|
-| A. 拉流直放：`playurl(platform=html5)` 取MP4 → ExoPlayer | 体验最好：全屏、无广告位、可控UI、白名单闭环 | 依赖B站web接口；清晰度上限720p(html5) | ✅ 主方案 |
+| A. 拉流直放：`playurl(platform=html5)` 取MP4 → ExoPlayer | 体验最好：全屏、无广告位、可控UI、白名单闭环 | 依赖B站web接口；清晰度自动取账号允许的最高档（游客720p，登录后更高） | ✅ 主方案 |
 | B. WebView 嵌入 player.bilibili.com | 接口稳 | TV遥控器D-pad操作网页困难、有页面导航逃逸风险（可点击"去看推荐"） | ❌ |
 | C. 深链跳转B站TV版App（`bilibili://video/BV...`） | 最省事 | 跳出去后孩子可自由浏览B站——违背R6 | ❌（跳转入口已移除） |
 
@@ -46,7 +46,7 @@
   ↓
 pagelist?bvid=xxx → 取第 item.ep 页的 cid
   ↓
-playurl?bvid=..&cid=..&platform=html5&qn=64 → durl[0].url（MP4直链）
+playurl?bvid=..&cid=..&platform=html5&qn=127 → durl[0].url（MP4直链；qn固定请求最高，服务端按登录态自动返回最高允许档）
   ↓
 ExoPlayer + 请求头(Referer: bilibili.com / Cookie: SESSDATA…)
   ↓ 播放失败(403/下架)
@@ -62,7 +62,7 @@ TV端没有键盘，账号密码输入不可行。采用B站**官方**二维码�
 3. 手机B站App扫码确认
 4. TV端每2秒轮询 `.../web/qrcode/poll?qrcode_key=...`，`code=0` 时响应头携带 `SESSDATA/bilijct/DedeUserID` 等Cookie
 5. Cookie存本地（仅家长PIN可见的私有存储），后续所有API与拉流请求自动携带
-   - 登录态可提升 `playurl` 清晰度（480p→720p）并避免风控
+   - 登录态可提升清晰度并避免风控：DASH流可达1080P+，MP4直链也随账号权限提升
 
 ### 2.3 配置来源三级优先级（覆盖R3+R4）
 
@@ -117,7 +117,7 @@ TV端没有键盘，账号密码输入不可行。采用B站**官方**二维码�
   "version": 1,                      // 递增；App仅接受更大版本
   "updated_at": "2026-10-29",
   "server": { "name": "EvoKids 英语小小影院" },
-  "play": { "default_qn": 64, "autoplay_next": true },
+  "play": { "autoplay_next": true },   // 清晰度无需配置：始终请求账号允许的最高档
   "categories": [
     {
       "id": "w01", "title": "第01周 · 小猪佩奇", "en": "Peppa Pig",
@@ -149,7 +149,7 @@ TV端没有键盘，账号密码输入不可行。采用B站**官方**二维码�
 | 登录态检查 | `GET api.bilibili.com/x/web-interface/nav` | 显示昵称/头像 |
 | 视频搜索 | `GET /x/web-interface/search/type?search_type=video&keyword=` | kw→bvid兜底 |
 | 分P列表 | `GET api.bilibili.com/x/player/pagelist?bvid=` | 取cid |
-| 播放地址 | `GET api.bilibili.com/x/player/playurl?platform=html5&qn=64&bvid=&cid=` | 返回MP4直链(durl) |
+| 播放地址 | `GET api.bilibili.com/x/player/playurl?platform=html5&qn=127&bvid=&cid=`（服务端按登录态自动夹到最高允许档） | 返回MP4直链(durl) |
 
 播放直链必须带 `Referer: https://www.bilibili.com` 与登录Cookie，否则403。
 

@@ -26,7 +26,6 @@ data class ServerInfo(
 )
 
 data class PlayInfo(
-    @SerializedName("default_qn") val defaultQn: Int? = 64,
     @SerializedName("autoplay_next") val autoplayNext: Boolean? = true
 )
 

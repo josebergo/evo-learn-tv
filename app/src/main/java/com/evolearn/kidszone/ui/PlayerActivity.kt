@@ -175,11 +175,12 @@ class PlayerActivity : FragmentActivity() {
                     Ui.toast(this@PlayerActivity, getString(R.string.player_quality_info, BiliApi.qnLabel(dash.qn)))
                 } else {
                     playingDash = false
-                    val qn = cfg.play?.defaultQn ?: 64
-                    val url = BiliApi.playUrl(bvid, cid, qn)
+                    // 直链同样请求最高档：服务器按登录态自动返回允许的最高清晰度（游客720P，登录后更高）
+                    val mp4 = BiliApi.playUrl(bvid, cid)
                         ?: throw IllegalStateException("获取播放地址失败，请先在家长设置中扫码登录B站")
                     source = DefaultMediaSourceFactory(dataSourceFactory)
-                        .createMediaSource(MediaItem.fromUri(url))
+                        .createMediaSource(MediaItem.fromUri(mp4.url))
+                    Ui.toast(this@PlayerActivity, getString(R.string.player_quality_mp4, BiliApi.qnLabel(mp4.qn)))
                 }
 
                 player.setMediaSource(source)
